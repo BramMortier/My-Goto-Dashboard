@@ -1,14 +1,14 @@
 <script setup>
 import { Form, Field } from "vee-validate";
 import { useAuthStore } from "@stores/AuthStore";
-import { router } from "@router/index";
+import { router } from "@router/index.js";
 import * as yup from "yup";
 
 import BaseButton from "@components/BaseButton.vue";
 
-const { login } = useAuthStore();
+const { register } = useAuthStore();
 
-const loginFormValidationSchema = yup.object({
+const registerFormValidationSchema = yup.object({
   email: yup
     .string()
     .required("Email is required")
@@ -16,12 +16,12 @@ const loginFormValidationSchema = yup.object({
   password: yup.string().required("Password is required"),
 });
 
-const handleLoginFormSubmit = async (values) => {
-  const [data, error] = await login(values);
+const handleRegisterFormSubmit = async (values) => {
+  const [data, error] = await register(values);
 
-  if (error) console.log("login error!", error);
+  if (error) console.log("register error!", error);
   if (data) {
-    console.log("login succes!", data);
+    console.log("register succes!", data);
     await router.push("/");
   }
 };
@@ -29,44 +29,44 @@ const handleLoginFormSubmit = async (values) => {
 
 <template>
   <Form
-    class="login-form"
-    @submit="handleLoginFormSubmit"
-    :validation-schema="loginFormValidationSchema"
+    class="register-form"
+    @submit="handleRegisterFormSubmit"
+    :validation-schema="registerFormValidationSchema"
     v-slot="{ errors }"
   >
-    <h2>Login</h2>
-    <div class="login-form__fields">
-      <div class="login-form__group">
+    <h2>Register</h2>
+    <div class="register-form__fields">
+      <div class="register-form__group">
         <label>E-mail</label>
         <Field
           name="email"
           type="text"
           placeholder="type your e-mail"
-          class="login-form__field"
-          :class="{ 'login-form__field-error-feedback': errors.email }"
+          class="register-form__field"
+          :class="{ 'register-form__field-error-feedback': errors.email }"
         ></Field>
-        <p class="login-form__error-feedback">{{ errors.email }}</p>
+        <p class="register-form__error-feedback">{{ errors.email }}</p>
       </div>
-      <div class="login-form__group">
+      <div class="register-form__group">
         <label>Password</label>
         <Field
           name="password"
           type="password"
           placeholder="type your password"
-          class="login-form__field"
-          :class="{ 'login-form__field-error-feedback': errors.password }"
+          class="register-form__field"
+          :class="{ 'register-form__field-error-feedback': errors.password }"
         ></Field>
-        <p class="login-form__error-feedback">{{ errors.password }}</p>
+        <p class="register-form__error-feedback">{{ errors.password }}</p>
       </div>
     </div>
-    <div class="login-form__group">
-      <BaseButton>Login</BaseButton>
+    <div class="register-form__group">
+      <BaseButton>Register</BaseButton>
     </div>
   </Form>
 </template>
 
 <style lang="scss" scoped>
-.login-form {
+.register-form {
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
@@ -108,7 +108,7 @@ const handleLoginFormSubmit = async (values) => {
     background-color: var(--clr-gray-100);
     color: var(--clr-gray-900);
 
-    &.login-form__field-error-feedback {
+    &.register-form__field-error-feedback {
       border: 1px solid var(--clr-red-400);
       color: var(--clr-red-400);
     }

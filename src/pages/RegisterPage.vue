@@ -1,24 +1,24 @@
 <script setup>
-import LoginForm from "@components/LoginForm.vue";
+import RegisterForm from "@components/RegisterForm.vue";
 </script>
 
 <template>
-  <div class="login-page">
-    <div class="login-page__content">
-      <section class="login-page__welcome-message">
+  <div class="register-page">
+    <div class="register-page__content">
+      <section class="register-page__welcome-message">
         <img
           src="@assets/icons/logo-horizontal-color.svg"
           alt="horizontal logo colored version"
         />
         <p>Welcome to the My Go-to administration dashboard!</p>
       </section>
-      <LoginForm />
+      <RegisterForm />
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.login-page {
+.register-page {
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -5,7 +5,7 @@ export const routes = [
   {
     path: "/",
     name: "OverviewDashboardPage",
-    meta: { layout: SidebarLayout },
+    meta: { layout: SidebarLayout, requiresAuth: true },
     component: () => import("@pages/OverviewDashboardPage.vue"),
   },
   {
@@ -13,5 +13,11 @@ export const routes = [
     name: "LoginPage",
     meta: { layout: EmptyLayout },
     component: () => import("@pages/LoginPage.vue"),
+  },
+  {
+    path: "/register",
+    name: "RegisterPage",
+    meta: { layout: EmptyLayout },
+    component: () => import("@pages/RegisterPage.vue"),
   },
 ];
