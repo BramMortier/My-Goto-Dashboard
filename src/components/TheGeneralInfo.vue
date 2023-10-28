@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div>LoginForm</div>
+  <div class="general-info">TheGeneralInfo</div>
 </template>
 
 <style lang="scss" scoped></style>

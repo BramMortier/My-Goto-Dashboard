@@ -24,8 +24,10 @@
   --fw-black: 900;
 }
 
-body {
-  color: var(--black);
+body,
+button,
+a {
+  color: var(--clr-gray-900);
   font-family: var(--lexend);
   font-size: var(--fs-md);
   font-weight: var(--fw-regular);
