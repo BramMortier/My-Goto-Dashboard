@@ -12,7 +12,7 @@ import { RouterLink } from "vue-router";
       >
         <RouterLink to="#" class="sidebar-navigation__link">
           <img
-            src="@assets/icons/vending-machine-v3.svg"
+            src="@assets/icons/vending-machine-v4.svg"
             alt="navigation link icon (vending machine)"
           />
           <p>Machines</p>
@@ -85,16 +85,15 @@ import { RouterLink } from "vue-router";
   flex-direction: column;
   gap: var(--space-md);
 
+  & > h4 {
+    text-decoration: underline;
+    margin-bottom: var(--space-sm);
+  }
+
   & > h5 {
     text-transform: uppercase;
     color: var(--clr-gray-700);
-    font-weight: var(--fw-regular);
-    font-size: var(--fs-sm);
-  }
-
-  & > h4 {
-    text-decoration: underline;
-    font-weight: var(--fs-regular);
+    line-height: var(--lh-xs);
   }
 
   &__links-list {

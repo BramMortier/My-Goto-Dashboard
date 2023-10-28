@@ -34,7 +34,7 @@ import TheSidebarActionButtons from "./TheSidebarActionButtons.vue";
   }
 
   &__logo {
-    max-width: 8.75rem;
+    max-width: var(--logo-width-md);
   }
 }
 </style>

@@ -1,24 +1,19 @@
 <script setup>
 const props = defineProps({
-  type: {
-    default: "primary",
-    validator(value) {
-      return ["primary", "secondary", "tertiary"].includes(value);
-    },
-  },
-  variant: {
-    default: "filled",
-    validator(value) {
-      return ["filled", "outlined"].includes(value);
-    },
-  },
+  type: { default: "primary" },
+  variant: { default: "filled" },
+  strech: { default: "full-width" },
 });
 </script>
 
 <template>
   <button
     class="button"
-    :class="[`button--${props.type}`, `button--${props.variant}`]"
+    :class="[
+      `button--${props.type}`,
+      `button--${props.variant}`,
+      `button--${props.strech}`,
+    ]"
   >
     <slot>Button</slot>
   </button>
@@ -34,6 +29,10 @@ const props = defineProps({
   border-radius: var(--border-radius-md);
   transition: all ease 0.15s;
   cursor: pointer;
+
+  &--full-width {
+    width: 100%;
+  }
 
   &--filled {
     background-color: var(--clr-green-400);
