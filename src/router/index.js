@@ -10,5 +10,7 @@ export const router = createRouter({
 router.beforeEach((to) => {
   const { isAuthenticated } = useAuthStore();
 
-  if (!isAuthenticated && to.meta.requiresAuth) return { name: "LoginPage" };
+  if (!isAuthenticated() && to.meta.requiresAuth) {
+    return { name: "LoginPage" };
+  }
 });

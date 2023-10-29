@@ -19,10 +19,11 @@ const registerFormValidationSchema = yup.object({
 const handleRegisterFormSubmit = async (values) => {
   const [data, error] = await register(values);
 
-  if (error) console.log("register error!", error);
-  if (data) {
+  if (error) {
+    console.log("register error!", error);
+  } else {
     console.log("register succes!", data);
-    await router.push("/");
+    await router.push({ name: "OverviewDashboardPage" });
   }
 };
 </script>

@@ -19,10 +19,11 @@ const loginFormValidationSchema = yup.object({
 const handleLoginFormSubmit = async (values) => {
   const [data, error] = await login(values);
 
-  if (error) console.log("login error!", error);
-  if (data) {
+  if (error) {
+    console.log("login error!", error);
+  } else {
     console.log("login succes!", data);
-    await router.push("/");
+    await router.push({ name: "OverviewDashboardPage" });
   }
 };
 </script>
