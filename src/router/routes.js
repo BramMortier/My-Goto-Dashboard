@@ -8,22 +8,64 @@ export const routes = [
     meta: {
       layout: SidebarLayout,
       requiresAuth: true,
-      breadcrumbs: [{ label: "Dashboard", path: "/" }],
+      breadcrumbs: [{ label: "Dashboard", pathName: "OverviewDashboardPage" }],
     },
     component: () => import("@pages/OverviewDashboardPage.vue"),
   },
   {
     path: "/dishes-and-suppliers",
     name: "ManageDishesAndSuppliersPage",
+    redirect: { name: "ManageDishesPage" },
     meta: {
       layout: SidebarLayout,
       requiresAuth: true,
       breadcrumbs: [
-        { label: "Dashboard", path: "/" },
-        { label: "dishes & suppliers", path: "/dishes-and-suppliers" },
+        { label: "Dashboard", pathName: "OverviewDashboardPage" },
+        {
+          label: "Dishes & suppliers",
+          pathName: "ManageDishesAndSuppliersPage",
+        },
       ],
     },
     component: () => import("@pages/ManageDishesAndSuppliersPage.vue"),
+    children: [
+      {
+        path: "manage-dishes",
+        name: "ManageDishesPage",
+        meta: {
+          breadcrumbs: [
+            { label: "Dashboard", pathName: "OverviewDashboardPage" },
+            {
+              label: "Dishes & suppliers",
+              pathName: "ManageDishesAndSuppliersPage",
+            },
+            {
+              label: "Manage dishes",
+              pathName: "ManageDishesPage",
+            },
+          ],
+        },
+        component: () => import("@components/DishesList.vue"),
+      },
+      {
+        path: "manage-suppliers",
+        name: "ManageSuppliersPage",
+        meta: {
+          breadcrumbs: [
+            { label: "Dashboard", pathName: "OverviewDashboardPage" },
+            {
+              label: "Dishes & suppliers",
+              pathName: "ManageDishesAndSuppliersPage",
+            },
+            {
+              label: "Manage suppliers",
+              pathName: "ManageSuppliersPage",
+            },
+          ],
+        },
+        component: () => import("@components/SuppliersList.vue"),
+      },
+    ],
   },
   {
     path: "/login",
@@ -31,8 +73,8 @@ export const routes = [
     meta: {
       layout: EmptyLayout,
       breadcrumbs: [
-        { label: "Dashboard", path: "/" },
-        { label: "login", path: "/login" },
+        { label: "Dashboard", pathName: "OverviewDashboardPage" },
+        { label: "login", pathName: "LoginPage" },
       ],
     },
     component: () => import("@pages/LoginPage.vue"),
@@ -43,8 +85,8 @@ export const routes = [
     meta: {
       layout: EmptyLayout,
       breadcrumbs: [
-        { label: "Dashboard", path: "/" },
-        { label: "register", path: "/register" },
+        { label: "Dashboard", pathName: "OverviewDashboardPage" },
+        { label: "register", pathName: "RegisterPage" },
       ],
     },
     component: () => import("@pages/RegisterPage.vue"),

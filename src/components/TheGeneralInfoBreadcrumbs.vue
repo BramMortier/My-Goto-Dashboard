@@ -11,7 +11,9 @@ const route = useRoute();
       :key="index"
       class="breadcrumbs__link"
     >
-      <RouterLink :to="breadcrumb.path">{{ breadcrumb.label }}</RouterLink>
+      <RouterLink :to="{ name: breadcrumb.pathName }">{{
+        breadcrumb.label
+      }}</RouterLink>
       <img
         src="@assets/icons/chevron-right-light.svg"
         alt="breadcrumb spacer"
@@ -45,6 +47,8 @@ const route = useRoute();
     }
 
     img {
+      height: 0.75rem;
+      width: fit-content;
       filter: invert(81%) sepia(11%) saturate(0%) hue-rotate(154deg)
         brightness(89%) contrast(86%);
     }

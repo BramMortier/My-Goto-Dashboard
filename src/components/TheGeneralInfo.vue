@@ -1,11 +1,17 @@
 <script setup>
+import { useRoute } from "vue-router";
+
 import TheGeneralInfoBreadcrumbs from "@components/TheGeneralInfoBreadcrumbs.vue";
+
+const route = useRoute();
 </script>
 
 <template>
   <section class="general-info">
     <div class="general-info__route-info">
-      <h2>Dishes & duppliers</h2>
+      <h2>
+        {{ route.meta.breadcrumbs[route.meta.breadcrumbs.length - 1].label }}
+      </h2>
       <TheGeneralInfoBreadcrumbs />
     </div>
     <div class="general-info__user-info-container">

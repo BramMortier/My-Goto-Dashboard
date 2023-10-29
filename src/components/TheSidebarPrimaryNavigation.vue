@@ -40,7 +40,10 @@ import { RouterLink } from "vue-router";
     <h5>Master data</h5>
     <ul class="sidebar-navigation__links-list">
       <li class="sidebar-navigation__link-list-item">
-        <RouterLink to="/dishes-and-suppliers" class="sidebar-navigation__link">
+        <RouterLink
+          :to="{ name: 'ManageDishesAndSuppliersPage' }"
+          class="sidebar-navigation__link"
+        >
           <img
             src="@assets/icons/crate.svg"
             alt="navigation link icon (crate)"

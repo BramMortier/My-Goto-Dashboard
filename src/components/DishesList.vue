@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div>ManageSuppliersPage.vue</div>
+  <div class="dishes-list">DishesList</div>
 </template>
 
 <style lang="scss" scoped></style>
