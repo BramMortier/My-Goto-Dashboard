@@ -13,6 +13,48 @@ export const routes = [
     component: () => import("@pages/OverviewDashboardPage.vue"),
   },
   {
+    path: "/machines",
+    name: "OverviewMachinesPage",
+    meta: {
+      layout: SidebarLayout,
+      requiresAuth: true,
+      breadcrumbs: [
+        { label: "Dashboard", pathName: "OverviewDashboardPage" },
+        { label: "Machines", pathName: "OverviewMachinesPage" },
+      ],
+    },
+    component: () => import("@pages/OverviewMachinesPage.vue"),
+  },
+  {
+    path: "/warehouse",
+    name: "OverviewWarehousePage",
+    meta: {
+      layout: SidebarLayout,
+      requiresAuth: true,
+      breadcrumbs: [
+        { label: "Dashboard", pathName: "OverviewDashboardPage" },
+        { label: "Warehouse", pathName: "OverviewWarehousePage" },
+      ],
+    },
+    component: () => import("@pages/OverviewWarehousePage.vue"),
+  },
+  {
+    path: "/outbound-deliveries",
+    name: "OverviewOutboundDeliveriesPage",
+    meta: {
+      layout: SidebarLayout,
+      requiresAuth: true,
+      breadcrumbs: [
+        { label: "Dashboard", pathName: "OverviewDashboardPage" },
+        {
+          label: "Outbound deliveries",
+          pathName: "OverviewOutboundDeliveriesPage",
+        },
+      ],
+    },
+    component: () => import("@pages/OverviewOutboundDeliveriesPage.vue"),
+  },
+  {
     path: "/dishes-and-suppliers",
     name: "ManageDishesAndSuppliersPage",
     redirect: { name: "ManageDishesPage" },
@@ -66,6 +108,54 @@ export const routes = [
         component: () => import("@components/SuppliersList.vue"),
       },
     ],
+  },
+  {
+    path: "/locations",
+    name: "ManageLocationsPage",
+    meta: {
+      layout: SidebarLayout,
+      requiresAuth: true,
+      breadcrumbs: [
+        { label: "Dashboard", pathName: "OverviewDashboardPage" },
+        {
+          label: "Manage locationos",
+          pathName: "ManageLocationsPage",
+        },
+      ],
+    },
+    component: () => import("@pages/ManageLocationsPage.vue"),
+  },
+  {
+    path: "/allergies",
+    name: "ManageAllergiesPage",
+    meta: {
+      layout: SidebarLayout,
+      requiresAuth: true,
+      breadcrumbs: [
+        { label: "Dashboard", pathName: "OverviewDashboardPage" },
+        {
+          label: "Manage allergies",
+          pathName: "ManageAllergiesPage",
+        },
+      ],
+    },
+    component: () => import("@pages/ManageAllergiesPage.vue"),
+  },
+  {
+    path: "/users",
+    name: "ManageUsersPage",
+    meta: {
+      layout: SidebarLayout,
+      requiresAuth: true,
+      breadcrumbs: [
+        { label: "Dashboard", pathName: "OverviewDashboardPage" },
+        {
+          label: "Manage users",
+          pathName: "ManageUsersPage",
+        },
+      ],
+    },
+    component: () => import("@pages/ManageUsersPage.vue"),
   },
   {
     path: "/login",

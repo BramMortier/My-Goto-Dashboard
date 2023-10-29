@@ -1,5 +1,7 @@
 <script setup>
-import { RouterLink } from "vue-router";
+import { RouterLink, useRoute } from "vue-router";
+
+const route = useRoute();
 </script>
 
 <template>
@@ -10,7 +12,10 @@ import { RouterLink } from "vue-router";
       <li
         class="sidebar-navigation__link-list-item sidebar-navigation__link-list-item--active"
       >
-        <RouterLink to="#" class="sidebar-navigation__link">
+        <RouterLink
+          :to="{ name: 'OverviewMachinesPage' }"
+          class="sidebar-navigation__link"
+        >
           <img
             src="@assets/icons/vending-machine-v4.svg"
             alt="navigation link icon (vending machine)"
@@ -19,7 +24,10 @@ import { RouterLink } from "vue-router";
         </RouterLink>
       </li>
       <li class="sidebar-navigation__link-list-item">
-        <RouterLink to="#" class="sidebar-navigation__link">
+        <RouterLink
+          :to="{ name: 'OverviewWarehousePage' }"
+          class="sidebar-navigation__link"
+        >
           <img
             src="@assets/icons/warehouse.svg"
             alt="navigation link icon (warehouse)"
@@ -28,7 +36,10 @@ import { RouterLink } from "vue-router";
         </RouterLink>
       </li>
       <li class="sidebar-navigation__link-list-item">
-        <RouterLink to="#" class="sidebar-navigation__link">
+        <RouterLink
+          :to="{ name: 'OverviewOutboundDeliveriesPage' }"
+          class="sidebar-navigation__link"
+        >
           <img
             src="@assets/icons/truck.svg"
             alt="navigation link icon (truck)"
@@ -52,7 +63,10 @@ import { RouterLink } from "vue-router";
         </RouterLink>
       </li>
       <li class="sidebar-navigation__link-list-item">
-        <RouterLink to="#" class="sidebar-navigation__link">
+        <RouterLink
+          :to="{ name: 'ManageLocationsPage' }"
+          class="sidebar-navigation__link"
+        >
           <img
             src="@assets/icons/pin.svg"
             alt="navigation link icon (map pin)"
@@ -61,7 +75,10 @@ import { RouterLink } from "vue-router";
         </RouterLink>
       </li>
       <li class="sidebar-navigation__link-list-item">
-        <RouterLink to="#" class="sidebar-navigation__link">
+        <RouterLink
+          :to="{ name: 'ManageAllergiesPage' }"
+          class="sidebar-navigation__link"
+        >
           <img
             src="@assets/icons/allergies.svg"
             alt="navigation link icon (allergies)"
@@ -70,7 +87,10 @@ import { RouterLink } from "vue-router";
         </RouterLink>
       </li>
       <li class="sidebar-navigation__link-list-item">
-        <RouterLink to="#" class="sidebar-navigation__link">
+        <RouterLink
+          :to="{ name: 'ManageUsersPage' }"
+          class="sidebar-navigation__link"
+        >
           <img
             src="@assets/icons/users.svg"
             alt="navigation link icon (users)"
