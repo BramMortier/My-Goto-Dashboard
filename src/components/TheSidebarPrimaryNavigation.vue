@@ -1,7 +1,9 @@
 <script setup>
 import { RouterLink, useRoute } from "vue-router";
+import { computed } from "vue";
 
 const route = useRoute();
+const topLevelRouteName = computed(() => route.meta.breadcrumbs[1].pathName);
 </script>
 
 <template>
@@ -10,7 +12,11 @@ const route = useRoute();
     <h5>Overviews</h5>
     <ul class="sidebar-navigation__links-list">
       <li
-        class="sidebar-navigation__link-list-item sidebar-navigation__link-list-item--active"
+        class="sidebar-navigation__link-list-item"
+        :class="{
+          'sidebar-navigation__link-list-item--active':
+            topLevelRouteName === 'OverviewMachinesPage',
+        }"
       >
         <RouterLink
           :to="{ name: 'OverviewMachinesPage' }"
@@ -23,7 +29,13 @@ const route = useRoute();
           <p>Machines</p>
         </RouterLink>
       </li>
-      <li class="sidebar-navigation__link-list-item">
+      <li
+        class="sidebar-navigation__link-list-item"
+        :class="{
+          'sidebar-navigation__link-list-item--active':
+            topLevelRouteName === 'OverviewWarehousePage',
+        }"
+      >
         <RouterLink
           :to="{ name: 'OverviewWarehousePage' }"
           class="sidebar-navigation__link"
@@ -35,7 +47,13 @@ const route = useRoute();
           <p>Warehouse</p>
         </RouterLink>
       </li>
-      <li class="sidebar-navigation__link-list-item">
+      <li
+        class="sidebar-navigation__link-list-item"
+        :class="{
+          'sidebar-navigation__link-list-item--active':
+            topLevelRouteName === 'OverviewOutboundDeliveriesPage',
+        }"
+      >
         <RouterLink
           :to="{ name: 'OverviewOutboundDeliveriesPage' }"
           class="sidebar-navigation__link"
@@ -50,7 +68,13 @@ const route = useRoute();
     </ul>
     <h5>Master data</h5>
     <ul class="sidebar-navigation__links-list">
-      <li class="sidebar-navigation__link-list-item">
+      <li
+        class="sidebar-navigation__link-list-item"
+        :class="{
+          'sidebar-navigation__link-list-item--active':
+            topLevelRouteName === 'ManageDishesAndSuppliersPage',
+        }"
+      >
         <RouterLink
           :to="{ name: 'ManageDishesAndSuppliersPage' }"
           class="sidebar-navigation__link"
@@ -62,7 +86,13 @@ const route = useRoute();
           <p>Dishes & suppliers</p>
         </RouterLink>
       </li>
-      <li class="sidebar-navigation__link-list-item">
+      <li
+        class="sidebar-navigation__link-list-item"
+        :class="{
+          'sidebar-navigation__link-list-item--active':
+            topLevelRouteName === 'ManageLocationsPage',
+        }"
+      >
         <RouterLink
           :to="{ name: 'ManageLocationsPage' }"
           class="sidebar-navigation__link"
@@ -74,7 +104,13 @@ const route = useRoute();
           <p>Locations</p>
         </RouterLink>
       </li>
-      <li class="sidebar-navigation__link-list-item">
+      <li
+        class="sidebar-navigation__link-list-item"
+        :class="{
+          'sidebar-navigation__link-list-item--active':
+            topLevelRouteName === 'ManageAllergiesPage',
+        }"
+      >
         <RouterLink
           :to="{ name: 'ManageAllergiesPage' }"
           class="sidebar-navigation__link"
@@ -86,7 +122,13 @@ const route = useRoute();
           <p>Allergies</p>
         </RouterLink>
       </li>
-      <li class="sidebar-navigation__link-list-item">
+      <li
+        class="sidebar-navigation__link-list-item"
+        :class="{
+          'sidebar-navigation__link-list-item--active':
+            topLevelRouteName === 'ManageUsersPage',
+        }"
+      >
         <RouterLink
           :to="{ name: 'ManageUsersPage' }"
           class="sidebar-navigation__link"
