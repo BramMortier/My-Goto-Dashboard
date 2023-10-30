@@ -3,7 +3,14 @@ import { RouterLink, useRoute } from "vue-router";
 import { computed } from "vue";
 
 const route = useRoute();
-const topLevelRouteName = computed(() => route.meta.breadcrumbs[1].pathName);
+
+const topLevelRouteName = computed(() => {
+  if (route.meta.breadcrumbs[1]) {
+    return route.meta.breadcrumbs[1].pathName;
+  } else {
+    return "DashboardOverviewPage";
+  }
+});
 </script>
 
 <template>

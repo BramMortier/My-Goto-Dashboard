@@ -9,6 +9,8 @@ import BaseButton from "@components/BaseButton.vue";
 const { register } = useAuthStore();
 
 const registerFormValidationSchema = yup.object({
+  firstname: yup.string().required("Firstname is required"),
+  lastname: yup.string().required("Lastname is required"),
   email: yup
     .string()
     .required("Email is required")
@@ -37,6 +39,28 @@ const handleRegisterFormSubmit = async (values) => {
   >
     <h2>Register</h2>
     <div class="register-form__fields">
+      <div class="register-form__group">
+        <label>Firstname</label>
+        <Field
+          name="firstname"
+          type="text"
+          placeholder="type your firstname"
+          class="register-form__field"
+          :class="{ 'register-form__field-error-feedback': errors.firstname }"
+        ></Field>
+        <p class="register-form__error-feedback">{{ errors.firstname }}</p>
+      </div>
+      <div class="register-form__group">
+        <label>Lastname</label>
+        <Field
+          name="lastname"
+          type="text"
+          placeholder="type your lastname"
+          class="register-form__field"
+          :class="{ 'register-form__field-error-feedback': errors.lastname }"
+        ></Field>
+        <p class="register-form__error-feedback">{{ errors.lastname }}</p>
+      </div>
       <div class="register-form__group">
         <label>E-mail</label>
         <Field
