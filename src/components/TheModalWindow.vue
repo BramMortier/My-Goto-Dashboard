@@ -1,11 +1,21 @@
-<script setup></script>
+<script setup>
+import { useModalStore } from "@stores/ModalStore";
+import { storeToRefs } from "pinia";
+
+const { closeModal } = useModalStore();
+const { modalState } = storeToRefs(useModalStore());
+</script>
 
 <template>
-  <Teleport to="body">
+  <Teleport to=".modals">
     <Transition name="modal-window-transition">
-      <div class="modal-window__wrapper">
+      <div
+        class="modal-window__wrapper"
+        @click.self="closeModal"
+        v-if="modalState?.component"
+      >
         <div class="modal-window">
-          <component :is="" />
+          <component :is="modalState?.component" v-bind="modalState?.props" />
         </div>
       </div>
     </Transition>
@@ -13,17 +23,23 @@
 </template>
 
 <style lang="scss" scoped>
-.modal__wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 999;
-  background-color: var(--clr-overlay-300);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.modal-window {
+  background-color: var(--clr-white);
+  padding: var(--space-md);
+  border-bottom: 2px solid var(--clr-green-400);
+
+  &__wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    background-color: var(--clr-overlay-300);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .modal-window-transition-enter-from,
