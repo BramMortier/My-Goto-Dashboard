@@ -1,4 +1,7 @@
 :root {
+  --hover-transition: all ease 0.15s;
+
+  --border-radius-sm: 3px;
   --border-radius-md: 5px;
 
   --input-width-md: 18.75rem;
@@ -6,5 +9,6 @@
   --logo-width-md: 8.75rem;
 
   --container-width-md: 62.5rem;
-  --container-width-lg: 87.5rem;
+  --container-width-lg: 75rem;
+  --container-width-xl: 87.5rem;
 }

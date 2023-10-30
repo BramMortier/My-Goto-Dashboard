@@ -35,6 +35,11 @@ const route = useRoute();
   &__tab {
     position: relative;
     border-bottom: 2px solid var(--clr-gray-500);
+    transition: var(--hover-transition);
+
+    &:not(&--active):hover {
+      border-color: var(--clr-gray-700);
+    }
 
     &--active {
       border-color: var(--clr-green-400);

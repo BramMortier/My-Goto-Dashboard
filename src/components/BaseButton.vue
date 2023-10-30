@@ -27,7 +27,7 @@ const props = defineProps({
   line-height: var(--lh-xs);
   font-weight: var(--fw-regular);
   border-radius: var(--border-radius-md);
-  transition: all ease 0.15s;
+  transition: var(--hover-transition);
   cursor: pointer;
 
   &--full-width {
