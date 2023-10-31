@@ -1,12 +1,10 @@
 <script setup>
 import { Form, Field } from "vee-validate";
-import { useAuthStore } from "@stores/AuthStore";
 import { router } from "@router/index";
+import { login } from "@services/authService";
 import * as yup from "yup";
 
 import BaseButton from "@components/BaseButton.vue";
-
-const { login } = useAuthStore();
 
 const loginFormValidationSchema = yup.object({
   email: yup
@@ -17,10 +15,10 @@ const loginFormValidationSchema = yup.object({
 });
 
 const handleLoginFormSubmit = async (values) => {
-  const [data, error] = await login(values);
+  const { data: loginData, loginError } = await login(values);
 
-  if (error) {
-    console.log("login error!", error);
+  if (loginError) {
+    console.log("login error!", loginError);
   } else {
     console.log("login succes!", data);
     await router.push({ name: "OverviewDashboardPage" });

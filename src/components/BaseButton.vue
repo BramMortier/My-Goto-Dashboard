@@ -1,8 +1,8 @@
 <script setup>
 const props = defineProps({
-  type: { default: "primary" },
-  variant: { default: "filled" },
-  stretch: { default: "full-width" },
+  type: { type: String, default: "primary" },
+  variant: { type: String, default: "filled" },
+  stretch: { type: String, default: "full-width" },
 });
 </script>
 

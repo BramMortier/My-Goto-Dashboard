@@ -1,9 +1,11 @@
 <script setup>
 import { Form, Field } from "vee-validate";
 import { register } from "@services/authService.js";
+import { userRoles } from "@constants/index";
 import * as yup from "yup";
 
 import BaseButton from "@components/BaseButton.vue";
+import BaseCheckbox from "@components/BaseCheckbox.vue";
 
 const registerFormValidationSchema = yup.object({
   firstname: yup.string().required("Firstname is required"),
@@ -13,11 +15,14 @@ const registerFormValidationSchema = yup.object({
     .required("Email is required")
     .email("Invalid email format"),
   password: yup.string().required("Password is required"),
+  role: yup
+    .array()
+    .of(yup.string().required())
+    .required("You must select at least one role"),
 });
 
 const handleRegisterFormSubmit = async (values) => {
   const { data: registerData, error: registerError } = await register(values);
-
   if (registerError) {
     console.log("register error!", registerError);
   } else {
@@ -79,9 +84,18 @@ const handleRegisterFormSubmit = async (values) => {
         ></Field>
         <p class="register-form__error-feedback">{{ errors.password }}</p>
       </div>
+      <div class="register-form__group">
+        <BaseCheckbox
+          v-for="role in userRoles"
+          :label="role.name"
+          name="role"
+          :value="role.id"
+        />
+        <p class="register-form__error-feedback">{{ errors.role }}</p>
+      </div>
     </div>
     <div class="register-form__group">
-      <BaseButton>Register</BaseButton>
+      <BaseButton>Add user</BaseButton>
     </div>
   </Form>
 </template>

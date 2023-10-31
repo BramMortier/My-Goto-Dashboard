@@ -3,7 +3,7 @@ import { RouterLink, useRoute } from "vue-router";
 import { getFullRouteInfo } from "@helpers";
 
 const props = defineProps({
-  tabsInfo: { default: [] },
+  tabsInfo: { type: Object, default: [] },
 });
 
 const route = useRoute();
