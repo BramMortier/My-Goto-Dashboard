@@ -2,7 +2,7 @@
 const props = defineProps({
   type: { default: "primary" },
   variant: { default: "filled" },
-  strech: { default: "full-width" },
+  stretch: { default: "full-width" },
 });
 </script>
 
@@ -12,7 +12,7 @@ const props = defineProps({
     :class="[
       `button--${props.type}`,
       `button--${props.variant}`,
-      `button--${props.strech}`,
+      `button--${props.stretch}`,
     ]"
   >
     <slot>Button</slot>
@@ -32,6 +32,10 @@ const props = defineProps({
 
   &--full-width {
     width: 100%;
+  }
+
+  &--fit-content {
+    width: fit-content;
   }
 
   &--filled {

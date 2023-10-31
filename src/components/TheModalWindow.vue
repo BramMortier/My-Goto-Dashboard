@@ -25,7 +25,7 @@ const { modalState } = storeToRefs(useModalStore());
 <style lang="scss" scoped>
 .modal-window {
   background-color: var(--clr-white);
-  padding: var(--space-md);
+  padding: var(--space-xl);
   border-bottom: 2px solid var(--clr-green-400);
 
   &__wrapper {

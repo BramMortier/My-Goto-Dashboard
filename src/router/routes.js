@@ -169,16 +169,4 @@ export const routes = [
     },
     component: () => import("@pages/LoginPage.vue"),
   },
-  {
-    path: "/register",
-    name: "RegisterPage",
-    meta: {
-      layout: EmptyLayout,
-      breadcrumbs: [
-        { label: "Dashboard", pathName: "OverviewDashboardPage" },
-        { label: "register", pathName: "RegisterPage" },
-      ],
-    },
-    component: () => import("@pages/RegisterPage.vue"),
-  },
 ];
