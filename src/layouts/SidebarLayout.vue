@@ -26,6 +26,20 @@ import TheGeneralInfo from "@components/TheGeneralInfo.vue";
     display: flex;
     flex-direction: column;
     gap: var(--space-xl);
+    max-height: 100vh;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--clr-gray-500);
+    }
 
     background-image: url("@assets/images/background-pattern-grayscale.png");
     background-position: bottom right;

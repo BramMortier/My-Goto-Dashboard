@@ -1,15 +1,12 @@
 <script setup>
-import { useAuthStore } from "@stores/AuthStore";
-
 import BaseButton from "@components/BaseButton.vue";
+import { logout } from "@services/authService";
 import { router } from "@router";
 
-const { logout } = useAuthStore();
-
 const handleLogout = async () => {
-  const [error] = await logout();
-  if (error) {
-    console.log("logout error!", error);
+  const { data: logoutData, error: logoutError } = await logout();
+  if (logoutError) {
+    console.log("logout error!", logoutError);
   } else {
     console.log("logout succes!");
     await router.push({ name: "LoginPage" });

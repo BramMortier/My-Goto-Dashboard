@@ -4,7 +4,9 @@ import { useModalStore } from "@stores/ModalStore";
 import { ref, onMounted } from "vue";
 
 import BaseButton from "@components/BaseButton.vue";
+import BaseSearchbar from "@components/BaseSearchbar.vue";
 import UsersModalCreate from "@components/UsersModalCreate.vue";
+import UsersTableRow from "@components/UsersTableRow.vue";
 
 const { openModal } = useModalStore();
 
@@ -20,11 +22,14 @@ onMounted(async () => {
   <div class="users-table__container">
     <h3>Users</h3>
 
-    <BaseButton
-      @click="openModal({ component: UsersModalCreate })"
-      stretch="fit-content"
-      >Add a new user</BaseButton
-    >
+    <div class="users-table__filters">
+      <BaseSearchbar />
+      <BaseButton
+        @click="openModal({ component: UsersModalCreate })"
+        stretch="fit-content"
+        >Add a new user</BaseButton
+      >
+    </div>
 
     <div class="users-table">
       <div class="users-table__head">
@@ -33,17 +38,7 @@ onMounted(async () => {
         <div class="users-table__head-cell">Role</div>
       </div>
       <div class="users-table__body">
-        <div v-for="user in users" :key="user.id" class="users-table__body-row">
-          <div class="users-table__body-cell">
-            {{ user.firstname }} {{ user.lastname }}
-          </div>
-          <div class="users-table__body-cell">{{ user.email }}</div>
-          <div class="users-table__body-cell">
-            <div v-for="role in user.roles" class="users-table__role-tag">
-              {{ role.name }}
-            </div>
-          </div>
-        </div>
+        <UsersTableRow v-for="user in users" :key="user.id" :user="user" />
       </div>
     </div>
   </div>
@@ -63,8 +58,14 @@ onMounted(async () => {
     & > h3 {
       color: var(--clr-black);
       font-size: var(--fs-lg);
-      margin-bottom: var(--space-lg);
+      margin-bottom: var(--space-sm);
     }
+  }
+
+  &__filters {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-md);
   }
 
   &__head {
@@ -86,38 +87,6 @@ onMounted(async () => {
     &:not(:last-child) {
       border-right: 1px solid var(--clr-gray-500);
     }
-  }
-
-  &__body-row {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--clr-gray-500);
-    transition: var(--hover-transition);
-
-    &:hover {
-      background-color: var(--clr-gray-100);
-      cursor: pointer;
-    }
-  }
-
-  &__body-cell {
-    width: 100%;
-    padding: var(--space-md) var(--space-md);
-    line-height: var(--lh-xs);
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
-    overflow: hidden;
-  }
-
-  &__role-tag {
-    background-color: var(--clr-yellow-400);
-    color: var(--clr-yellow-800);
-    border-radius: var(--border-radius-md);
-    width: fit-content;
-    padding: var(--space-xs) var(--space-sm);
-    line-height: var(--lh-xs);
-    font-size: var(--fs-sm);
   }
 }
 </style>
