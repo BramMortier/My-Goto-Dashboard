@@ -15,7 +15,7 @@ const registerFormValidationSchema = yup.object({
     .required("Email is required")
     .email("Invalid email format"),
   password: yup.string().required("Password is required"),
-  role: yup
+  roles: yup
     .array()
     .of(yup.string().required())
     .required("You must select at least one role"),
@@ -28,6 +28,7 @@ const handleRegisterFormSubmit = async (values) => {
   } else {
     console.log("register succes!", registerData);
   }
+  console.log(values);
 };
 </script>
 
@@ -88,10 +89,10 @@ const handleRegisterFormSubmit = async (values) => {
         <BaseCheckbox
           v-for="role in userRoles"
           :label="role.name"
-          name="role"
+          name="roles"
           :value="role.id"
         />
-        <p class="register-form__error-feedback">{{ errors.role }}</p>
+        <p class="register-form__error-feedback">{{ errors.roles }}</p>
       </div>
     </div>
     <div class="register-form__group">

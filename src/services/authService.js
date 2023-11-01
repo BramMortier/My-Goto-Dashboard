@@ -1,7 +1,13 @@
 import { supabase } from "@plugins/supabase";
-import { createUser } from "@services/userService";
+import { createUser, assignUserRole } from "@services/userService";
 
-export const register = async ({ firstname, lastname, email, password }) => {
+export const register = async ({
+  firstname,
+  lastname,
+  email,
+  password,
+  roles,
+}) => {
   const { data: registerData, error: registerError } =
     await supabase.auth.signUp({
       email: email,
@@ -21,6 +27,17 @@ export const register = async ({ firstname, lastname, email, password }) => {
     });
 
     if (createUserError) return { data: null, error: createUserError };
+
+    roles.forEach(async (roleId) => {
+      const { data: assignUserRoleData, error: assignUserRoleError } =
+        await assignUserRole({
+          userId: userId,
+          roleId: roleId,
+        });
+
+      if (assignUserRoleError)
+        return { data: null, error: assignUserRoleError };
+    });
 
     return { data: createUserData, error: null };
   } else {

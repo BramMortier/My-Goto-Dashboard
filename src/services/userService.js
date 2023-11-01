@@ -1,9 +1,11 @@
 import { supabase } from "@plugins/supabase";
 
 export const getAllUsers = async () => {
-  const { data: getAllUsersData, error: getAllUsersError } = await supabase
-    .from("user_profiles")
-    .select("*");
+  const { data: getAllUsersData, error: getAllUsersError } =
+    await supabase.from("user_profiles").select(`
+    *, 
+    roles ( name )
+  `);
 
   if (getAllUsersError) return { data: null, error: getAllUsersError };
 

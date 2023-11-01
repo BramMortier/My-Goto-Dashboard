@@ -13,6 +13,8 @@ const users = ref(null);
 onMounted(async () => {
   const { data, error } = await getAllUsers();
   users.value = data;
+
+  console.log(data);
 });
 </script>
 
@@ -39,7 +41,9 @@ onMounted(async () => {
           </div>
           <div class="users-table__body-cell">{{ user.email }}</div>
           <div class="users-table__body-cell">
-            <div class="users-table__role-tag">ADMIN</div>
+            <div v-for="role in user.roles" class="users-table__role-tag">
+              {{ role.name }}
+            </div>
           </div>
         </div>
       </div>
@@ -103,6 +107,8 @@ onMounted(async () => {
     line-height: var(--lh-xs);
     display: flex;
     align-items: center;
+    gap: var(--space-xs);
+    overflow: hidden;
   }
 
   &__role-tag {

@@ -20,7 +20,7 @@ const handleLoginFormSubmit = async (values) => {
   if (loginError) {
     console.log("login error!", loginError);
   } else {
-    console.log("login succes!", data);
+    console.log("login succes!", loginData);
     await router.push({ name: "OverviewDashboardPage" });
   }
 };
