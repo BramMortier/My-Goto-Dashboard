@@ -15,3 +15,12 @@ export const generateTabsFromRoute = (route) => {
     return { label, pathName };
   });
 };
+
+export const getCurrentDateFormatted = () => {
+  return new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+};

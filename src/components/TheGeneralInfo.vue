@@ -1,9 +1,19 @@
 <script setup>
 import { useRoute } from "vue-router";
+import { getCurrentDateFormatted } from "@helpers/index";
+import { getAuthenticatedUser } from "@services/userService";
+import { onMounted, ref } from "vue";
 
 import TheGeneralInfoBreadcrumbs from "@components/TheGeneralInfoBreadcrumbs.vue";
 
 const route = useRoute();
+
+const userName = ref("");
+
+onMounted(async () => {
+  const { data, error } = await getAuthenticatedUser();
+  userName.value = `${data.firstname} ${data.lastname}`;
+});
 </script>
 
 <template>
@@ -16,8 +26,8 @@ const route = useRoute();
     </div>
     <div class="general-info__user-info-container">
       <div class="general-info__user-info">
-        <p>Hi, Niels Bjorndahl</p>
-        <span>Monday, 11 okt 2023</span>
+        <p>Hi, {{ userName }}</p>
+        <span>{{ getCurrentDateFormatted() }}</span>
       </div>
       <div class="general-info__user-profile-picture">
         <img src="@assets/icons/person.svg" alt="profile icon" />
@@ -44,16 +54,19 @@ const route = useRoute();
   &__user-info-container {
     display: flex;
     gap: var(--space-lg);
+    align-items: center;
+    height: fit-content;
   }
 
   &__user-info {
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
+    gap: var(--space-md);
     text-align: right;
 
     & > p {
       text-decoration: underline;
+      line-height: var(--lh-xs);
       color: var(--clr-black);
     }
 

@@ -1,11 +1,11 @@
 import { supabase } from "@plugins/supabase";
+import { useAuthStore } from "@stores/authStore";
+import { storeToRefs } from "pinia";
 
 export const getAllUsers = async () => {
-  const { data: getAllUsersData, error: getAllUsersError } =
-    await supabase.from("user_profiles").select(`
-    *, 
-    roles ( name )
-  `);
+  const { data: getAllUsersData, error: getAllUsersError } = await supabase
+    .from("user_profiles")
+    .select("*, roles ( name ) ");
 
   if (getAllUsersError) return { data: null, error: getAllUsersError };
 
@@ -15,12 +15,25 @@ export const getAllUsers = async () => {
 export const getUserById = async (userId) => {
   const { data: getUserByIdData, error: getUserByIdError } = await supabase
     .from("user_profiles")
-    .select("*")
-    .eq("id", userId);
+    .select(" *, roles ( name ) ")
+    .eq("id", userId)
+    .single();
 
   if (getUserByIdError) return { data: null, error: getUserByIdError };
 
   return { data: getUserByIdData, error: null };
+};
+
+export const getAuthenticatedUser = async () => {
+  const { user } = storeToRefs(useAuthStore());
+
+  const { data: getAuthenticatedUserData, error: getAuthenticatedUserError } =
+    await getUserById(user.value.id);
+
+  if (getAuthenticatedUserError)
+    return { data: null, error: getAuthenticatedUserError };
+
+  return { data: getAuthenticatedUserData, error: null };
 };
 
 export const createUser = async ({ userId, firstname, lastname, email }) => {

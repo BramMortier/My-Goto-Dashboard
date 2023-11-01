@@ -7,7 +7,7 @@ const { modalState } = storeToRefs(useModalStore());
 </script>
 
 <template>
-  <Teleport to=".modals">
+  <Teleport to="#modals">
     <Transition name="modal-window-transition">
       <div
         class="modal-window__wrapper"
@@ -25,7 +25,7 @@ const { modalState } = storeToRefs(useModalStore());
 <style lang="scss" scoped>
 .modal-window {
   background-color: var(--clr-white);
-  padding: var(--space-xl);
+  padding: var(--space-md);
   border-bottom: 2px solid var(--clr-green-400);
 
   &__wrapper {
@@ -34,7 +34,7 @@ const { modalState } = storeToRefs(useModalStore());
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 999;
+    z-index: 99;
     background-color: var(--clr-overlay-300);
     display: flex;
     align-items: center;

@@ -5,6 +5,7 @@ import { useAuthStore } from "@stores/AuthStore";
 import { storeToRefs } from "pinia";
 
 import TheModalWindow from "@components/TheModalWindow.vue";
+import TheNotifications from "@components/TheNotifications.vue";
 
 const { user } = storeToRefs(useAuthStore());
 
@@ -17,6 +18,7 @@ import "@styles/index.scss";
 
 <template>
   <TheModalWindow />
+  <TheNotifications />
   <component :is="$route.meta.layout || 'div'">
     <RouterView />
   </component>

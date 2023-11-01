@@ -1,11 +1,16 @@
 <script setup>
 import { Form, Field } from "vee-validate";
 import { register } from "@services/authService.js";
+import { useRouter } from "vue-router";
+import { useNotificationStore } from "@stores/NotificationStore";
 import { userRoles } from "@constants/index";
 import * as yup from "yup";
 
 import BaseButton from "@components/BaseButton.vue";
 import BaseCheckbox from "@components/BaseCheckbox.vue";
+
+const router = useRouter();
+const { addNotification } = useNotificationStore();
 
 const registerFormValidationSchema = yup.object({
   firstname: yup.string().required("Firstname is required"),
@@ -28,7 +33,15 @@ const handleRegisterFormSubmit = async (values) => {
   } else {
     console.log("register succes!", registerData);
   }
-  console.log(values);
+
+  addNotification({
+    title: "Succes!",
+    message: "Added new user succesfully",
+    type: "succes",
+    removeDelay: 2000,
+  });
+
+  setTimeout(() => router.go(), 1000);
 };
 </script>
 
