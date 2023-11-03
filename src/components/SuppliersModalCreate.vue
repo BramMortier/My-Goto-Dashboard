@@ -1,6 +1,7 @@
 <script setup>
 import { Form } from "vee-validate";
 import { uploadSupplierLogoToMain } from "@services/storageService";
+import { createSupplier } from "@services/supplierService";
 import * as yup from "yup";
 
 import BaseFormFileUploader from "@components/BaseFormFileUploader.vue";
@@ -19,9 +20,18 @@ const suppliersFormValidationSchema = yup.object({
 });
 
 const handleSuppliersFormSubmit = async (values) => {
-  const { data, error } = await uploadSupplierLogoToMain(values.logoFile);
-  console.log(data, error);
-  console.log(values);
+  const {
+    data: uploadSupplierLogoToMainData,
+    error: uploadSupplierLogoToMainError,
+  } = await uploadSupplierLogoToMain(values.logoFile);
+
+  const { data: createSupplierData, error: createSupplierError } =
+    await createSupplier({
+      logoPath: uploadSupplierLogoToMainData.path,
+      supplierName: values.supplierName,
+      email: values.email,
+      phoneNumber: values.phoneNumber,
+    });
 };
 </script>
 

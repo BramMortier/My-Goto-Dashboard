@@ -19,11 +19,13 @@ export const getSupplierById = async (supplierId) => {
 };
 
 export const createSupplier = async ({
+  logoPath,
   supplierName,
   email,
   phoneNumber,
-  logoURL,
 }) => {
+  console.log(logoURL, supplierName, email, phoneNumber);
+
   const { data: createSupplierData, error: createSupplierError } =
     await supabase
       .from("suppliers")
@@ -31,7 +33,7 @@ export const createSupplier = async ({
         name: supplierName,
         email: email,
         phone_number: phoneNumber,
-        logo_url: logoURL,
+        logo_path: logoPath,
       })
       .select();
 

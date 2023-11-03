@@ -1,11 +1,23 @@
 <script setup>
+import { ref, onMounted } from "vue";
 import { useModalStore } from "@stores/ModalStore";
+import { getAllSuppliers } from "@services/supplierService";
+import { getPublicUrl, publicStorageBucketUrl } from "@services/storageService";
 
 import SuppliersListCardCreate from "@components/SuppliersListCardCreate.vue";
 import SuppliersModalCreate from "@components/SuppliersModalCreate.vue";
 import BaseButton from "@components/BaseButton.vue";
 
 const { openModal } = useModalStore();
+
+const suppliers = ref(null);
+
+onMounted(async () => {
+  const { data: getAllSuppliersData, error: getAllSuppliersError } =
+    await getAllSuppliers();
+
+  suppliers.value = getAllSuppliersData;
+});
 </script>
 
 <template>
@@ -18,46 +30,28 @@ const { openModal } = useModalStore();
     >
     <ul class="suppliers-list">
       <SuppliersListCardCreate />
-      <li class="suppliers-list-card">
+      <li
+        v-for="supplier in suppliers"
+        :key="supplier.id"
+        class="suppliers-list-card"
+      >
         <div class="suppliers-list-card__supplier-logo">
           <img
-            src="@assets/images/suppliers/farmers-fridge-logo.png"
+            :src="publicStorageBucketUrl + supplier.logo_path"
             alt="supplier logo"
           />
         </div>
         <div class="suppliers-list-card__info">
-          <h4>Farmer's Fridge</h4>
+          <h4>{{ supplier.name }}</h4>
 
           <div class="suppliers-list-card__contact-info">
             <div class="suppliers-list-card__contact-info-entry">
               <p>Phone number:</p>
-              <span>+45 83 45 67 89</span>
+              <span>{{ supplier.phone_number }}</span>
             </div>
             <div class="suppliers-list-card__contact-info-entry">
               <p>E-mail address:</p>
-              <span>orders@farmersfridge.com</span>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="suppliers-list-card">
-        <div class="suppliers-list-card__supplier-logo">
-          <img
-            src="@assets/images/suppliers/freshly-logo.png"
-            alt="supplier logo"
-          />
-        </div>
-        <div class="suppliers-list-card__info">
-          <h4>Freshly</h4>
-
-          <div class="suppliers-list-card__contact-info">
-            <div class="suppliers-list-card__contact-info-entry">
-              <p>Phone number:</p>
-              <span>+45 50 12 34 56</span>
-            </div>
-            <div class="suppliers-list-card__contact-info-entry">
-              <p>E-mail address:</p>
-              <span>orders@freshly.com</span>
+              <span>{{ supplier.email }}</span>
             </div>
           </div>
         </div>

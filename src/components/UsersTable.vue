@@ -13,8 +13,9 @@ const { openModal } = useModalStore();
 const users = ref(null);
 
 onMounted(async () => {
-  const { data, error } = await getAllUsers();
-  users.value = data;
+  const { data: getAllUsersData, error: getAllUsersError } =
+    await getAllUsers();
+  users.value = getAllUsersData;
 });
 </script>
 
