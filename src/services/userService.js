@@ -1,5 +1,5 @@
 import { supabase } from "@plugins/supabase";
-import { useAuthStore } from "@stores/authStore";
+import { useAuthStore } from "@stores/AuthStore";
 import { storeToRefs } from "pinia";
 
 export const getAllUsers = async () => {
