@@ -23,19 +23,35 @@ export const getDishById = async (dishId) => {
 };
 
 export const createDish = async ({
-  name,
+  dishName,
   description,
   calories,
   protien,
   fat,
   carbohydrates,
   points,
-  food_category_id,
-  supplier_id,
+  purchasePrice,
+  sellPrice,
+  foodCategoryId,
+  supplierId,
+  thumbnailPath,
 }) => {
   const { data: createDishData, error: createDishError } = await supabase
     .from("dishes")
-    .insert({})
+    .insert({
+      name: dishName,
+      description: description,
+      calories: calories,
+      protien: protien,
+      fat: fat,
+      carbohydrates: carbohydrates,
+      points: points,
+      purchase_price: purchasePrice,
+      sell_price: sellPrice,
+      food_category_id: foodCategoryId,
+      supplier_id: supplierId,
+      thumbnail_path: thumbnailPath,
+    })
     .select();
 
   if (createDishError) return { data: createDishData, error: createDishError };

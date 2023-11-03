@@ -16,3 +16,18 @@ export const userRoles = [
     id: "cca4aa8d-434a-471e-b4e4-ace5eb44419a",
   },
 ];
+
+export const foodCategories = [
+  {
+    name: "All",
+    id: "252ab4d6-6113-4f97-bca9-c0e3be02e252",
+  },
+  {
+    name: "Vegetarian",
+    id: "e966e768-5c73-4501-b059-cd1cde565893",
+  },
+  {
+    name: "Vegan",
+    id: "851d952d-23d6-4e16-8267-54d19f3a2bef",
+  },
+];

@@ -95,8 +95,9 @@ const handleRegisterFormSubmit = async (values) => {
       <BaseFormRow>
         <BaseFormCheckbox
           v-for="role in userRoles"
-          :label="role.name"
+          :key="role.id"
           name="roles"
+          :label="role.name"
           :value="role.id"
         />
         <p class="register-form__error-feedback">{{ errors.roles }}</p>

@@ -1,12 +1,26 @@
 <script setup>
+import { ref, onMounted } from "vue";
+import { getAllDishes } from "@services/dishService";
 import { useModalStore } from "@stores/ModalStore";
 
+import DishesListCardCreate from "@components/DishesListCardCreate.vue";
 import DishesListCard from "@components/DishesListCard.vue";
 import DishesModalCreate from "@components/DishesModalCreate.vue";
 import BaseSearchBar from "@components/BaseSearchBar.vue";
 import BaseButton from "@components/BaseButton.vue";
 
 const { openModal } = useModalStore();
+
+const dishes = ref(null);
+
+onMounted(async () => {
+  const { data: getAllDishesData, error: getAllDishesError } =
+    await getAllDishes();
+
+  dishes.value = getAllDishesData;
+
+  console.log(dishes.value);
+});
 </script>
 
 <template>
@@ -21,11 +35,8 @@ const { openModal } = useModalStore();
     </div>
 
     <ul class="dishes-list">
-      <DishesListCard />
-      <DishesListCard />
-      <DishesListCard />
-      <DishesListCard />
-      <DishesListCard />
+      <DishesListCardCreate />
+      <DishesListCard v-for="dish in dishes" :key="dish.id" :dish="dish" />
     </ul>
   </div>
 </template>
@@ -34,7 +45,8 @@ const { openModal } = useModalStore();
 .dishes-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-lg);
+  column-gap: var(--space-lg);
+  row-gap: var(--space-xl);
 
   &__filters {
     display: grid;

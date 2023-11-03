@@ -1,4 +1,6 @@
 <script setup>
+import { publicStorageBucketUrl } from "@services/storageService";
+
 const props = defineProps({
   dish: Object,
 });
@@ -7,32 +9,34 @@ const props = defineProps({
 <template>
   <li class="dish-card">
     <div class="dish-card__thumbnail">
-      <img src="@assets/icons/plus.svg" alt="action icon" />
-      <div class="dish-card__price">39kr.</div>
+      <img
+        :src="publicStorageBucketUrl + props.dish.thumbnail_path"
+        alt="action icon"
+      />
+      <div class="dish-card__price">{{ props.dish.sell_price }}kr.</div>
     </div>
-    <h4>Fresh herb pasta salad</h4>
+    <h4>{{ props.dish.name }}</h4>
     <span>Farmer's Fridge</span>
     <p>
-      A garden-fresh medley of pasta, herbs, and crisp vegetables, drizzled with
-      a tangy...
+      {{ props.dish.description }}
     </p>
-    <h5>Nutrition</h5>
     <ul class="dish-card__nutrition">
+      <h5>Nutrition</h5>
       <li class="dish-card__nutrition-entry">
         <p>Calories:</p>
-        <span>280kcal</span>
+        <span>{{ props.dish.calories }}kcal</span>
       </li>
       <li class="dish-card__nutrition-entry">
         <p>Fat:</p>
-        <span>9g</span>
+        <span>{{ props.dish.fat }}g</span>
       </li>
       <li class="dish-card__nutrition-entry">
         <p>Protien:</p>
-        <span>7g</span>
+        <span>{{ props.dish.protien }}g</span>
       </li>
       <li class="dish-card__nutrition-entry">
         <p>Carbohydrates:</p>
-        <span>32g</span>
+        <span>{{ props.dish.carbohydrates }}g</span>
       </li>
     </ul>
   </li>
@@ -42,6 +46,8 @@ const props = defineProps({
 .dish-card {
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid var(--clr-gray-500);
+  padding-bottom: var(--space-md);
 
   &__thumbnail {
     position: relative;
@@ -52,10 +58,10 @@ const props = defineProps({
     background-color: var(--clr-gray-100);
     border-radius: var(--border-radius-md);
     height: 11.25rem;
+    overflow: hidden;
 
     & > img {
-      height: 3rem;
-      width: 3rem;
+      object-fit: cover;
     }
   }
 
@@ -75,6 +81,7 @@ const props = defineProps({
     line-height: var(--lh-xs);
     color: var(--clr-black);
     margin-bottom: var(--space-sm);
+    font-weight: var(--fw-semibold);
   }
 
   & > span {
@@ -89,17 +96,19 @@ const props = defineProps({
     margin-bottom: var(--space-md);
   }
 
-  & > h5 {
-    color: var(--clr-black);
-    text-decoration: underline;
-    font-size: var(--fs-md);
-    margin-bottom: var(--space-md);
-  }
-
   &__nutrition {
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+    justify-content: flex-end;
+    flex: 1;
+
+    & > h5 {
+      color: var(--clr-black);
+      text-decoration: underline;
+      font-size: var(--fs-md);
+      margin-bottom: var(--space-2xs);
+    }
   }
 
   &__nutrition-entry {
