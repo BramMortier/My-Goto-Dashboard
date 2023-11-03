@@ -1,15 +1,20 @@
 <script setup>
-import { Form, Field } from "vee-validate";
+import { Form } from "vee-validate";
 import { register } from "@services/authService.js";
 import { useRouter } from "vue-router";
 import { useNotificationStore } from "@stores/NotificationStore";
+import { useModalStore } from "@stores/ModalStore";
 import { userRoles } from "@constants/index";
 import * as yup from "yup";
 
 import BaseButton from "@components/BaseButton.vue";
-import BaseCheckbox from "@components/BaseCheckbox.vue";
+import BaseFormCheckbox from "@components/BaseFormCheckbox.vue";
+import BaseFormInput from "@components/BaseFormInput.vue";
+import BaseFormRow from "@components/BaseFormRow.vue";
+import BaseFormFieldset from "@components/BaseFormFieldset.vue";
 
 const router = useRouter();
+const { closeModal } = useModalStore();
 const { addNotification } = useNotificationStore();
 
 const registerFormValidationSchema = yup.object({
@@ -27,6 +32,8 @@ const registerFormValidationSchema = yup.object({
 });
 
 const handleRegisterFormSubmit = async (values) => {
+  closeModal();
+
   const { data: registerData, error: registerError } = await register(values);
   if (registerError) {
     console.log("register error!", registerError);
@@ -52,65 +59,50 @@ const handleRegisterFormSubmit = async (values) => {
     :validation-schema="registerFormValidationSchema"
     v-slot="{ errors }"
   >
-    <h2>Add a new user</h2>
-    <div class="register-form__fields">
-      <div class="register-form__group">
-        <label>Firstname</label>
-        <Field
+    <h3>Add a new user</h3>
+
+    <BaseFormFieldset label="General info">
+      <BaseFormRow>
+        <BaseFormInput
           name="firstname"
-          type="text"
+          label="Firstname"
           placeholder="type your firstname"
-          class="register-form__field"
-          :class="{ 'register-form__field-error-feedback': errors.firstname }"
-        ></Field>
-        <p class="register-form__error-feedback">{{ errors.firstname }}</p>
-      </div>
-      <div class="register-form__group">
-        <label>Lastname</label>
-        <Field
+        />
+        <BaseFormInput
           name="lastname"
-          type="text"
+          label="Lastname"
           placeholder="type your lastname"
-          class="register-form__field"
-          :class="{ 'register-form__field-error-feedback': errors.lastname }"
-        ></Field>
-        <p class="register-form__error-feedback">{{ errors.lastname }}</p>
-      </div>
-      <div class="register-form__group">
-        <label>E-mail</label>
-        <Field
-          name="email"
-          type="text"
-          placeholder="type your e-mail"
-          class="register-form__field"
-          :class="{ 'register-form__field-error-feedback': errors.email }"
-        ></Field>
-        <p class="register-form__error-feedback">{{ errors.email }}</p>
-      </div>
-      <div class="register-form__group">
-        <label>Password</label>
-        <Field
-          name="password"
-          type="password"
-          placeholder="type your password"
-          class="register-form__field"
-          :class="{ 'register-form__field-error-feedback': errors.password }"
-        ></Field>
-        <p class="register-form__error-feedback">{{ errors.password }}</p>
-      </div>
-      <div class="register-form__group">
-        <BaseCheckbox
+        />
+      </BaseFormRow>
+      <BaseFormInput
+        name="email"
+        label="E-mail"
+        placeholder="type your e-mail"
+      />
+      <BaseFormInput
+        name="password"
+        type="password"
+        label="Password"
+        placeholder="type your password"
+      />
+    </BaseFormFieldset>
+    <BaseFormFieldset
+      label="Assign user roles"
+      description="A single user can have multiple different roles assigned to their profile.
+      The Admin role shouldn't be combined with other roles as it has full
+      access to everything."
+    >
+      <BaseFormRow>
+        <BaseFormCheckbox
           v-for="role in userRoles"
           :label="role.name"
           name="roles"
           :value="role.id"
         />
         <p class="register-form__error-feedback">{{ errors.roles }}</p>
-      </div>
-    </div>
-    <div class="register-form__group">
-      <BaseButton>Add user</BaseButton>
-    </div>
+      </BaseFormRow>
+    </BaseFormFieldset>
+    <BaseButton>Add user</BaseButton>
   </Form>
 </template>
 
@@ -118,50 +110,10 @@ const handleRegisterFormSubmit = async (values) => {
 .register-form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
 
   & > h3 {
     font-size: var(--fs-lg);
-  }
-
-  &__fields {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  &__group {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-
-    & > label {
-      line-height: var(--lh-xs);
-      font-size: var(--fs-sm);
-      font-weight: var(--fw-medium);
-    }
-  }
-
-  &__field {
-    min-width: var(--input-width-md);
-    width: 100%;
-    min-height: 44px;
-    padding-inline: var(--space-md);
-    font-size: var(--fs-sm);
-    border: 1px solid transparent;
-    border-radius: var(--border-radius-md);
-    outline: none;
-    background-color: var(--clr-gray-100);
-    color: var(--clr-gray-900);
-
-    &.register-form__field-error-feedback {
-      border: 1px solid var(--clr-red-400);
-      color: var(--clr-red-400);
-    }
-
-    &::placeholder {
-      color: var(--clr-gray-500);
-    }
+    margin-bottom: var(--space-lg);
   }
 
   &__error-feedback {

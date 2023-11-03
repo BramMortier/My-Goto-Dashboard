@@ -1,10 +1,21 @@
 <script setup>
+import { useModalStore } from "@stores/ModalStore";
+
 import SuppliersListCardCreate from "@components/SuppliersListCardCreate.vue";
+import SuppliersModalCreate from "@components/SuppliersModalCreate.vue";
+import BaseButton from "@components/BaseButton.vue";
+
+const { openModal } = useModalStore();
 </script>
 
 <template>
   <div class="suppliers-list__container">
     <h3>Suppliers</h3>
+    <BaseButton
+      @click="openModal({ component: SuppliersModalCreate })"
+      stretch="fit-content"
+      >Add a supplier</BaseButton
+    >
     <ul class="suppliers-list">
       <SuppliersListCardCreate />
       <li class="suppliers-list-card">

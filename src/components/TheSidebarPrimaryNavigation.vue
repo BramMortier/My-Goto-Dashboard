@@ -166,6 +166,7 @@ const topLevelRouteName = computed(() => {
     text-transform: uppercase;
     color: var(--clr-gray-700);
     line-height: var(--lh-xs);
+    font-size: var(--fs-sm);
   }
 
   &__links-list {
