@@ -6,6 +6,7 @@ import BaseButton from "@components/BaseButton.vue";
 
 const props = defineProps({
   name: String,
+  emptyMessage: String,
 });
 
 const fileInput = ref(null);
@@ -36,7 +37,7 @@ const handleFileInputChange = () => {
     >
       <div v-if="!selectedFile" class="file-uploader__upload-empty-message">
         <img src="@assets/icons/upload.svg" alt="file icon" />
-        <p>Upload a supplier logo</p>
+        <p>{{ props.emptyMessage }}</p>
       </div>
     </div>
     <div class="file-uploader__upload-button">

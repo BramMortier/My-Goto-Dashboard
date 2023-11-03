@@ -43,7 +43,10 @@ const handleSuppliersFormSubmit = async (values) => {
   >
     <h3>Add a new supplier</h3>
     <BaseFormFieldSet label="Supplier logo">
-      <BaseFormFileUploader name="logoFile" />
+      <BaseFormFileUploader
+        name="logoFile"
+        emptyMessage="Upload a supplier logo"
+      />
     </BaseFormFieldSet>
     <BaseFormFieldSet label="Supplier information">
       <BaseFormInput

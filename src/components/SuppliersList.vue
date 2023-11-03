@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useModalStore } from "@stores/ModalStore";
 import { getAllSuppliers } from "@services/supplierService";
-import { getPublicUrl, publicStorageBucketUrl } from "@services/storageService";
+import { publicStorageBucketUrl } from "@services/storageService";
 
 import SuppliersListCardCreate from "@components/SuppliersListCardCreate.vue";
 import SuppliersModalCreate from "@components/SuppliersModalCreate.vue";

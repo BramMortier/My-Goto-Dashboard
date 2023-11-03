@@ -6,6 +6,7 @@ const props = defineProps({
   type: { type: String, default: "text" },
   label: String,
   placeholder: String,
+  optional: { type: Boolean, default: false },
 });
 
 const { value, errorMessage } = useField(() => props.name);
@@ -13,7 +14,10 @@ const { value, errorMessage } = useField(() => props.name);
 
 <template>
   <div class="form-input">
-    <label>{{ props.label }}</label>
+    <div class="form-input__label">
+      <label>{{ props.label }}</label>
+      <span v-if="optional">(optional)</span>
+    </div>
     <input
       v-model="value"
       :type="props.type"
@@ -34,10 +38,22 @@ const { value, errorMessage } = useField(() => props.name);
   gap: var(--space-xs);
   margin-bottom: var(--space-md);
 
-  & > label {
-    line-height: var(--lh-xs);
-    font-size: var(--fs-sm);
-    font-weight: var(--fw-medium);
+  &__label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & > label {
+      line-height: var(--lh-xs);
+      font-size: var(--fs-sm);
+      font-weight: var(--fw-medium);
+    }
+
+    & > span {
+      line-height: var(--lh-xs);
+      color: var(--clr-gray-700);
+      font-size: var(--fs-sm);
+    }
   }
 
   & > input {

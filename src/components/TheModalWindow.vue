@@ -27,6 +27,9 @@ const { modalState } = storeToRefs(useModalStore());
   background-color: var(--clr-white);
   padding: var(--space-md);
   border-bottom: 2px solid var(--clr-green-400);
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   &__wrapper {
     position: fixed;
@@ -39,6 +42,18 @@ const { modalState } = storeToRefs(useModalStore());
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--clr-gray-500);
   }
 }
 

@@ -1,13 +1,47 @@
-<script setup></script>
+<script setup>
+import { useModalStore } from "@stores/ModalStore";
+
+import DishesListCard from "@components/DishesListCard.vue";
+import DishesModalCreate from "@components/DishesModalCreate.vue";
+import BaseSearchBar from "@components/BaseSearchBar.vue";
+import BaseButton from "@components/BaseButton.vue";
+
+const { openModal } = useModalStore();
+</script>
 
 <template>
   <div class="dishes-list__container">
-    <h3>Dishes</h3>
+    <h3>Current assortment of dishes</h3>
+
+    <div class="dishes-list__filters">
+      <BaseSearchBar />
+      <BaseButton @click="openModal({ component: DishesModalCreate })"
+        >Add a dish</BaseButton
+      >
+    </div>
+
+    <ul class="dishes-list">
+      <DishesListCard />
+      <DishesListCard />
+      <DishesListCard />
+      <DishesListCard />
+      <DishesListCard />
+    </ul>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .dishes-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+
+  &__filters {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-md);
+  }
+
   &__container {
     display: flex;
     flex-direction: column;
@@ -20,6 +54,7 @@
     & > h3 {
       color: var(--clr-black);
       font-size: var(--fs-lg);
+      margin-bottom: var(--space-lg);
     }
   }
 }
