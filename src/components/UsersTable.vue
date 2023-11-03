@@ -71,7 +71,6 @@ onMounted(async () => {
   &__head {
     border: 1px solid var(--clr-gray-500);
     border-radius: var(--border-radius-md);
-    background-color: var(--clr-gray-100);
     display: flex;
     justify-content: space-between;
     align-items: center;

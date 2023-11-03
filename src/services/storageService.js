@@ -1,9 +1,12 @@
 import { supabase } from "@plugins/supabase";
 
-export const uploadFileToMain = async (file) => {
-  const { data: uploadFileData, error: uploadFileError } = await supabase
-    .from("main_storage")
-    .upload("/", file);
+export const uploadSupplierLogoToMain = async (file) => {
+  const { data: uploadFileData, error: uploadFileError } =
+    await supabase.storage
+      .from("main_storage")
+      .upload(`/supplier logos/${file.name}`, file, {
+        upsert: true,
+      });
 
   if (uploadFileError) return { data: null, error: uploadFileError };
 

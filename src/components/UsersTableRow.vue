@@ -41,8 +41,8 @@ const props = defineProps({
   }
 
   &__role-tag {
-    background-color: var(--clr-yellow-400);
-    color: var(--clr-yellow-800);
+    border: 1px solid var(--clr-gray-900);
+    color: var(--clr-gray-900);
     border-radius: var(--border-radius-md);
     width: fit-content;
     padding: var(--space-xs) var(--space-sm);
