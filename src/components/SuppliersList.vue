@@ -6,7 +6,7 @@ import { getPublicUrl, publicStorageBucketUrl } from "@services/storageService";
 
 import SuppliersListCardCreate from "@components/SuppliersListCardCreate.vue";
 import SuppliersModalCreate from "@components/SuppliersModalCreate.vue";
-import BaseButton from "@components/BaseButton.vue";
+import BaseSearchbar from "@components/BaseSearchbar.vue";
 
 const { openModal } = useModalStore();
 
@@ -23,13 +23,15 @@ onMounted(async () => {
 <template>
   <div class="suppliers-list__container">
     <h3>Suppliers</h3>
-    <BaseButton
-      @click="openModal({ component: SuppliersModalCreate })"
-      stretch="fit-content"
-      >Add a supplier</BaseButton
-    >
+
+    <div class="suppliers-list__filters">
+      <BaseSearchbar />
+    </div>
+
     <ul class="suppliers-list">
-      <SuppliersListCardCreate />
+      <SuppliersListCardCreate
+        @click="openModal({ component: SuppliersModalCreate })"
+      />
       <li
         v-for="supplier in suppliers"
         :key="supplier.id"
