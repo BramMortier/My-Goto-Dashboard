@@ -21,10 +21,7 @@ onMounted(async () => {
 
 const handleSupplierChange = (supplier) => {
   value.value = supplier.id;
-  console.log(value.value);
 };
-
-console.log(value.value);
 </script>
 
 <template>
@@ -34,8 +31,7 @@ console.log(value.value);
       :key="supplier.id"
       class="dishes-create-suppliers-list__card"
       :class="{
-        'dishes-create-suppliers-list__card--selected':
-          value?.value === supplier.id,
+        'dishes-create-suppliers-list__card--selected': value === supplier.id,
       }"
       @click="handleSupplierChange(supplier)"
     >
@@ -58,8 +54,6 @@ console.log(value.value);
   gap: var(--space-md);
 
   &__card {
-    width: 200px;
-    height: 100px;
     border-radius: var(--border-radius-md);
     background-color: var(--clr-gray-100);
     border: 1px solid transparent;

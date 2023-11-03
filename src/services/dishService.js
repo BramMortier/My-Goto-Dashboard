@@ -3,7 +3,7 @@ import { supabase } from "@plugins/supabase";
 export const getAllDishes = async () => {
   const { data: getAllDishesData, error: getAllDishesError } = await supabase
     .from("dishes")
-    .select("*");
+    .select(`*, suppliers( * )`);
 
   if (getAllDishesError) return { data: null, error: getAllDishesError };
 

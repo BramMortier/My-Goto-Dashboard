@@ -2,7 +2,6 @@
 import { Form } from "vee-validate";
 import { uploadDishThumbnailToMain } from "@services/storageService";
 import { createDish } from "@services/dishService";
-import { getAllSuppliers } from "@services/supplierService";
 import { foodCategories } from "@constants/index";
 import * as yup from "yup";
 
@@ -18,15 +17,16 @@ const dishesFormValidationSchema = yup.object({
   thumbnailFile: yup.mixed().required("Dish Thumbnail is required"),
   dishName: yup.string().required("Dish Name is required"),
   description: yup.string().required("Description is required"),
-  purchasePrice: yup
+  sellPrice: yup
     .number("The sellPrice must be a number")
-    .required("A purchase price is required"),
+    .required("A sell price price is required"),
   purchasePrice: yup
     .number("The purchasePrice must be a number")
-    .required("A sell price is required"),
+    .required("A purchase price is required"),
   points: yup
     .number("The points field must be a number")
     .required("Points value is required"),
+  supplier: yup.string().required("You need to select a supplier"),
   foodCategory: yup
     .array()
     .of(yup.string().required())
@@ -34,8 +34,6 @@ const dishesFormValidationSchema = yup.object({
 });
 
 const handleDishesFormSubmit = async (values) => {
-  console.log(values);
-
   const { data: uploadDishThumbnailData, error: uploadDishThumbnailError } =
     await uploadDishThumbnailToMain(values.thumbnailFile);
 

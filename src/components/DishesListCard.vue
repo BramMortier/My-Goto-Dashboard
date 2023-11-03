@@ -8,15 +8,18 @@ const props = defineProps({
 
 <template>
   <li class="dish-card">
-    <div class="dish-card__thumbnail">
-      <img
-        :src="publicStorageBucketUrl + props.dish.thumbnail_path"
-        alt="action icon"
-      />
+    <div
+      class="dish-card__thumbnail"
+      :style="{
+        backgroundImage: `url(${
+          publicStorageBucketUrl + props.dish.thumbnail_path
+        })`,
+      }"
+    >
       <div class="dish-card__price">{{ props.dish.sell_price }}kr.</div>
     </div>
     <h4>{{ props.dish.name }}</h4>
-    <span>Farmer's Fridge</span>
+    <span>{{ props.dish.suppliers.name }}</span>
     <p>
       {{ props.dish.description }}
     </p>
@@ -60,9 +63,9 @@ const props = defineProps({
     height: 11.25rem;
     overflow: hidden;
 
-    & > img {
-      object-fit: cover;
-    }
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
   &__price {
