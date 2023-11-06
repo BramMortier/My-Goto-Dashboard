@@ -41,7 +41,7 @@ const { value, errorMessage } = useField(() => props.name);
   &__label {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: var(--space-xs);
 
     & > label {
       line-height: var(--lh-xs);

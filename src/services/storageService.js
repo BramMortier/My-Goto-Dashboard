@@ -34,3 +34,19 @@ export const uploadDishThumbnailToMain = async (file) => {
 
   return { data: uploadDishThumbnailToMainData, error: null };
 };
+
+export const uploadAllergyIconToMain = async (file) => {
+  const {
+    data: uploadAllergyIconToMainData,
+    error: uploadAllergyIconToMainError,
+  } = await supabase.storage
+    .from("main_storage")
+    .upload(`/allergy-icons/${file.name}`, file, {
+      upsert: true,
+    });
+
+  if (uploadAllergyIconToMainError)
+    return { data: null, error: uploadAllergyIconToMainError };
+
+  return { data: uploadAllergyIconToMainData, error: null };
+};
