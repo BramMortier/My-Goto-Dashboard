@@ -43,6 +43,12 @@ const props = defineProps({
   display: grid;
   grid-template-columns: 15.625rem 1fr;
   gap: var(--space-md);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--clr-gray-500);
+
+  &:not(:last-child) {
+    margin-bottom: var(--space-md);
+  }
 
   &__thumbnail {
     height: 12.5rem;

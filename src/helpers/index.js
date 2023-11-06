@@ -14,7 +14,6 @@ export const generateTabsFromRoute = (route) => {
   return route.children.map((route) => {
     const { label, pathName } =
       route.meta.breadcrumbs[route.meta.breadcrumbs.length - 1];
-    console.log(label, pathName);
     return { label, pathName };
   });
 };

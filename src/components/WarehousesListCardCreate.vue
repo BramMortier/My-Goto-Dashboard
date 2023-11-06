@@ -1,16 +1,20 @@
 <script setup></script>
 
 <template>
-  <li class="truck-list-card">
-    <div class="truck-list-card__thumbnail">
-      <img src="@assets/icons/truck.svg" alt="truck list card icon" />
+  <li class="warehouse-list-card-create">
+    <div class="warehouse-list-card-create__thumbnail">
+      <img src="@assets/icons/plus.svg" alt="warehouse list card icon" />
     </div>
-    <div class="truck-list-card__main">
-      <h4>Truck 1-DFF-568</h4>
-      <div class="truck-list-card__info">
-        <div class="truck-list-card__info-entry">
-          <p>Max capacity:</p>
-          <span>1200 meals</span>
+    <div class="warehouse-list-card-create__main">
+      <h4>Add a warehouse location</h4>
+      <div class="warehouse-list-card-create__info">
+        <div class="warehouse-list-card-create__info-entry">
+          <p>Address:</p>
+          <span>Asta Nielsen Strædet 14, 2500 København</span>
+        </div>
+        <div class="warehouse-list-card-create__info-entry">
+          <p>Geolocation:</p>
+          <span>55.66696, 12.51517</span>
         </div>
       </div>
     </div>
@@ -18,12 +22,16 @@
 </template>
 
 <style lang="scss" scoped>
-.truck-list-card {
+.warehouse-list-card-create {
   display: grid;
   grid-template-columns: 4rem 1fr;
   gap: var(--space-md);
   padding-bottom: var(--space-md);
   border-bottom: 1px solid var(--clr-gray-500);
+
+  &:hover {
+    cursor: pointer;
+  }
 
   &:not(:last-child) {
     margin-bottom: var(--space-md);
@@ -39,8 +47,8 @@
     border-radius: var(--border-radius-md);
 
     img {
-      width: 2rem;
-      height: 2rem;
+      width: 1.5rem;
+      height: 1.5rem;
     }
   }
 
@@ -67,11 +75,16 @@
 
     & > p {
       line-height: var(--lh-xs);
+      background-color: var(--clr-gray-100);
+      border-radius: var(--border-radius-md);
+      color: var(--clr-gray-100);
     }
 
     & > span {
       line-height: var(--lh-xs);
-      color: var(--clr-gray-700);
+      background-color: var(--clr-gray-100);
+      border-radius: var(--border-radius-md);
+      color: var(--clr-gray-100);
     }
   }
 }

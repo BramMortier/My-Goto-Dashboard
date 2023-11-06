@@ -1,29 +1,26 @@
 <script setup></script>
 
 <template>
-  <li class="machines-list-card">
-    <div class="machines-list-card__thumbnail">
-      <img
-        src="@assets/icons/vending-machine-v4.svg"
-        alt="machines list card icon"
-      />
+  <li class="machines-list-card-create">
+    <div class="machines-list-card-create__thumbnail">
+      <img src="@assets/icons/plus.svg" alt="machines list card icon" />
     </div>
-    <div class="machines-list-card__main">
-      <h4>Vending machine Østerbro 001</h4>
-      <div class="machines-list-card__info">
-        <div class="machines-list-card__info-entry">
+    <div class="machines-list-card-create__main">
+      <h4>Add a machine</h4>
+      <div class="machines-list-card-create__info">
+        <div class="machines-list-card-create__info-entry">
           <p>Address:</p>
           <span>Asta Nielsen Strædet 14</span>
         </div>
-        <div class="machines-list-card__info-entry">
+        <div class="machines-list-card-create__info-entry">
           <p>Postal code:</p>
           <span>2500</span>
         </div>
-        <div class="machines-list-card__info-entry">
+        <div class="machines-list-card-create__info-entry">
           <p>City:</p>
           <span>København</span>
         </div>
-        <div class="machines-list-card__info-entry">
+        <div class="machines-list-card-create__info-entry">
           <p>Geolocation:</p>
           <span>55.66696, 12.51517</span>
         </div>
@@ -33,7 +30,7 @@
 </template>
 
 <style lang="scss" scoped>
-.machines-list-card {
+.machines-list-card-create {
   display: grid;
   grid-template-columns: 4rem 1fr;
   gap: var(--space-md);
@@ -50,8 +47,8 @@
     border-radius: var(--border-radius-md);
 
     img {
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
     }
   }
 
@@ -78,11 +75,16 @@
 
     & > p {
       line-height: var(--lh-xs);
+      background-color: var(--clr-gray-100);
+      border-radius: var(--border-radius-md);
+      color: var(--clr-gray-100);
     }
 
     & > span {
       line-height: var(--lh-xs);
-      color: var(--clr-gray-700);
+      background-color: var(--clr-gray-100);
+      border-radius: var(--border-radius-md);
+      color: var(--clr-gray-100);
       text-align: right;
     }
   }

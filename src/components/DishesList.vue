@@ -26,7 +26,6 @@ onMounted(async () => {
 .dishes-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
 
   & > h3 {
     color: var(--clr-black);

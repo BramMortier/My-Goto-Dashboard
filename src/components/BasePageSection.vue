@@ -21,6 +21,7 @@ const props = defineProps({
   flex-direction: column;
   background-color: var(--clr-white);
   border-bottom: 2px solid var(--clr-green-400);
+  height: fit-content;
 
   & > h3 {
     padding: var(--space-md);

@@ -1,14 +1,14 @@
 <script setup></script>
 
 <template>
-  <li class="truck-list-card">
-    <div class="truck-list-card__thumbnail">
-      <img src="@assets/icons/truck.svg" alt="truck list card icon" />
+  <li class="truck-list-card-create">
+    <div class="truck-list-card-create__thumbnail">
+      <img src="@assets/icons/plus.svg" alt="truck list card icon" />
     </div>
-    <div class="truck-list-card__main">
-      <h4>Truck 1-DFF-568</h4>
-      <div class="truck-list-card__info">
-        <div class="truck-list-card__info-entry">
+    <div class="truck-list-card-create__main">
+      <h4>Add a truck</h4>
+      <div class="truck-list-card-create__info">
+        <div class="truck-list-card-create__info-entry">
           <p>Max capacity:</p>
           <span>1200 meals</span>
         </div>
@@ -18,7 +18,7 @@
 </template>
 
 <style lang="scss" scoped>
-.truck-list-card {
+.truck-list-card-create {
   display: grid;
   grid-template-columns: 4rem 1fr;
   gap: var(--space-md);
@@ -39,8 +39,8 @@
     border-radius: var(--border-radius-md);
 
     img {
-      width: 2rem;
-      height: 2rem;
+      width: 1.5rem;
+      height: 1.5rem;
     }
   }
 
@@ -67,11 +67,16 @@
 
     & > p {
       line-height: var(--lh-xs);
+      background-color: var(--clr-gray-100);
+      border-radius: var(--border-radius-md);
+      color: var(--clr-gray-100);
     }
 
     & > span {
       line-height: var(--lh-xs);
-      color: var(--clr-gray-700);
+      background-color: var(--clr-gray-100);
+      border-radius: var(--border-radius-md);
+      color: var(--clr-gray-100);
     }
   }
 }
