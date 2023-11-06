@@ -112,18 +112,58 @@ export const routes = [
   {
     path: "/locations",
     name: "ManageLocationsPage",
+    redirect: { name: "ManageMachineLocationsPage" },
     meta: {
       layout: SidebarLayout,
       requiresAuth: true,
       breadcrumbs: [
         { label: "Dashboard", pathName: "OverviewDashboardPage" },
         {
-          label: "Manage locationos",
+          label: "Manage locations",
           pathName: "ManageLocationsPage",
         },
       ],
     },
     component: () => import("@pages/ManageLocationsPage.vue"),
+    children: [
+      {
+        path: "manage-machines",
+        name: "ManageMachineLocationsPage",
+        meta: {
+          breadcrumbs: [
+            { label: "Dashboard", pathName: "OverviewDashboardPage" },
+            {
+              label: "Manage locations",
+              pathName: "ManageLocationsPage",
+            },
+            {
+              label: "Manage machine locations",
+              pathName: "ManageMachineLocationsPage",
+            },
+          ],
+        },
+        component: () => import("@pages/ManageMachineLocationsPage.vue"),
+      },
+      {
+        path: "manage-truck-and-warehouses",
+        name: "ManageTruckAndWarehouseLocationsPage",
+        meta: {
+          breadcrumbs: [
+            { label: "Dashboard", pathName: "OverviewDashboardPage" },
+            {
+              label: "Manage locations",
+              pathName: "ManageLocationsPage",
+            },
+            {
+              label: "Manage truck and warehouse locations",
+              pathName: "ManageTruckAndWarehouseLocationsPage",
+            },
+          ],
+        },
+        component: () =>
+          import("@pages/ManageTruckAndWarehouseLocationsPage.vue"),
+      },
+    ],
   },
   {
     path: "/allergies",

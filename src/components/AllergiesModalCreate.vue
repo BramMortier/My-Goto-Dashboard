@@ -1,5 +1,7 @@
 <script setup>
 import { Form } from "vee-validate";
+import { uploadAllergyIconToMain } from "@services/storageService";
+import { createAllergy } from "@services/allergyService";
 import * as yup from "yup";
 
 import BaseFormFileUploader from "@components/BaseFormFileUploader.vue";
@@ -13,7 +15,18 @@ const allergyFormValidationSchema = yup.object({
 });
 
 const handleAllergyFormSubmit = async (values) => {
-  console.log(values);
+  const {
+    data: uploadAllergyIconToMainData,
+    error: uploadAllergyIconToMainError,
+  } = await uploadAllergyIconToMain(values.iconFile);
+
+  const { data: createAllergyData, error: createAllergyError } =
+    await createAllergy({
+      allergyName: values.allergyName,
+      iconPath: uploadAllergyIconToMainData.path,
+    });
+
+  console.log(createAllergyData);
 };
 </script>
 

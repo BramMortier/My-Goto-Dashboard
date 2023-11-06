@@ -55,6 +55,8 @@
     & > img {
       height: 3rem;
       width: 3rem;
+      filter: invert(31%) sepia(1%) saturate(0%) hue-rotate(253deg)
+        brightness(99%) contrast(89%);
     }
   }
 
