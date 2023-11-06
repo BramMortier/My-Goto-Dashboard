@@ -87,7 +87,7 @@ export const routes = [
             },
           ],
         },
-        component: () => import("@components/DishesList.vue"),
+        component: () => import("@pages/ManageDishesPage.vue"),
       },
       {
         path: "manage-suppliers",
@@ -105,7 +105,7 @@ export const routes = [
             },
           ],
         },
-        component: () => import("@components/SuppliersList.vue"),
+        component: () => import("@pages/ManageSuppliersPage.vue"),
       },
     ],
   },

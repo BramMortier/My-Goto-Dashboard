@@ -6,7 +6,6 @@ import { publicStorageBucketUrl } from "@services/storageService";
 
 import SuppliersListCardCreate from "@components/SuppliersListCardCreate.vue";
 import SuppliersModalCreate from "@components/SuppliersModalCreate.vue";
-import BaseSearchbar from "@components/BaseSearchbar.vue";
 
 const { openModal } = useModalStore();
 
@@ -21,45 +20,37 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="suppliers-list__container">
-    <h3>Suppliers</h3>
+  <ul class="suppliers-list">
+    <SuppliersListCardCreate
+      @click="openModal({ component: SuppliersModalCreate })"
+    />
+    <li
+      v-for="supplier in suppliers"
+      :key="supplier.id"
+      class="suppliers-list-card"
+    >
+      <div class="suppliers-list-card__supplier-logo">
+        <img
+          :src="publicStorageBucketUrl + supplier.logo_path"
+          alt="supplier logo"
+        />
+      </div>
+      <div class="suppliers-list-card__info">
+        <h4>{{ supplier.name }}</h4>
 
-    <div class="suppliers-list__filters">
-      <BaseSearchbar />
-    </div>
-
-    <ul class="suppliers-list">
-      <SuppliersListCardCreate
-        @click="openModal({ component: SuppliersModalCreate })"
-      />
-      <li
-        v-for="supplier in suppliers"
-        :key="supplier.id"
-        class="suppliers-list-card"
-      >
-        <div class="suppliers-list-card__supplier-logo">
-          <img
-            :src="publicStorageBucketUrl + supplier.logo_path"
-            alt="supplier logo"
-          />
-        </div>
-        <div class="suppliers-list-card__info">
-          <h4>{{ supplier.name }}</h4>
-
-          <div class="suppliers-list-card__contact-info">
-            <div class="suppliers-list-card__contact-info-entry">
-              <p>Phone number:</p>
-              <span>{{ supplier.phone_number }}</span>
-            </div>
-            <div class="suppliers-list-card__contact-info-entry">
-              <p>E-mail address:</p>
-              <span>{{ supplier.email }}</span>
-            </div>
+        <div class="suppliers-list-card__contact-info">
+          <div class="suppliers-list-card__contact-info-entry">
+            <p>Phone number:</p>
+            <span>{{ supplier.phone_number }}</span>
+          </div>
+          <div class="suppliers-list-card__contact-info-entry">
+            <p>E-mail address:</p>
+            <span>{{ supplier.email }}</span>
           </div>
         </div>
-      </li>
-    </ul>
-  </div>
+      </div>
+    </li>
+  </ul>
 </template>
 
 <style lang="scss" scoped>
@@ -67,22 +58,6 @@ onMounted(async () => {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-xl);
-
-  &__container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    padding: var(--space-md);
-    background-color: var(--clr-white);
-    border-bottom: 2px solid var(--clr-green-400);
-    max-width: var(--container-width-lg);
-
-    & > h3 {
-      margin-bottom: var(--space-lg);
-      font-size: var(--fs-lg);
-      color: var(--clr-black);
-    }
-  }
 }
 
 .suppliers-list-card {

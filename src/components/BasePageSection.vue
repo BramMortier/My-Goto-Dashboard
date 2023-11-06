@@ -1,11 +1,15 @@
 <script setup>
 const props = defineProps({
   title: String,
+  width: { type: String, default: "md" },
 });
 </script>
 
 <template>
-  <section class="page-section">
+  <section
+    class="page-section"
+    :style="{ maxWidth: `var(--container-width-${props.width})` }"
+  >
     <h3>{{ title }}</h3>
     <slot></slot>
   </section>
@@ -17,7 +21,6 @@ const props = defineProps({
   flex-direction: column;
   background-color: var(--clr-white);
   border-bottom: 2px solid var(--clr-green-400);
-  max-width: var(--container-width-md);
 
   & > h3 {
     padding: var(--space-md);
