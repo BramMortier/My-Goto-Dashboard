@@ -1,11 +1,18 @@
 <script setup>
+import { useModalStore } from "@stores/ModalStore";
+
 import MachinesListCard from "@components/MachinesListCard.vue";
 import MachinesListCardCreate from "@components/MachinesListCardCreate.vue";
+import MachinesModalCreate from "@components/MachinesModalCreate.vue";
+
+const { openModal } = useModalStore();
 </script>
 
 <template>
   <ul class="machines-list">
-    <MachinesListCardCreate />
+    <MachinesListCardCreate
+      @click="openModal({ component: MachinesModalCreate })"
+    />
     <MachinesListCard />
     <MachinesListCard />
     <MachinesListCard />

@@ -9,8 +9,6 @@ export const getFullRouteInfo = (routeName) => {
 };
 
 export const generateTabsFromRoute = (route) => {
-  console.log(route.children);
-
   return route.children.map((route) => {
     const { label, pathName } =
       route.meta.breadcrumbs[route.meta.breadcrumbs.length - 1];

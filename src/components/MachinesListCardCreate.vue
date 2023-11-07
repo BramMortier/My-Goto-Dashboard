@@ -7,6 +7,9 @@
     </div>
     <div class="machines-list-card-create__main">
       <h4>Add a machine</h4>
+      <p class="machines-list-card-create__assigned-dishes">
+        6 Assigned dishes
+      </p>
       <div class="machines-list-card-create__info">
         <div class="machines-list-card-create__info-entry">
           <p>Address:</p>
@@ -60,6 +63,16 @@
       font-weight: var(--fw-semibold);
       margin-bottom: var(--space-md);
     }
+  }
+
+  &__assigned-dishes {
+    background-color: var(--clr-gray-100);
+    color: var(--clr-gray-100);
+    border-radius: var(--border-radius-md);
+    padding: var(--space-xs) var(--space-sm);
+    margin-bottom: var(--space-md);
+    line-height: var(--lh-xs);
+    width: fit-content;
   }
 
   &__info {

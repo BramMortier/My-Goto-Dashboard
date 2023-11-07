@@ -10,6 +10,7 @@
     </div>
     <div class="machines-list-card__main">
       <h4>Vending machine Østerbro 001</h4>
+      <p class="machines-list-card__assigned-dishes">6 Assigned dishes</p>
       <div class="machines-list-card__info">
         <div class="machines-list-card__info-entry">
           <p>Address:</p>
@@ -40,6 +41,10 @@
   padding-bottom: var(--space-md);
   border-bottom: 1px solid var(--clr-gray-500);
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &__thumbnail {
     width: 4rem;
     height: 4rem;
@@ -63,6 +68,16 @@
       font-weight: var(--fw-semibold);
       margin-bottom: var(--space-md);
     }
+  }
+
+  &__assigned-dishes {
+    background-color: var(--clr-green-400);
+    color: var(--clr-white);
+    border-radius: var(--border-radius-md);
+    padding: var(--space-xs) var(--space-sm);
+    margin-bottom: var(--space-md);
+    line-height: var(--lh-xs);
+    width: fit-content;
   }
 
   &__info {
