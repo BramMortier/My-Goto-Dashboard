@@ -42,7 +42,9 @@ export const createLocation = async ({
         postal_code: locationPostalCode,
         city: locationCity,
         country: locationCountry,
-        geolocation: `POINT(${locationLongitude} ${locationLatitude})`,
+        geolocation: locationLongitude
+          ? `POINT(${locationLongitude} ${locationLatitude})`
+          : null,
       })
       .select();
 

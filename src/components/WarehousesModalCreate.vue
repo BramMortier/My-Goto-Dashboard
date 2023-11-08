@@ -34,9 +34,6 @@ const handleWarehouseLocationFormSubmit = async (values) => {
       locationLatitude: values.locationLatitude,
       locationLongitude: values.locationLongitude,
     });
-
-  console.log(createLocationError);
-  console.log(createLocationData);
 };
 </script>
 

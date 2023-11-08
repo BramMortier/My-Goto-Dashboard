@@ -39,6 +39,11 @@
   gap: var(--space-md);
   padding-bottom: var(--space-md);
   border-bottom: 1px solid var(--clr-gray-500);
+  transition: var(--hover-transition);
+
+  &:hover {
+    cursor: pointer;
+  }
 
   &__thumbnail {
     width: 4rem;
