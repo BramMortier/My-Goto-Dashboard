@@ -28,12 +28,6 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .users-table {
-  &__filters {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: var(--space-md);
-  }
-
   &__head {
     border: 1px solid var(--clr-gray-500);
     border-radius: var(--border-radius-md);

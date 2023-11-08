@@ -14,4 +14,26 @@
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.warehouse-inventories-table-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--clr-gray-500);
+  transition: var(--hover-transition);
+
+  &:hover {
+    background-color: var(--clr-gray-100);
+    cursor: pointer;
+  }
+
+  &__cell {
+    width: 100%;
+    padding: var(--space-md) var(--space-md);
+    line-height: var(--lh-xs);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    overflow: hidden;
+  }
+}
+</style>
