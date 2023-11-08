@@ -1,9 +1,14 @@
 <script setup>
+import { useModalStore } from "@stores/ModalStore";
+
 import BasePageSection from "@components/BasePageSection.vue";
 import BasePageSectionGroup from "@components/BasePageSectionGroup.vue";
 import BaseSearchbar from "@components/BaseSearchbar.vue";
 import BaseButton from "@components/BaseButton.vue";
 import WarehouseInventoriesTable from "@components/WarehouseInventoriesTable.vue";
+import WarehouseInboundDeliveriesModalCreate from "@components/WarehouseInboundDeliveriesModalCreate.vue";
+
+const { openModal } = useModalStore();
 </script>
 
 <template>
@@ -12,7 +17,12 @@ import WarehouseInventoriesTable from "@components/WarehouseInventoriesTable.vue
       <BasePageSectionGroup>
         <div class="overview-warehouse-page__filters">
           <BaseSearchbar />
-          <BaseButton>Add inbound delivery</BaseButton>
+          <BaseButton
+            @click="
+              openModal({ component: WarehouseInboundDeliveriesModalCreate })
+            "
+            >Add inbound delivery</BaseButton
+          >
         </div>
       </BasePageSectionGroup>
       <BasePageSectionGroup>
