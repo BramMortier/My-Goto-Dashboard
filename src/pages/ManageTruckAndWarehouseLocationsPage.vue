@@ -1,6 +1,7 @@
 <script setup>
 import BasePageSection from "@components/BasePageSection.vue";
 import BasePageSectionGroup from "@components/BasePageSectionGroup.vue";
+import BaseSearchbar from "@components/BaseSearchbar.vue";
 import WarehousesList from "@components/WarehousesList.vue";
 import TrucksList from "@components/TrucksList.vue";
 </script>
@@ -9,10 +10,16 @@ import TrucksList from "@components/TrucksList.vue";
   <div class="manage-truck-and-warehouse-locations-page">
     <BasePageSection title="Warehouses">
       <BasePageSectionGroup>
+        <BaseSearchbar />
+      </BasePageSectionGroup>
+      <BasePageSectionGroup>
         <WarehousesList />
       </BasePageSectionGroup>
     </BasePageSection>
     <BasePageSection title="Trucks">
+      <BasePageSectionGroup>
+        <BaseSearchbar />
+      </BasePageSectionGroup>
       <BasePageSectionGroup>
         <TrucksList />
       </BasePageSectionGroup>
