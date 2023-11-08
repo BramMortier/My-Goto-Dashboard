@@ -9,6 +9,16 @@ export const getAllLocations = async () => {
   return { data: getAllLocationsData, error: null };
 };
 
+export const getAllLocationsByType = async (locationType) => {
+  const { data: getAllLocationsByTypeData, error: getAllLocationsByTypeError } =
+    await supabase.from("locations").select("*").eq("type", locationType);
+
+  if (getAllLocationsByTypeError)
+    return { data: null, error: getAllLocationsByTypeError };
+
+  return { data: getAllLocationsByTypeData, error: null };
+};
+
 export const getLocationById = async (locationId) => {
   const { data: getLocationByIdData, error: getLocationByIdError } =
     await supabase.from("locations").select("*").eq("id", locationId).single();

@@ -23,10 +23,6 @@
           <p>City:</p>
           <span>København</span>
         </div>
-        <div class="machines-list-card-create__info-entry">
-          <p>Geolocation:</p>
-          <span>55.66696, 12.51517</span>
-        </div>
       </div>
     </div>
   </li>

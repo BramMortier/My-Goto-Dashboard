@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  warehouse: Object,
+});
+</script>
 
 <template>
   <li class="warehouse-list-card">
@@ -6,15 +10,22 @@
       <img src="@assets/icons/warehouse.svg" alt="warehouse list card icon" />
     </div>
     <div class="warehouse-list-card__main">
-      <h4>Warehouse Frederiksberg</h4>
+      <h4>{{ props.warehouse.name }}</h4>
       <div class="warehouse-list-card__info">
         <div class="warehouse-list-card__info-entry">
           <p>Address:</p>
-          <span>Asta Nielsen Strædet 14, 2500 København</span>
+          <span
+            >{{ props.warehouse.street }}
+            {{ props.warehouse.street_number }}</span
+          >
         </div>
         <div class="warehouse-list-card__info-entry">
-          <p>Geolocation:</p>
-          <span>55.66696, 12.51517</span>
+          <p>Postal code:</p>
+          <span>{{ props.warehouse.postal_code }}</span>
+        </div>
+        <div class="warehouse-list-card__info-entry">
+          <p>City:</p>
+          <span>{{ props.warehouse.city }}</span>
         </div>
       </div>
     </div>

@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  truck: Object,
+});
+</script>
 
 <template>
   <li class="truck-list-card">
@@ -6,11 +10,11 @@
       <img src="@assets/icons/truck.svg" alt="truck list card icon" />
     </div>
     <div class="truck-list-card__main">
-      <h4>Truck 1-DFF-568</h4>
+      <h4>{{ props.truck.name }}</h4>
       <div class="truck-list-card__info">
         <div class="truck-list-card__info-entry">
           <p>Max capacity:</p>
-          <span>1200 meals</span>
+          <span>{{ props.truck.capacity }} meals</span>
         </div>
       </div>
     </div>

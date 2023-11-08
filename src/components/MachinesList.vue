@@ -1,11 +1,23 @@
 <script setup>
+import { ref, onMounted } from "vue";
 import { useModalStore } from "@stores/ModalStore";
+import { getAllLocationsByType } from "@services/locationService";
 
 import MachinesListCard from "@components/MachinesListCard.vue";
 import MachinesListCardCreate from "@components/MachinesListCardCreate.vue";
 import MachinesModalCreate from "@components/MachinesModalCreate.vue";
 
+const machines = ref(null);
+
 const { openModal } = useModalStore();
+
+onMounted(async () => {
+  const { data: getAllLocationsData, error: getAllLocationsError } =
+    await getAllLocationsByType("Machine");
+
+  machines.value = getAllLocationsData;
+  console.log(machines.value);
+});
 </script>
 
 <template>
@@ -13,13 +25,11 @@ const { openModal } = useModalStore();
     <MachinesListCardCreate
       @click="openModal({ component: MachinesModalCreate })"
     />
-    <MachinesListCard />
-    <MachinesListCard />
-    <MachinesListCard />
-    <MachinesListCard />
-    <MachinesListCard />
-    <MachinesListCard />
-    <MachinesListCard />
+    <MachinesListCard
+      v-for="machine in machines"
+      :key="machine.id"
+      :machine="machine"
+    />
   </ul>
 </template>
 

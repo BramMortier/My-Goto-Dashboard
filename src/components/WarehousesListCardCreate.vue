@@ -10,11 +10,15 @@
       <div class="warehouse-list-card-create__info">
         <div class="warehouse-list-card-create__info-entry">
           <p>Address:</p>
-          <span>Asta Nielsen Strædet 14, 2500 København</span>
+          <span>Rosengården 12</span>
         </div>
         <div class="warehouse-list-card-create__info-entry">
-          <p>Geolocation:</p>
-          <span>55.66696, 12.51517</span>
+          <p>Postal code:</p>
+          <span>1174</span>
+        </div>
+        <div class="warehouse-list-card-create__info-entry">
+          <p>City:</p>
+          <span>København</span>
         </div>
       </div>
     </div>

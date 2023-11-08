@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  machine: Object,
+});
+</script>
 
 <template>
   <li class="machines-list-card">
@@ -9,24 +13,22 @@
       />
     </div>
     <div class="machines-list-card__main">
-      <h4>Vending machine Østerbro 001</h4>
+      <h4>{{ props.machine.name }}</h4>
       <p class="machines-list-card__assigned-dishes">6 Assigned dishes</p>
       <div class="machines-list-card__info">
         <div class="machines-list-card__info-entry">
           <p>Address:</p>
-          <span>Asta Nielsen Strædet 14</span>
+          <span
+            >{{ props.machine.street }} {{ props.machine.street_number }}</span
+          >
         </div>
         <div class="machines-list-card__info-entry">
           <p>Postal code:</p>
-          <span>2500</span>
+          <span>{{ props.machine.postal_code }}</span>
         </div>
         <div class="machines-list-card__info-entry">
           <p>City:</p>
-          <span>København</span>
-        </div>
-        <div class="machines-list-card__info-entry">
-          <p>Geolocation:</p>
-          <span>55.66696, 12.51517</span>
+          <span>{{ props.machine.city }}</span>
         </div>
       </div>
     </div>
