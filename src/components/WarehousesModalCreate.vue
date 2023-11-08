@@ -1,5 +1,6 @@
 <script setup>
 import { Form } from "vee-validate";
+import { createLocation } from "@services/locationService";
 import * as yup from "yup";
 
 import BaseButton from "@components/BaseButton.vue";
@@ -8,20 +9,34 @@ import BaseFormInput from "@components/BaseFormInput.vue";
 import BaseFormFieldset from "@components/BaseFormFieldset.vue";
 
 const warehouseLocationValidationSchema = yup.object({
-  warehouseName: yup.string().required("Warehouse name is required"),
-  street: yup.string().required("A street is required"),
-  streetNumber: yup.number().required("A street number is required"),
-  postalCode: yup.number().required("A postal code is required"),
-  city: yup.string().required("A city is required"),
-  country: yup.string().required("A country is required"),
-  latitude: yup.number().required("A latitude is required"),
-  longitude: yup.number().required("A longitude is required"),
+  locationName: yup.string().required("Warehouse name is required"),
+  locationStreet: yup.string().required("A street is required"),
+  locationStreetNumber: yup.number().required("A street number is required"),
+  locationPostalCode: yup.number().required("A postal code is required"),
+  locationCity: yup.string().required("A city is required"),
+  locationCountry: yup.string().required("A country is required"),
+  locationLatitude: yup.number().required("A latitude is required"),
+  locationLongitude: yup.number().required("A longitude is required"),
 });
 
 const handleWarehouseLocationFormSubmit = async (values) => {
   console.log(values);
 
-  // transform address to coords
+  const { data: createLocationData, error: createLocationError } =
+    await createLocation({
+      locationType: "Warehouse",
+      locationName: values.locationName,
+      locationStreet: values.locationStreet,
+      locationStreetNumber: values.locationStreetNumber,
+      locationPostalCode: values.locationPostalCode,
+      locationCity: values.locationCity,
+      locationCountry: values.locationCountry,
+      locationLatitude: values.locationLatitude,
+      locationLongitude: values.locationLongitude,
+    });
+
+  console.log(createLocationError);
+  console.log(createLocationData);
 };
 </script>
 
@@ -34,7 +49,7 @@ const handleWarehouseLocationFormSubmit = async (values) => {
     <h3>Add a warehouse</h3>
     <BaseFormFieldset label="General info">
       <BaseFormInput
-        name="warehouseName"
+        name="locationName"
         label="Name"
         placeholder="type a warehouse name"
       />
@@ -42,31 +57,31 @@ const handleWarehouseLocationFormSubmit = async (values) => {
     <BaseFormFieldset label="Location info">
       <BaseFormRow>
         <BaseFormInput
-          name="street"
+          name="locationStreet"
           label="Street"
           placeholder="type the warehouse street"
         />
         <BaseFormInput
-          name="streetNumber"
+          name="locationStreetNumber"
           label="Street number"
           placeholder="type the warehouse street number"
         />
       </BaseFormRow>
       <BaseFormRow>
         <BaseFormInput
-          name="postalCode"
+          name="locationPostalCode"
           label="Postal code"
           placeholder="type the warehouse postal code"
         />
         <BaseFormInput
-          name="city"
+          name="locationCity"
           label="City"
           placeholder="type the warehouse city"
         />
       </BaseFormRow>
       <BaseFormRow>
         <BaseFormInput
-          name="country"
+          name="locationCountry"
           label="Country"
           placeholder="type the warehouse country"
         />
@@ -78,12 +93,12 @@ const handleWarehouseLocationFormSubmit = async (values) => {
     >
       <BaseFormRow>
         <BaseFormInput
-          name="latitude"
+          name="locationLatitude"
           label="Latitude"
           placeholder="type the latitude"
         />
         <BaseFormInput
-          name="longitude"
+          name="locationLongitude"
           label="Longitude"
           placeholder="type the longitude"
         />

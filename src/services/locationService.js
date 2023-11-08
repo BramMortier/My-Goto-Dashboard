@@ -18,9 +18,33 @@ export const getLocationById = async (locationId) => {
   return { data: getLocationByIdData, error: null };
 };
 
-export const createLocation = async () => {
+export const createLocation = async ({
+  locationType,
+  locationName,
+  locationCapacity,
+  locationStreet,
+  locationStreetNumber,
+  locationPostalCode,
+  locationCity,
+  locationCountry,
+  locationLatitude,
+  locationLongitude,
+}) => {
   const { data: createLocationData, error: createLocationError } =
-    await supabase.from("locations").insert({}).select();
+    await supabase
+      .from("locations")
+      .insert({
+        type: locationType,
+        name: locationName,
+        capacity: locationCapacity,
+        street: locationStreet,
+        street_number: locationStreetNumber,
+        postal_code: locationPostalCode,
+        city: locationCity,
+        country: locationCountry,
+        geolocation: `POINT(${locationLongitude} ${locationLatitude})`,
+      })
+      .select();
 
   if (createLocationError) return { data: null, error: createLocationError };
 
