@@ -4,6 +4,8 @@ import { publicStorageBucketUrl } from "@services/storageService";
 const props = defineProps({
   dish: Object,
 });
+
+console.log(publicStorageBucketUrl + props.dish.thumbnail_path);
 </script>
 
 <template>
@@ -12,7 +14,7 @@ const props = defineProps({
       class="dish-card__thumbnail"
       :style="{
         backgroundImage: `url(${
-          publicStorageBucketUrl + props.dish.thumbnail_path
+          publicStorageBucketUrl + encodeURIComponent(props.dish.thumbnail_path)
         })`,
       }"
     ></div>

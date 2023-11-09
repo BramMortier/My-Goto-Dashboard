@@ -31,7 +31,7 @@ onMounted(async () => {
     >
       <div class="suppliers-list-card__supplier-logo">
         <img
-          :src="publicStorageBucketUrl + supplier.logo_path"
+          :src="publicStorageBucketUrl + encodeURIComponent(supplier.logo_path)"
           alt="supplier logo"
         />
       </div>

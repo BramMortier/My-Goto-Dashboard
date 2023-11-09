@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 import { useField } from "vee-validate";
 import { getAllSuppliers } from "@services/supplierService";
 import { publicStorageBucketUrl } from "@services/storageService";
