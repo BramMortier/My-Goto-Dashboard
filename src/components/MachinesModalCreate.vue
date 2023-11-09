@@ -111,6 +111,11 @@ const handleMachineLocationFormSubmit = async (values) => {
         />
       </BaseFormRow>
     </BaseFormFieldset>
+    <BaseFormFieldset
+      label="Plan the machines inventory structure"
+      description="Select which meals this machines should idealy have in stock. By specifiing a specific structure choosing how to fill up the machines later will easier."
+    >
+    </BaseFormFieldset>
     <BaseButton>Add machine</BaseButton>
   </Form>
 </template>
