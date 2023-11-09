@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { Form } from "vee-validate";
+import * as yup from "yup";
 
 import BaseMultistepFormProgressBar from "@components/BaseMultistepFormProgressBar.vue";
 import BaseFormFieldset from "@components/BaseFormFieldset.vue";
@@ -16,6 +17,19 @@ const inboundDeliveryFormStepsInfo = [
   "Verify data",
 ];
 
+const inboundDeliveryFormValidationSchema = yup.object({
+  inboundDish: yup.mixed().required("Dish is required"),
+  inboundDishSupplierBatchNumber: yup
+    .string()
+    .required("Supplier Batch Number is required"),
+  inboundDishBatchExpiryDate: yup
+    .string()
+    .required("Batch Expiry Date is required"),
+  inboundDishAmountOfUnits: yup
+    .number()
+    .required("Amount of Units is required"),
+});
+
 const handleInboundDeliveryFormSubmit = async (values) => {
   console.log(values);
 };
@@ -29,6 +43,7 @@ const handleActiveStepChange = (stepIndex) => {
   <Form
     @submit="handleInboundDeliveryFormSubmit"
     class="inbound-deliveries-form-create"
+    :validationSchema="inboundDeliveryFormValidationSchema"
     v-slot="{ values }"
   >
     <h3>Add an inbound delivery</h3>
@@ -42,7 +57,7 @@ const handleActiveStepChange = (stepIndex) => {
       class="inbound-deliveries-form-create__select-dish"
     >
       <BaseFormFieldset label="Select dish">
-        <WarehouseInboundDeliveriesModalCreateDishesList name="dish" />
+        <WarehouseInboundDeliveriesModalCreateDishesList name="inboundDish" />
       </BaseFormFieldset>
       <div class="inbound-deliveries-form-create__select-dish-action-buttons">
         <BaseButton
@@ -58,17 +73,17 @@ const handleActiveStepChange = (stepIndex) => {
     >
       <BaseFormFieldset label="Delivery info">
         <BaseFormInput
-          name="supplierBatchNumber"
+          name="inboundDishSupplierBatchNumber"
           label="Supplier batch number/id"
           placeholder="type a batch number"
         />
         <BaseFormInput
-          name="batchExpiryDate"
+          name="inboundDishBatchExpiryDate"
           label="Batch expiry data"
           placeholder="type an expiry date"
         />
         <BaseFormInput
-          name="amountOfUnits"
+          name="inboundDishAmountOfUnits"
           label="Amount of units"
           placeholder="type an amount of units"
         />
@@ -96,19 +111,25 @@ const handleActiveStepChange = (stepIndex) => {
         <ul class="inbound-deliveries-form-create__verify-info-list">
           <li class="inbound-deliveries-form-create__verify-info-list-entry">
             <p>Dish:</p>
-            <span>{{ values.dish?.name || "Not specified" }}</span>
+            <span>{{ values.inboundDish?.name || "Not specified" }}</span>
           </li>
           <li class="inbound-deliveries-form-create__verify-info-list-entry">
             <p>Amount of units:</p>
-            <span>{{ values.amountOfUnits || "Not specified" }}</span>
+            <span>{{
+              values.inboundDishAmountOfUnits || "Not specified"
+            }}</span>
           </li>
           <li class="inbound-deliveries-form-create__verify-info-list-entry">
             <p>Supplier batch number/id:</p>
-            <span>{{ values.supplierBatchNumber || "Not specified" }}</span>
+            <span>{{
+              values.inboundDishSupplierBatchNumber || "Not specified"
+            }}</span>
           </li>
           <li class="inbound-deliveries-form-create__verify-info-list-entry">
             <p>Batch expiry date:</p>
-            <span>{{ values.batchExpiryDate || "Not specified" }}</span>
+            <span>{{
+              values.inboundDishBatchExpiryDate || "Not specified"
+            }}</span>
           </li>
         </ul>
       </BaseFormFieldset>

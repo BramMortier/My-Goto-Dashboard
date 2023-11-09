@@ -22,10 +22,21 @@ export const getMealById = async (mealId) => {
   return { data: getMealByIdData, error: null };
 };
 
-export const createMeal = async () => {
+export const createMeal = async ({
+  inboundDishId,
+  inboundDishSupplierBatchNumber,
+  inboundDishBatchExpiryDate,
+  inboundDishAmountOfUnits,
+}) => {
   const { data: createMealData, error: createMealError } = await supabase
     .from("meals")
-    .insert({})
+    .insert({
+      dish_id: inboundDishId,
+      supplier_batch: inboundDishSupplierBatchNumber,
+      expiry_date: inboundDishBatchExpiryDate,
+      amount: inboundDishAmountOfUnits,
+      warehouse_id: "8aa863b4-794f-4263-95dd-687cbdd0f083",
+    })
     .select();
 
   if (createMealError) return { data: null, error: createMealError };
