@@ -43,6 +43,7 @@ const handleActiveStepChange = (stepIndex) => {
   padding-inline: var(--space-2xl);
 
   &__step {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,6 +70,7 @@ const handleActiveStepChange = (stepIndex) => {
   &__step-label {
     line-height: var(--lh-xs);
     position: absolute;
+    white-space: nowrap;
   }
 
   &__step-number {

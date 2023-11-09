@@ -26,7 +26,11 @@ const handleActiveStepChange = (stepIndex) => {
 </script>
 
 <template>
-  <Form class="inbound-deliveries-form-create" v-slot="{ values }">
+  <Form
+    @submit="handleInboundDeliveryFormSubmit"
+    class="inbound-deliveries-form-create"
+    v-slot="{ values }"
+  >
     <h3>Add an inbound delivery</h3>
     <BaseMultistepFormProgressBar
       :steps="inboundDeliveryFormStepsInfo"
@@ -38,7 +42,7 @@ const handleActiveStepChange = (stepIndex) => {
       class="inbound-deliveries-form-create__select-dish"
     >
       <BaseFormFieldset label="Select dish">
-        <WarehouseInboundDeliveriesModalCreateDishesList />
+        <WarehouseInboundDeliveriesModalCreateDishesList name="dish" />
       </BaseFormFieldset>
       <div class="inbound-deliveries-form-create__select-dish-action-buttons">
         <BaseButton
@@ -92,7 +96,7 @@ const handleActiveStepChange = (stepIndex) => {
         <ul class="inbound-deliveries-form-create__verify-info-list">
           <li class="inbound-deliveries-form-create__verify-info-list-entry">
             <p>Dish:</p>
-            <span>{{ values.dish || "Not specified" }}</span>
+            <span>{{ values.dish?.name || "Not specified" }}</span>
           </li>
           <li class="inbound-deliveries-form-create__verify-info-list-entry">
             <p>Amount of units:</p>
@@ -116,7 +120,9 @@ const handleActiveStepChange = (stepIndex) => {
           variant="tertiary"
           >Previous step</BaseButton
         >
-        <BaseButton stretch="fit-content">Finalize inbound delivery</BaseButton>
+        <BaseButton type="submit" stretch="fit-content"
+          >Finalize inbound delivery</BaseButton
+        >
       </div>
     </div>
   </Form>
