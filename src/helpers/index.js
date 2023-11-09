@@ -16,11 +16,14 @@ export const generateTabsFromRoute = (route) => {
   });
 };
 
-export const getCurrentDateFormatted = () => {
-  return new Date().toLocaleDateString("en-US", {
+export const transformToFormattedDate = (date) => {
+  return date.toLocaleDateString("en-US", {
     weekday: "long",
     day: "numeric",
     month: "long",
     year: "numeric",
   });
 };
+
+export const transformToFormattedDateShort = (date) =>
+  date.toLocaleDateString("en-US");

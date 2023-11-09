@@ -1,13 +1,16 @@
 <script setup>
 import { ref } from "vue";
 import { Form } from "vee-validate";
+import { transformToFormattedDate } from "@helpers/index";
+import { createMeals } from "@services/mealService";
 import * as yup from "yup";
 
+import WarehouseInboundDeliveriesModalCreateDishesList from "@components/WarehouseInboundDeliveriesModalCreateDishesList.vue";
 import BaseMultistepFormProgressBar from "@components/BaseMultistepFormProgressBar.vue";
 import BaseFormFieldset from "@components/BaseFormFieldset.vue";
+import BaseFormDatePicker from "@components/BaseFormDatePicker.vue";
 import BaseFormInput from "@components/BaseFormInput.vue";
 import BaseButton from "@components/BaseButton.vue";
-import WarehouseInboundDeliveriesModalCreateDishesList from "@components/WarehouseInboundDeliveriesModalCreateDishesList.vue";
 
 const inboundDeliveryFormActiveStep = ref(1);
 
@@ -23,7 +26,8 @@ const inboundDeliveryFormValidationSchema = yup.object({
     .string()
     .required("Supplier Batch Number is required"),
   inboundDishBatchExpiryDate: yup
-    .string()
+    .date()
+    .typeError("Invalid date format")
     .required("Batch Expiry Date is required"),
   inboundDishAmountOfUnits: yup
     .number()
@@ -32,6 +36,16 @@ const inboundDeliveryFormValidationSchema = yup.object({
 
 const handleInboundDeliveryFormSubmit = async (values) => {
   console.log(values);
+
+  const { data: createMealData, error: createMealError } = await createMeals({
+    inboundDishId: values.inboundDish.id,
+    inboundDishSupplierBatchNumber: values.inboundDishSupplierBatchNumber,
+    inboundDishBatchExpiryDate: values.inboundDishBatchExpiryDate.toISOString(),
+    inboundDishAmountOfUnits: values.inboundDishAmountOfUnits,
+  });
+
+  console.log(createMealData);
+  console.log(createMealError);
 };
 
 const handleActiveStepChange = (stepIndex) => {
@@ -77,10 +91,9 @@ const handleActiveStepChange = (stepIndex) => {
           label="Supplier batch number/id"
           placeholder="type a batch number"
         />
-        <BaseFormInput
+        <BaseFormDatePicker
           name="inboundDishBatchExpiryDate"
-          label="Batch expiry data"
-          placeholder="type an expiry date"
+          label="Batch expiry date"
         />
         <BaseFormInput
           name="inboundDishAmountOfUnits"
@@ -128,7 +141,9 @@ const handleActiveStepChange = (stepIndex) => {
           <li class="inbound-deliveries-form-create__verify-info-list-entry">
             <p>Batch expiry date:</p>
             <span>{{
-              values.inboundDishBatchExpiryDate || "Not specified"
+              values.inboundDishBatchExpiryDate
+                ? transformToFormattedDate(values.inboundDishBatchExpiryDate)
+                : "Not specified"
             }}</span>
           </li>
         </ul>
@@ -171,6 +186,7 @@ const handleActiveStepChange = (stepIndex) => {
     align-items: center;
     line-height: var(--lh-xs);
     justify-content: space-between;
+    gap: var(--space-4xl);
 
     & > span {
       color: var(--clr-gray-700);

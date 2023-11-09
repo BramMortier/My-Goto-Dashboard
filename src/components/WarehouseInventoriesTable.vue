@@ -1,5 +1,21 @@
 <script setup>
+import { ref, onMounted } from "vue";
+import { getWarehouseInventory } from "@services/mealService";
+
 import WarehouseInventoriesTableRow from "@components/WarehouseInventoriesTableRow.vue";
+
+const warehouseInventories = ref(null);
+
+onMounted(async () => {
+  const { data: getWarehouseInventoryData, error: getWarehouseInventoryError } =
+    await getWarehouseInventory();
+
+  console.log(getWarehouseInventoryError);
+
+  warehouseInventories.value = getWarehouseInventoryData;
+
+  console.log(warehouseInventories.value);
+});
 </script>
 
 <template>
@@ -9,16 +25,16 @@ import WarehouseInventoriesTableRow from "@components/WarehouseInventoriesTableR
       <div class="warehouse-inventories-table__head-cell">Supplier</div>
       <div class="warehouse-inventories-table__head-cell">Supplier batch</div>
       <div class="warehouse-inventories-table__head-cell">Amount</div>
-      <div class="warehouse-inventories-table__head-cell">Stored on</div>
-      <div class="warehouse-inventories-table__head-cell">Expires on</div>
+      <div class="warehouse-inventories-table__head-cell">Stored at</div>
+      <div class="warehouse-inventories-table__head-cell">Expires at</div>
       <div class="warehouse-inventories-table__head-cell">Expires in</div>
     </div>
     <div class="warehouse-inventories-table-body">
-      <WarehouseInventoriesTableRow />
-      <WarehouseInventoriesTableRow />
-      <WarehouseInventoriesTableRow />
-      <WarehouseInventoriesTableRow />
-      <WarehouseInventoriesTableRow />
+      <WarehouseInventoriesTableRow
+        v-for="inventoryEntry in warehouseInventories"
+        :key="inventoryEntry.stored_at"
+        :inventoryEntry="inventoryEntry"
+      />
     </div>
   </div>
 </template>

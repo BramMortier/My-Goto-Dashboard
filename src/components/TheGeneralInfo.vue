@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute } from "vue-router";
-import { getCurrentDateFormatted } from "@helpers/index";
+import { transformToFormattedDate } from "@helpers/index";
 import { getAuthenticatedUser } from "@services/userService";
 import { onMounted, ref } from "vue";
 
@@ -27,7 +27,7 @@ onMounted(async () => {
     <div class="general-info__user-info-container">
       <div class="general-info__user-info">
         <p>Hi, {{ userName }}</p>
-        <span>{{ getCurrentDateFormatted() }}</span>
+        <span>{{ transformToFormattedDate(new Date()) }}</span>
       </div>
       <div class="general-info__user-profile-picture">
         <img src="@assets/icons/person.svg" alt="profile icon" />

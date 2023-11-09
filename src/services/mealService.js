@@ -10,6 +10,16 @@ export const getAllMeals = async () => {
   return { data: getAllMealsData, error: null };
 };
 
+export const getWarehouseInventory = async () => {
+  const { data: getWarehouseInventoryData, error: getWarehouseInventoryError } =
+    await supabase.rpc("get_warehouse_inventory");
+
+  if (getWarehouseInventoryError)
+    return { data: null, error: getWarehouseInventoryError };
+
+  return { data: getWarehouseInventoryData, error: null };
+};
+
 export const getMealById = async (mealId) => {
   const { data: getMealByIdData, error: getMealByIdError } = await supabase
     .from("meals")
@@ -22,21 +32,24 @@ export const getMealById = async (mealId) => {
   return { data: getMealByIdData, error: null };
 };
 
-export const createMeal = async ({
+export const createMeals = async ({
   inboundDishId,
   inboundDishSupplierBatchNumber,
   inboundDishBatchExpiryDate,
   inboundDishAmountOfUnits,
 }) => {
+  const mealsData = Array.from({ length: inboundDishAmountOfUnits }, () => ({
+    dish_id: inboundDishId,
+    supplier_batch: inboundDishSupplierBatchNumber,
+    expires_at: inboundDishBatchExpiryDate,
+    warehouse_id: "8aa863b4-794f-4263-95dd-687cbdd0f083",
+  }));
+
+  console.log(mealsData);
+
   const { data: createMealData, error: createMealError } = await supabase
     .from("meals")
-    .insert({
-      dish_id: inboundDishId,
-      supplier_batch: inboundDishSupplierBatchNumber,
-      expiry_date: inboundDishBatchExpiryDate,
-      amount: inboundDishAmountOfUnits,
-      warehouse_id: "8aa863b4-794f-4263-95dd-687cbdd0f083",
-    })
+    .insert(mealsData)
     .select();
 
   if (createMealError) return { data: null, error: createMealError };
