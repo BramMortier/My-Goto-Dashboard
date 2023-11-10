@@ -9,12 +9,12 @@ import MachinesActiveList from "@components/MachinesActiveList.vue";
 
 <template>
   <div class="overview-machines-page">
-    <BasePageSection title="Machines status">
+    <BasePageSection width="xl">
       <BasePageSectionGroup>
         <MachinesStatusOverview />
       </BasePageSectionGroup>
     </BasePageSection>
-    <BasePageSection title="Active machines">
+    <BasePageSection title="Active machines" width="xl">
       <BasePageSectionGroup>
         <div class="overview-machines-page__filters">
           <BaseSearchbar />

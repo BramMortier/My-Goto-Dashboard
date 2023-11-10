@@ -10,7 +10,7 @@ const props = defineProps({
     class="page-section"
     :style="{ maxWidth: `var(--container-width-${props.width})` }"
   >
-    <h3>{{ title }}</h3>
+    <h3 v-if="title">{{ title }}</h3>
     <slot></slot>
   </section>
 </template>
