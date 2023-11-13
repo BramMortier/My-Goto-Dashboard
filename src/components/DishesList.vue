@@ -11,8 +11,6 @@ onMounted(async () => {
     await getAllDishes();
 
   dishes.value = getAllDishesData;
-
-  console.log(dishes.value);
 });
 </script>
 

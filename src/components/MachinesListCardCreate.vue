@@ -13,7 +13,7 @@
       <div class="machines-list-card-create__info">
         <div class="machines-list-card-create__info-entry">
           <p>Address:</p>
-          <span>Asta Nielsen Strædet 14</span>
+          <span>Nielsen Strædet 14</span>
         </div>
         <div class="machines-list-card-create__info-entry">
           <p>Postal code:</p>

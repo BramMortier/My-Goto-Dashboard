@@ -9,6 +9,7 @@ import BaseFormRow from "@components/BaseFormRow.vue";
 import BaseFormInput from "@components/BaseFormInput.vue";
 import BaseFormFieldset from "@components/BaseFormFieldset.vue";
 import BaseMultistepFormProgressBar from "@components/BaseMultistepFormProgressBar.vue";
+import MachinesModalCreatePlanStructure from "@components/MachinesModalCreatePlanStructure.vue";
 
 const machineLocationFormActiveStep = ref(1);
 
@@ -140,6 +141,7 @@ const handleActiveStepChange = (stepIndex) => {
         label="Plan the machines inventory structure"
         description="Select which meals this machines should idealy have in stock. By specifiing a specific structure choosing how to fill up the machines later will easier."
       >
+        <MachinesModalCreatePlanStructure name="locationStructure" />
       </BaseFormFieldset>
     </div>
     <BaseButton>Add machine</BaseButton>

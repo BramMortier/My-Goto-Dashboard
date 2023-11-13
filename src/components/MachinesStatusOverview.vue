@@ -66,6 +66,7 @@
     & > span {
       color: var(--clr-black);
       line-height: var(--lh-xs);
+      margin-bottom: var(--space-2xs);
     }
   }
 
