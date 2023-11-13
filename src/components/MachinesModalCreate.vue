@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from "vue";
 import { Form } from "vee-validate";
 import { createLocation } from "@services/locationService";
 import * as yup from "yup";
@@ -7,6 +8,11 @@ import BaseButton from "@components/BaseButton.vue";
 import BaseFormRow from "@components/BaseFormRow.vue";
 import BaseFormInput from "@components/BaseFormInput.vue";
 import BaseFormFieldset from "@components/BaseFormFieldset.vue";
+import BaseMultistepFormProgressBar from "@components/BaseMultistepFormProgressBar.vue";
+
+const machineLocationFormActiveStep = ref(1);
+
+const machineLocationFormStepsInfo = ["Machine info", "Plan structure"];
 
 const machineLocationValidationSchema = yup.object({
   locationName: yup.string().required("Machine name is required"),
@@ -40,6 +46,10 @@ const handleMachineLocationFormSubmit = async (values) => {
   console.log(createLocationData);
   console.log(createLocationError);
 };
+
+const handleActiveStepChange = (stepIndex) => {
+  machineLocationFormActiveStep.value = stepIndex;
+};
 </script>
 
 <template>
@@ -49,73 +59,89 @@ const handleMachineLocationFormSubmit = async (values) => {
     class="machines-form-create"
   >
     <h3>Add a machine</h3>
-    <BaseFormFieldset label="General info">
-      <BaseFormInput
-        name="locationName"
-        label="Name"
-        placeholder="type machine name"
-      />
-      <BaseFormInput
-        name="locationCapacity"
-        label="Capacity"
-        placeholder="type machine capacity"
-      />
-    </BaseFormFieldset>
-    <BaseFormFieldset label="Location info">
-      <BaseFormRow>
-        <BaseFormInput
-          name="locationStreet"
-          label="Street"
-          placeholder="type the machine street"
-        />
-        <BaseFormInput
-          name="locationStreetNumber"
-          label="Street number"
-          placeholder="type the machine street number"
-        />
-      </BaseFormRow>
-      <BaseFormRow>
-        <BaseFormInput
-          name="locationPostalCode"
-          label="Postal code"
-          placeholder="type the machine postal code"
-        />
-        <BaseFormInput
-          name="locationCity"
-          label="City"
-          placeholder="type the machine city"
-        />
-      </BaseFormRow>
-      <BaseFormRow>
-        <BaseFormInput
-          name="locationCountry"
-          label="Country"
-          placeholder="type the machine country"
-        />
-      </BaseFormRow>
-    </BaseFormFieldset>
-    <BaseFormFieldset
-      label="Geolocation info"
-      description="To easily show locations on a map we need the latitude and longitude of the address. Type the address in to google maps and copy the coordinates into the fields below."
+    <BaseMultistepFormProgressBar
+      :steps="machineLocationFormStepsInfo"
+      :activeStep="machineLocationFormActiveStep"
+      @activeStepChange="handleActiveStepChange"
     >
-      <BaseFormRow>
-        <BaseFormInput
-          name="locationLatitude"
-          label="Latitude"
-          placeholder="type the latitude"
-        />
-        <BaseFormInput
-          name="locationLongitude"
-          label="Longitude"
-          placeholder="type the longitude"
-        />
-      </BaseFormRow>
-    </BaseFormFieldset>
-    <BaseFormFieldset
-      label="Plan the machines inventory structure"
-      description="Select which meals this machines should idealy have in stock. By specifiing a specific structure choosing how to fill up the machines later will easier."
+    </BaseMultistepFormProgressBar>
+    <div
+      v-show="machineLocationFormActiveStep === 1"
+      class="machines-form-create__machine-info"
     >
-    </BaseFormFieldset>
+      <BaseFormFieldset label="General info">
+        <BaseFormInput
+          name="locationName"
+          label="Name"
+          placeholder="type machine name"
+        />
+        <BaseFormInput
+          name="locationCapacity"
+          label="Capacity"
+          placeholder="type machine capacity"
+        />
+      </BaseFormFieldset>
+      <BaseFormFieldset label="Location info">
+        <BaseFormRow>
+          <BaseFormInput
+            name="locationStreet"
+            label="Street"
+            placeholder="type the machine street"
+          />
+          <BaseFormInput
+            name="locationStreetNumber"
+            label="Street number"
+            placeholder="type the machine street number"
+          />
+        </BaseFormRow>
+        <BaseFormRow>
+          <BaseFormInput
+            name="locationPostalCode"
+            label="Postal code"
+            placeholder="type the machine postal code"
+          />
+          <BaseFormInput
+            name="locationCity"
+            label="City"
+            placeholder="type the machine city"
+          />
+        </BaseFormRow>
+        <BaseFormRow>
+          <BaseFormInput
+            name="locationCountry"
+            label="Country"
+            placeholder="type the machine country"
+          />
+        </BaseFormRow>
+      </BaseFormFieldset>
+      <BaseFormFieldset
+        label="Geolocation info"
+        description="To easily show locations on a map we need the latitude and longitude of the address. Type the address in to google maps and copy the coordinates into the fields below."
+      >
+        <BaseFormRow>
+          <BaseFormInput
+            name="locationLatitude"
+            label="Latitude"
+            placeholder="type the latitude"
+          />
+          <BaseFormInput
+            name="locationLongitude"
+            label="Longitude"
+            placeholder="type the longitude"
+          />
+        </BaseFormRow>
+      </BaseFormFieldset>
+    </div>
+    <div
+      v-show="machineLocationFormActiveStep === 2"
+      class="machines-form-create__plan-structure"
+    >
+      <BaseFormFieldset
+        label="Plan the machines inventory structure"
+        description="Select which meals this machines should idealy have in stock. By specifiing a specific structure choosing how to fill up the machines later will easier."
+      >
+      </BaseFormFieldset>
+    </div>
     <BaseButton>Add machine</BaseButton>
   </Form>
 </template>

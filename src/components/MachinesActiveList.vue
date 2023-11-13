@@ -1,7 +1,18 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from "vue";
+
+import MachinesActiveListCard from "@components/MachinesActiveListCard.vue";
+
+const activeMachines = ref(null);
+</script>
 
 <template>
-  <div>MachinesActiveList</div>
+  <ul class="machines-active-list">
+    <!-- <MachinesActiveListCard
+      v-for="machine in activeMachines"
+      :key="machine.id"
+    /> -->
+  </ul>
 </template>
 
 <style lang="scss" scoped></style>
