@@ -25,16 +25,23 @@ onMounted(async () => {
   machinePlan.value = [];
 });
 
-const handleAddDishToMachineStructurePlan = (dish, quantity) => {
+const handleAddDishToMachineStructurePlan = (dish) => {
   machinePlan.value = [
     ...machinePlan.value,
     {
       dishName: dish.name,
       dishId: dish.id,
-      dishQuantity: quantity || 1,
+      dishQuantity: 1,
     },
   ];
-  console.log(machinePlan.value);
+};
+
+const updateDishQuantity = (index, quantity) => {
+  machinePlan.value[index].dishQuantity = quantity;
+};
+
+const removeDishFromMachineStructurePlan = (index) => {
+  machinePlan.value.splice(index, 1);
 };
 </script>
 
@@ -78,27 +85,44 @@ const handleAddDishToMachineStructurePlan = (dish, quantity) => {
       </Transition>
     </div>
     <div class="machines-create-plan-structure__overview">
-      <div class="machines-create-plan-structure__overview-empty">
+      <div
+        v-if="machinePlan?.length === 0"
+        class="machines-create-plan-structure__overview-empty"
+      >
         <p>
           This machine plan is empty. Add dishes to the plan by searching for
           them above.
         </p>
         <BaseButton
-          @click="searchInput.focus()"
+          @click.prevent="searchInput.focus()"
           type="secondary"
           stretch="fit-content"
-          >Plan a dish</BaseButton
-        >
+          >Plan a dish
+        </BaseButton>
       </div>
       <ul
         v-if="machinePlan"
         class="machines-create-plan-structure__overview-list"
       >
         <li
-          v-for="entry in machinePlan"
+          v-for="(entry, index) in machinePlan"
           :key="entry.dishId"
           class="machines-create-plan-structure__overview-list-card"
-        ></li>
+        >
+          <p>{{ entry.dishName }}</p>
+          <div
+            class="machines-create-plan-structure__overview-list-card-section"
+          >
+            <input type="text" :value="entry.dishQuantity" />
+            <BaseButton
+              @click.prevent="removeDishFromMachineStructurePlan(index)"
+              type="tertiary"
+              variant="outlined"
+            >
+              Remove
+            </BaseButton>
+          </div>
+        </li>
       </ul>
     </div>
   </div>
@@ -108,33 +132,29 @@ const handleAddDishToMachineStructurePlan = (dish, quantity) => {
 .machines-create-plan-structure {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-md);
 
-  &__search-dishes {
-    input {
-      position: relative;
-      margin-bottom: var(--space-xs);
-      min-width: var(--input-width-md);
-      width: 100%;
-      min-height: 44px;
-      padding-inline: var(--space-md);
-      font-size: var(--fs-sm);
-      border: 1px solid transparent;
-      border-radius: var(--border-radius-md);
-      outline: none;
-      background-color: var(--clr-gray-100);
-      color: var(--clr-gray-900);
+  input {
+    position: relative;
+    width: 100%;
+    min-height: 44px;
+    padding-inline: var(--space-md);
+    font-size: var(--fs-sm);
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-md);
+    outline: none;
+    background-color: var(--clr-gray-100);
+    color: var(--clr-gray-900);
 
-      &::placeholder {
-        color: var(--clr-gray-500);
-      }
+    &::placeholder {
+      color: var(--clr-gray-500);
     }
   }
 
   &__dishes-list {
     position: absolute;
-    max-height: 18.75rem;
     overflow-y: scroll;
+    max-height: 25rem;
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
@@ -200,11 +220,34 @@ const handleAddDishToMachineStructurePlan = (dish, quantity) => {
     width: 100%;
     border-radius: var(--border-radius-md);
     background-color: var(--clr-gray-100);
-    min-height: 18.75rem;
+    min-height: 200px;
 
     & > p {
       max-width: 25rem;
       text-align: center;
+    }
+  }
+
+  &__overview-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  &__overview-list-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--clr-gray-500);
+  }
+
+  &__overview-list-card-section {
+    display: flex;
+    gap: var(--space-xs);
+
+    input {
+      max-width: 4rem;
     }
   }
 }
