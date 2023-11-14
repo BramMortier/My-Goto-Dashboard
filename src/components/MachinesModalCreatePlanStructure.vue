@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useField } from "vee-validate";
 import { getAllDishes } from "@services/dishService";
 import { publicStorageBucketUrl } from "@services/storageService";
@@ -8,6 +8,7 @@ import BaseButton from "@components/BaseButton.vue";
 
 const props = defineProps({
   name: String,
+  machineCapacity: Number,
 });
 
 const dishes = ref(null);
@@ -16,6 +17,14 @@ const searchInput = ref(null);
 const isSearchInputFocused = ref(false);
 
 const { value: machinePlan } = useField(() => props.name);
+
+const machinePlanSize = computed(() =>
+  machinePlan.value?.reduce((total, dish) => total + dish.dishQuantity, 0)
+);
+
+const machineCapacityExceeded = computed(
+  () => machinePlanSize.value > props.machineCapacity
+);
 
 onMounted(async () => {
   const { data: getAllDishesData, error: getAllDishesError } =
@@ -36,11 +45,11 @@ const handleAddDishToMachineStructurePlan = (dish) => {
   ];
 };
 
-const updateDishQuantity = (index, quantity) => {
-  machinePlan.value[index].dishQuantity = quantity;
+const handleUupdateDishQuantity = (index, quantity) => {
+  machinePlan.value[index].dishQuantity = Number(quantity);
 };
 
-const removeDishFromMachineStructurePlan = (index) => {
+const handleRemoveDishFromMachineStructurePlan = (index) => {
   machinePlan.value.splice(index, 1);
 };
 </script>
@@ -48,6 +57,19 @@ const removeDishFromMachineStructurePlan = (index) => {
 <template>
   <div class="machines-create-plan-structure">
     <div class="machines-create-plan-structure__search-dishes">
+      <p class="machines-create-plan-structure__capacity-overview">
+        Plan capacity:
+        <span
+          class="machines-create-plan-structure__plan-size"
+          :class="{
+            'machines-create-plan-structure__plan-size--exceeded':
+              machineCapacityExceeded,
+          }"
+        >
+          {{ machinePlanSize }}</span
+        >
+        / {{ props.machineCapacity ? props.machineCapacity : "Not specified" }}
+      </p>
       <input
         type="text"
         ref="searchInput"
@@ -113,9 +135,13 @@ const removeDishFromMachineStructurePlan = (index) => {
           <div
             class="machines-create-plan-structure__overview-list-card-section"
           >
-            <input type="text" :value="entry.dishQuantity" />
+            <input
+              @change="handleUupdateDishQuantity(index, $event.target.value)"
+              type="text"
+              :value="entry.dishQuantity"
+            />
             <BaseButton
-              @click.prevent="removeDishFromMachineStructurePlan(index)"
+              @click.prevent="handleRemoveDishFromMachineStructurePlan(index)"
               type="tertiary"
               variant="outlined"
             >
@@ -133,6 +159,22 @@ const removeDishFromMachineStructurePlan = (index) => {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
+
+  &__capacity-overview {
+    line-height: var(--lh-xs);
+    margin-bottom: var(--space-xs);
+    text-align: right;
+    text-transform: uppercase;
+    font-size: var(--fs-sm);
+  }
+
+  &__plan-size {
+    color: var(--clr-green-400);
+
+    &--exceeded {
+      color: var(--clr-red-400);
+    }
+  }
 
   input {
     position: relative;
@@ -225,6 +267,7 @@ const removeDishFromMachineStructurePlan = (index) => {
     & > p {
       max-width: 25rem;
       text-align: center;
+      color: var(--clr-gray-700);
     }
   }
 

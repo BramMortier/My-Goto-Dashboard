@@ -25,27 +25,35 @@ const machineLocationValidationSchema = yup.object({
   locationCountry: yup.string().required("A country is required"),
   locationLatitude: yup.number().required("A latitude is required"),
   locationLongitude: yup.number().required("A longitude is required"),
+  locationPlan: yup.array().of(
+    yup.object().shape({
+      dishName: yup.string().required(),
+      dishId: yup.string().required(),
+      dishQuantity: yup.number().required().integer().positive(),
+    })
+  ),
 });
 
 const handleMachineLocationFormSubmit = async (values) => {
+  console.log("submiting");
   console.log(values);
 
-  const { data: createLocationData, error: createLocationError } =
-    await createLocation({
-      locationType: "Machine",
-      locationCapacity: values.locationCapacity,
-      locationName: values.locationName,
-      locationStreet: values.locationStreet,
-      locationStreetNumber: values.locationStreetNumber,
-      locationPostalCode: values.locationPostalCode,
-      locationCity: values.locationCity,
-      locationCountry: values.locationCountry,
-      locationLatitude: values.locationLatitude,
-      locationLongitude: values.locationLongitude,
-    });
+  // const { data: createLocationData, error: createLocationError } =
+  //   await createLocation({
+  //     locationType: "Machine",
+  //     locationCapacity: values.locationCapacity,
+  //     locationName: values.locationName,
+  //     locationStreet: values.locationStreet,
+  //     locationStreetNumber: values.locationStreetNumber,
+  //     locationPostalCode: values.locationPostalCode,
+  //     locationCity: values.locationCity,
+  //     locationCountry: values.locationCountry,
+  //     locationLatitude: values.locationLatitude,
+  //     locationLongitude: values.locationLongitude,
+  //   });
 
-  console.log(createLocationData);
-  console.log(createLocationError);
+  // console.log(createLocationData);
+  // console.log(createLocationError);
 };
 
 const handleActiveStepChange = (stepIndex) => {
@@ -58,6 +66,7 @@ const handleActiveStepChange = (stepIndex) => {
     @submit="handleMachineLocationFormSubmit"
     :validation-schema="machineLocationValidationSchema"
     class="machines-form-create"
+    v-slot="{ values }"
   >
     <h3>Add a machine</h3>
     <BaseMultistepFormProgressBar
@@ -132,6 +141,14 @@ const handleActiveStepChange = (stepIndex) => {
           />
         </BaseFormRow>
       </BaseFormFieldset>
+      <div class="machines-form-create__machine-info-action-buttons">
+        <BaseButton
+          @click.prevent="handleActiveStepChange(2)"
+          stretch="fit-content"
+        >
+          Continue
+        </BaseButton>
+      </div>
     </div>
     <div
       v-show="machineLocationFormActiveStep === 2"
@@ -141,10 +158,23 @@ const handleActiveStepChange = (stepIndex) => {
         label="Plan the machines inventory structure"
         description="Select which meals this machines should idealy have in stock. By specifiing a specific structure choosing how to fill up the machines later will easier."
       >
-        <MachinesModalCreatePlanStructure name="locationStructure" />
+        <MachinesModalCreatePlanStructure
+          :machineCapacity="Number(values.locationCapacity) || undefined"
+          name="locationPlan"
+        />
       </BaseFormFieldset>
+      <div class="machines-form-create__plan-structure-action-buttons">
+        <BaseButton
+          @click.prevent="handleActiveStepChange(1)"
+          stretch="fit-content"
+          type="outlined"
+          variant="tertiary"
+        >
+          Previous step
+        </BaseButton>
+        <BaseButton stretch="fit-content"> Add machine </BaseButton>
+      </div>
     </div>
-    <BaseButton>Add machine</BaseButton>
   </Form>
 </template>
 
@@ -156,6 +186,13 @@ const handleActiveStepChange = (stepIndex) => {
   & > h3 {
     font-size: var(--fs-lg);
     margin-bottom: var(--space-lg);
+  }
+
+  &__machine-info-action-buttons,
+  &__plan-structure-action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-md);
   }
 }
 </style>

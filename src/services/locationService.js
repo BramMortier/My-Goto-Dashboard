@@ -9,6 +9,18 @@ export const getAllLocations = async () => {
   return { data: getAllLocationsData, error: null };
 };
 
+export const getAllMachinesWithPlan = async () => {
+  const {
+    data: getAllMachinesWithPlanData,
+    error: getAllMachinesWithPlanError,
+  } = await supabase.rpc("get_all_machines_with_plan");
+
+  if (getAllMachinesWithPlanError)
+    return { data: null, error: getAllMachinesWithPlanError };
+
+  return { data: getAllMachinesWithPlanData, error: null };
+};
+
 export const getAllLocationsByType = async (locationType) => {
   const { data: getAllLocationsByTypeData, error: getAllLocationsByTypeError } =
     await supabase.from("locations").select("*").eq("type", locationType);

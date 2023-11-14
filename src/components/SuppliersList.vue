@@ -16,6 +16,7 @@ onMounted(async () => {
     await getAllSuppliers();
 
   suppliers.value = getAllSuppliersData;
+  console.log(suppliers.value);
 });
 </script>
 

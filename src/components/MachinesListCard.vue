@@ -18,9 +18,9 @@ const props = defineProps({
       <div class="machines-list-card__info">
         <div class="machines-list-card__info-entry">
           <p>Address:</p>
-          <span
-            >{{ props.machine.street }} {{ props.machine.street_number }}</span
-          >
+          <span>
+            {{ props.machine.street }} {{ props.machine.street_number }}
+          </span>
         </div>
         <div class="machines-list-card__info-entry">
           <p>Postal code:</p>
