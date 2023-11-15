@@ -55,6 +55,26 @@ export const routes = [
     component: () => import("@pages/OverviewOutboundDeliveriesPage.vue"),
   },
   {
+    path: "/outbound-deliveries/plan-delivery",
+    name: "PlanOutboundDeliveriesPage",
+    meta: {
+      layout: SidebarLayout,
+      requiresAuth: true,
+      breadcrumbs: [
+        { label: "Dashboard", pathName: "OverviewDashboardPage" },
+        {
+          label: "Outbound deliveries",
+          pathName: "OverviewOutboundDeliveriesPage",
+        },
+        {
+          label: "Plan delivery",
+          pathName: "PlanOutboundDeliveriesPage",
+        },
+      ],
+    },
+    component: () => import("@pages/PlanOutboundDeliveriesPage.vue"),
+  },
+  {
     path: "/dishes-and-suppliers",
     name: "ManageDishesAndSuppliersPage",
     redirect: { name: "ManageDishesPage" },

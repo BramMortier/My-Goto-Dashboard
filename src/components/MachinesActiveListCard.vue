@@ -2,6 +2,9 @@
 const props = defineProps({
   machine: Object,
 });
+
+const generateEntryQuantityArray = (length) =>
+  Array.from({ length }, (_, index) => index);
 </script>
 
 <template>
@@ -26,11 +29,17 @@ const props = defineProps({
           <div
             class="machines-active-list-card__inventory-overview-entry-quantity"
           >
-            <p>dish.dish_name</p>
+            <p>{{ dish.dish_name }}</p>
             <ul>
-              <li></li>
+              <li
+                v-for="(item, index) in generateEntryQuantityArray(
+                  dish.suggested_quantity
+                )"
+                :key="index"
+              ></li>
             </ul>
           </div>
+          <p>0 / {{ dish.suggested_quantity }}</p>
         </li>
       </ul>
     </div>
@@ -70,13 +79,12 @@ const props = defineProps({
 
     & > h4 {
       font-weight: var(--fw-semibold);
-      margin-bottom: var(--space-xs);
+      margin-bottom: var(--space-sm);
     }
 
     & > span {
       line-height: var(--lh-xs);
       margin-bottom: var(--space-md);
-      font-size: var(--fs-sm);
     }
   }
 
@@ -88,6 +96,44 @@ const props = defineProps({
     margin-bottom: var(--space-md);
     line-height: var(--lh-xs);
     width: fit-content;
+  }
+
+  &__inventory-overview {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  &__inventory-overview-entry {
+    display: flex;
+    justify-content: space-between;
+
+    & > p {
+      line-height: var(--lh-xs);
+    }
+  }
+
+  &__inventory-overview-entry-quantity {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+
+    & > P {
+      line-height: var(--lh-xs);
+    }
+
+    & > ul {
+      display: grid;
+      grid-template-columns: repeat(12, 16px);
+      gap: var(--space-2xs);
+
+      & > li {
+        width: 16px;
+        height: 16px;
+        border-radius: 3px;
+        background-color: var(--clr-gray-300);
+      }
+    }
   }
 }
 </style>
