@@ -19,7 +19,14 @@ onMounted(async () => {
 const { value: selectedTruckDriver, errorMessage } = useField(() => props.name);
 
 const handleTruckDriverChange = (truckDriver) => {
-  selectedTruckDriver.value = truckDriver;
+  if (
+    selectedTruckDriver.value?.truck_driver_id === truckDriver.truck_driver_id
+  ) {
+    selectedTruckDriver.value = null;
+    return;
+  } else {
+    selectedTruckDriver.value = truckDriver;
+  }
 };
 </script>
 
@@ -51,21 +58,26 @@ const handleTruckDriverChange = (truckDriver) => {
 
 <style lang="scss" scoped>
 .outbound-deliveries-create-truck-driver-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-sm);
 
   &__card {
     display: flex;
     width: 100%;
+    min-width: 18.75rem;
     justify-content: space-between;
     align-items: center;
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
     background-color: var(--clr-gray-100);
-    padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-md);
+    padding: var(--space-sm);
     transition: var(--hover-transition);
     max-width: 25rem;
+
+    & > p {
+      line-height: var(--lh-xs);
+    }
 
     &--selected {
       border-color: var(--clr-green-400);
