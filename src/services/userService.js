@@ -12,6 +12,16 @@ export const getAllUsers = async () => {
   return { data: getAllUsersData, error: null };
 };
 
+export const getAllUsersByRole = async (userRole) => {
+  const { data: getAllUsersByRoleData, error: getAllUsersByRoleError } =
+    await supabase.rpc("get_all_users_by_role", { role_name: userRole });
+
+  if (getAllUsersByRoleError)
+    return { data: null, error: getAllUsersByRoleError };
+
+  return { data: getAllUsersByRoleData, error: null };
+};
+
 export const getUserById = async (userId) => {
   const { data: getUserByIdData, error: getUserByIdError } = await supabase
     .from("user_profiles")

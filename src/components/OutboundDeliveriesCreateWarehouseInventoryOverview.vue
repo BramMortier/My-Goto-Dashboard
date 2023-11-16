@@ -10,7 +10,6 @@ onMounted(async () => {
     await getAllMealsCount();
 
   mealCounts.value = getAllMealsCountData;
-  console.log(getAllMealsCountData, getAllMealsCountError);
 });
 </script>
 

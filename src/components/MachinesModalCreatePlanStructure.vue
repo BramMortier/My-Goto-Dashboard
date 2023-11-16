@@ -77,6 +77,7 @@ const handleRemoveDishFromMachineStructurePlan = (index) => {
         @focus="isSearchInputFocused = true"
         @blur="isSearchInputFocused = false"
         placeholder="Search all dishes"
+        autocomplete="off"
       />
       <Transition name="dishes-list-transition">
         <ul
