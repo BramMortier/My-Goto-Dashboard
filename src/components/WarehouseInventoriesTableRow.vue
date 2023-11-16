@@ -33,7 +33,11 @@ const props = defineProps({
     <div
       class="warehouse-inventories-table-row__cell warehouse-inventories-table-row__cell--bold"
     >
-      {{ inventoryEntry.expires_in_days }} days
+      {{
+        inventoryEntry.expires_in_days < 0
+          ? `Expired ${Math.abs(inventoryEntry.expires_in_days)} day ago`
+          : `${inventoryEntry.expires_in_days} days`
+      }}
     </div>
   </div>
 </template>
