@@ -7,6 +7,14 @@ const props = defineProps({
 });
 
 const inventoryRefillPlan = ref(props.machine.machine_plan);
+const hoveredMeal = ref({
+  dish: null,
+  index: null,
+});
+
+const setHoveredMeal = (dish, index) => {
+  hoveredMeal.value = { dish, index };
+};
 </script>
 
 <template>
@@ -34,12 +42,22 @@ const inventoryRefillPlan = ref(props.machine.machine_plan);
           class="outbound-deliveries-create-refill-machine__inventory-overview-entry-quantity"
         >
           {{ entry.dish_name }}
-          <ul>
+          <ul
+            class="outbound-deliveries-create-refill-machine__inventory-overview-meals"
+            @mouseleave="setHoveredMeal(null, null)"
+          >
             <li
               v-for="(_, index) in generateArrayFromLength(
                 entry.suggested_quantity
               )"
               :key="index"
+              class="outbound-deliveries-create-refill-machine__inventory-overview-meal"
+              :class="{
+                'outbound-deliveries-create-refill-machine__inventory-overview-meal--selected':
+                  hoveredMeal.dish === entry.dish_name &&
+                  hoveredMeal.index >= index,
+              }"
+              @mouseover="setHoveredMeal(entry.dish_name, index)"
             ></li>
           </ul>
         </div>
@@ -105,24 +123,25 @@ const inventoryRefillPlan = ref(props.machine.machine_plan);
     & > P {
       line-height: var(--lh-xs);
     }
+  }
 
-    & > ul {
-      display: grid;
-      grid-template-columns: repeat(12, 24px);
-      gap: var(--space-2xs);
+  &__inventory-overview-meals {
+    display: grid;
+    grid-template-columns: repeat(12, 20px);
+    gap: var(--space-2xs);
+    width: fit-content;
+  }
 
-      & > li {
-        width: 24px;
-        height: 24px;
-        border-radius: var(--border-radius-md);
-        background-color: var(--clr-gray-300);
-        transition: var(--hover-transition);
+  &__inventory-overview-meal {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--border-radius-md);
+    background-color: var(--clr-gray-300);
+    transition: var(--hover-transition);
 
-        &:hover {
-          cursor: pointer;
-          background-color: var(--clr-gray-500);
-        }
-      }
+    &--selected {
+      cursor: pointer;
+      filter: brightness(90%);
     }
   }
 }
