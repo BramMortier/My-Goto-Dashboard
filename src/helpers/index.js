@@ -27,3 +27,6 @@ export const transformToFormattedDate = (date) => {
 
 export const transformToFormattedDateShort = (date) =>
   date.toLocaleDateString("en-US");
+
+export const generateArrayFromLength = (length) =>
+  Array.from({ length }, (_, index) => index);

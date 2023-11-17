@@ -13,9 +13,6 @@ onMounted(async () => {
   } = await getAllMachinesWithPlan();
 
   activeMachines.value = getAllMachinesWithPlanData;
-
-  console.log(getAllMachinesWithPlanData);
-  console.log(getAllMachinesWithPlanError);
 });
 </script>
 

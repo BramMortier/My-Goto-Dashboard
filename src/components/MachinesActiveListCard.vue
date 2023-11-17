@@ -1,10 +1,9 @@
 <script setup>
+import { generateArrayFromLength } from "@helpers/index";
+
 const props = defineProps({
   machine: Object,
 });
-
-const generateEntryQuantityArray = (length) =>
-  Array.from({ length }, (_, index) => index);
 </script>
 
 <template>
@@ -23,23 +22,23 @@ const generateEntryQuantityArray = (length) =>
       </p>
       <ul class="machines-active-list-card__inventory-overview">
         <li
-          v-for="dish in props.machine.machine_plan"
+          v-for="entry in props.machine.machine_plan"
           class="machines-active-list-card__inventory-overview-entry"
         >
           <div
             class="machines-active-list-card__inventory-overview-entry-quantity"
           >
-            <p>{{ dish.dish_name }}</p>
+            <p>{{ entry.dish_name }}</p>
             <ul>
               <li
-                v-for="(item, index) in generateEntryQuantityArray(
-                  dish.suggested_quantity
+                v-for="(_, index) in generateArrayFromLength(
+                  entry.suggested_quantity
                 )"
                 :key="index"
               ></li>
             </ul>
           </div>
-          <p>0 / {{ dish.suggested_quantity }}</p>
+          <p>0 / {{ entry.suggested_quantity }}</p>
         </li>
       </ul>
     </div>
