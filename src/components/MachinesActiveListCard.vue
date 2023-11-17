@@ -17,7 +17,7 @@ const generateEntryQuantityArray = (length) =>
     </div>
     <div class="machines-active-list-card__main">
       <h4>{{ props.machine.location_name }}</h4>
-      <span>43/70 meals filled (61,1%)</span>
+      <span>43/{{ props.machine.capacity }} meals filled (61,1%)</span>
       <p class="machines-active-list-card__assigned-dishes">
         6 Assigned dishes
       </p>
