@@ -15,7 +15,18 @@ import OutboundDeliveriesCreateWarehouseInventoryOverview from "@components/Outb
         <OutboundDeliveriesCreate />
       </BasePageSectionGroup>
     </BasePageSection>
+    <BasePageSection title="Delivery contents">
+      <BasePageSectionGroup>
+        <h4>DeliveryContentList</h4>
+      </BasePageSectionGroup>
+    </BasePageSection>
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.plan-outbound-deliveries-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+</style>
