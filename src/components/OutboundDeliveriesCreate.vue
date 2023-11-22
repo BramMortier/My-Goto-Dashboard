@@ -1,5 +1,6 @@
 <script setup>
 import { Form } from "vee-validate";
+import * as yup from "yup";
 
 import BaseFormFieldset from "@components/BaseFormFieldset.vue";
 import OutboundDeliveriesCreateTruckDriversList from "@components/OutboundDeliveriesCreateTruckDriversList.vue";
@@ -7,10 +8,25 @@ import OutboundDeliveriesCreateTrucksList from "@components/OutboundDeliveriesCr
 import OutboundDeliveriesCreateMachinesList from "./OutboundDeliveriesCreateMachinesList.vue";
 import BaseSearchbar from "@components/BaseSearchbar.vue";
 import BaseButton from "@components/BaseButton.vue";
+
+const outboundDeliveriesFormValidationSchema = yup.object({
+  outboundDeliveryTruckDriver: yup
+    .mixed()
+    .required("A truck driver is required"),
+  outboundDeliveryTruck: yup.mixed().required("A truck is required"),
+  outboundDeliveryContents: yup.mixed().required("Contents are required"),
+});
+
+const handleOutboundDeliveriesFormSubmit = async () => {};
 </script>
 
 <template>
-  <Form class="outbound-deliveries-form-create">
+  <Form
+    @submit="handleOutboundDeliveriesFormSubmit"
+    :validation-schema="outboundDeliveriesFormValidationSchema"
+    class="outbound-deliveries-form-create"
+    v-slot="{ values }"
+  >
     <BaseFormFieldset label="Assign a driver">
       <OutboundDeliveriesCreateTruckDriversList
         name="outboundDeliveryTruckDriver"
@@ -23,7 +39,7 @@ import BaseButton from "@components/BaseButton.vue";
       <div class="outbound-deliveries-form-create__machine-list-filters">
         <BaseSearchbar />
       </div>
-      <OutboundDeliveriesCreateMachinesList />
+      <OutboundDeliveriesCreateMachinesList name="outboundDeliveryContents" />
     </BaseFormFieldset>
     <div class="outbound-deliveries-form-create__action-buttons">
       <BaseButton stretch="fit-content">Finalize outbound delivery</BaseButton>

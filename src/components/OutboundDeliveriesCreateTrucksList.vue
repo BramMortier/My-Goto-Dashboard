@@ -14,7 +14,6 @@ onMounted(async () => {
     await getAllLocationsByType("Truck");
 
   trucks.value = getAllLocationsData;
-  console.log(trucks.value);
 });
 
 const { value: selectedTruck, errorMessage } = useField(() => props.name);

@@ -65,7 +65,6 @@ const handleTruckDriverChange = (truckDriver) => {
   &__card {
     display: flex;
     width: 100%;
-    min-width: 18.75rem;
     justify-content: space-between;
     align-items: center;
     border: 1px solid transparent;

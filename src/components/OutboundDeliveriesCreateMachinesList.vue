@@ -1,9 +1,14 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import { useField } from "vee-validate";
 import { getAllMachinesWithPlan } from "@services/locationService";
 import { useModalStore } from "@stores/ModalStore";
 
 import OutboundDeliveriesCreateRefillMachineModal from "@components/OutboundDeliveriesCreateRefillMachineModal.vue";
+
+const props = defineProps({
+  name: String,
+});
 
 const { openModal } = useModalStore();
 
@@ -16,19 +21,31 @@ onMounted(async () => {
   } = await getAllMachinesWithPlan();
 
   machines.value = getAllMachinesWithPlanData;
+  console.log(machines.value);
 });
+
+const { value: outboundDeliveryContents, errorMessage } = useField(
+  () => props.name
+);
+
+const updateOutboundDeliveryContents = (content) => {
+  console.log("updating...");
+};
 </script>
 
 <template>
   <ul class="outbound-deliveries-create-machines-list">
     <li
       v-for="machine in machines"
-      :key="machine.id"
+      :key="machine.location_id"
       class="outbound-deliveries-create-machines-list__card"
       @click="
         openModal({
           component: OutboundDeliveriesCreateRefillMachineModal,
-          props: { machine: machine },
+          props: {
+            machine: machine,
+            onUpdateOutboundDeliveryContents: updateOutboundDeliveryContents,
+          },
         })
       "
     >
