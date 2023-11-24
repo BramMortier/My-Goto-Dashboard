@@ -33,6 +33,7 @@ const { openModal } = useModalStore();
 .manage-users-page {
   display: flex;
   flex-direction: column;
+  margin-bottom: var(--space-4xl);
 
   &__filters {
     display: grid;

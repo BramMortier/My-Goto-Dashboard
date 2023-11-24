@@ -24,7 +24,7 @@ const { notifications } = storeToRefs(useNotificationStore());
 <style lang="scss" scoped>
 .notifications {
   position: fixed;
-  bottom: var(--space-xl);
+  top: var(--space-xl);
   right: var(--space-xl);
   display: flex;
   flex-direction: column;

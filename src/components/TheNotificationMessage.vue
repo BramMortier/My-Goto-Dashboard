@@ -30,6 +30,7 @@ const props = defineProps({
   display: flex;
   gap: var(--space-md);
   padding: var(--space-sm);
+  padding-right: var(--space-2xl);
   background-color: var(--clr-white);
   border-bottom: 2px solid var(--clr-green-400);
   min-width: 12.5rem;

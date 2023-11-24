@@ -1,33 +1,34 @@
 <script setup>
+import { ref } from "vue";
+import { onClickOutside } from "@vueuse/core";
 import { useRightClickMenuStore } from "@stores/RightClickMenuStore";
 import { storeToRefs } from "pinia";
 
 const { closeMenu } = useRightClickMenuStore();
 const { rightClickMenuState } = storeToRefs(useRightClickMenuStore());
+
+const rightClickMenu = ref(null);
+
+onClickOutside(rightClickMenu, () => closeMenu());
 </script>
 
 <template>
   <Teleport to="#right-click-menus">
-    <Transition>
-      <div
-        class="right-click-menu__wrapper"
-        @click.self="closeMenu"
-        @click.right.prevent.self="closeMenu"
+    <Transition name="right-click-menu-transition">
+      <ul
         v-if="rightClickMenuState?.component"
+        class="right-click-menu"
+        ref="rightClickMenu"
+        :style="{
+          top: rightClickMenuState.menuY + 'px',
+          left: rightClickMenuState.menuX + 'px',
+        }"
       >
-        <div
-          class="right-click-menu"
-          :style="{
-            top: rightClickMenuState.menuY + 'px',
-            left: rightClickMenuState.menuX + 'px',
-          }"
-        >
-          <component
-            :is="rightClickMenuState?.component"
-            v-bind="rightClickMenuState?.props"
-          />
-        </div>
-      </div>
+        <component
+          :is="rightClickMenuState?.component"
+          v-bind="rightClickMenuState?.props"
+        />
+      </ul>
     </Transition>
   </Teleport>
 </template>
@@ -36,17 +37,20 @@ const { rightClickMenuState } = storeToRefs(useRightClickMenuStore());
 .right-click-menu {
   position: absolute;
   display: flex;
+  flex-direction: column;
   background-color: var(--clr-white);
   border-bottom: 2px solid var(--clr-green-400);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+}
 
-  &__wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 99;
-    background-color: transparent;
-  }
+.right-click-menu-transition-enter-from,
+.right-click-menu-transition-leave-to {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.right-click-menu-transition-enter-active,
+.right-click-menu-transition-leave-active {
+  transition: 0.15s ease all;
 }
 </style>

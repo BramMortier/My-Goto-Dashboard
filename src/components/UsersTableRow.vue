@@ -14,7 +14,7 @@ const { openMenu } = useRightClickMenuStore();
   <div
     class="users-table-row"
     @click.right.prevent="
-      openMenu({ component: UserActionsMenu, props: { test: 'test' } })
+      openMenu({ component: UserActionsMenu, props: { user: props.user } })
     "
   >
     <div class="users-table-row__cell">

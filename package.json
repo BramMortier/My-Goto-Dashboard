@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.38.1",
+    "@vueuse/core": "^10.6.1",
     "pinia": "^2.1.7",
     "sass": "^1.69.3",
     "vee-validate": "^4.11.8",

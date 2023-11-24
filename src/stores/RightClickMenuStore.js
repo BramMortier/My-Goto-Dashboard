@@ -17,8 +17,6 @@ export const useRightClickMenuStore = defineStore("right-click-menu", () => {
       menuX: menuX.value,
       menuY: menuY.value,
     };
-
-    console.log(rightClickMenuState.value);
   };
 
   const closeMenu = () => {
