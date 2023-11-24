@@ -1,4 +1,5 @@
 import { useRouter } from "vue-router";
+import { ref, onMounted, onUnmounted } from "vue";
 
 export const getFullRouteInfo = (routeName) => {
   const router = useRouter();
@@ -30,3 +31,18 @@ export const transformToFormattedDateShort = (date) =>
 
 export const generateArrayFromLength = (length) =>
   Array.from({ length }, (_, index) => index);
+
+export const useMouse = () => {
+  const x = ref(0);
+  const y = ref(0);
+
+  function update(event) {
+    x.value = event.pageX;
+    y.value = event.pageY;
+  }
+
+  onMounted(() => window.addEventListener("mousemove", update));
+  onUnmounted(() => window.removeEventListener("mousemove", update));
+
+  return { x, y };
+};

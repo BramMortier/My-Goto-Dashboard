@@ -1,11 +1,22 @@
 <script setup>
+import { useRightClickMenuStore } from "@stores/RightClickMenuStore";
+
+import UserActionsMenu from "@components/UserActionsMenu.vue";
+
 const props = defineProps({
   user: Object,
 });
+
+const { openMenu } = useRightClickMenuStore();
 </script>
 
 <template>
-  <div class="users-table-row">
+  <div
+    class="users-table-row"
+    @click.right.prevent="
+      openMenu({ component: UserActionsMenu, props: { test: 'test' } })
+    "
+  >
     <div class="users-table-row__cell">
       {{ user.firstname }} {{ user.lastname }}
     </div>
