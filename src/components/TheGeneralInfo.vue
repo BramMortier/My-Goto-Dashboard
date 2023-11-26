@@ -11,8 +11,18 @@ const route = useRoute();
 const userName = ref("");
 
 onMounted(async () => {
-  const { data, error } = await getAuthenticatedUser();
-  userName.value = `${data.firstname} ${data.lastname}`;
+  const { data: getAuthenticatedUserData, error: getAuthenticatedUserError } =
+    await getAuthenticatedUser();
+
+  localStorage.setItem(
+    "AuthenticatedUser",
+    JSON.stringify(getAuthenticatedUserData)
+  );
+
+  userName.value = `
+    ${JSON.parse(localStorage.getItem("AuthenticatedUser")).firstname} 
+    ${JSON.parse(localStorage.getItem("AuthenticatedUser")).lastname}
+  `;
 });
 </script>
 

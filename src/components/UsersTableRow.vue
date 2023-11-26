@@ -1,7 +1,7 @@
 <script setup>
 import { useRightClickMenuStore } from "@stores/RightClickMenuStore";
 
-import UserActionsMenu from "@components/UserActionsMenu.vue";
+import UsersActionMenu from "@components/UsersActionMenu.vue";
 
 const props = defineProps({
   user: Object,
@@ -14,7 +14,7 @@ const { openMenu } = useRightClickMenuStore();
   <div
     class="users-table-row"
     @click.right.prevent="
-      openMenu({ component: UserActionsMenu, props: { user: props.user } })
+      openMenu({ component: UsersActionMenu, props: { user: props.user } })
     "
   >
     <div class="users-table-row__cell">
