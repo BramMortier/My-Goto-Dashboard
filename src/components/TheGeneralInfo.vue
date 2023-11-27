@@ -14,14 +14,9 @@ onMounted(async () => {
   const { data: getAuthenticatedUserData, error: getAuthenticatedUserError } =
     await getAuthenticatedUser();
 
-  localStorage.setItem(
-    "AuthenticatedUser",
-    JSON.stringify(getAuthenticatedUserData)
-  );
-
   userName.value = `
-    ${JSON.parse(localStorage.getItem("AuthenticatedUser")).firstname} 
-    ${JSON.parse(localStorage.getItem("AuthenticatedUser")).lastname}
+    ${getAuthenticatedUserData.firstname} 
+    ${getAuthenticatedUserData.lastname}
   `;
 });
 </script>

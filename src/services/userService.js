@@ -73,8 +73,20 @@ export const assignUserRole = async ({ userId, roleId }) => {
   return { data: assignUserRoleData, error: null };
 };
 
-export const updateUser = async (userData) => {
-  // ignore for now
+export const updateUser = async ({ userId, firstname, lastname, email }) => {
+  const { data: updateUserData, error: updateUserError } = await supabase
+    .from("user_profiles")
+    .update({
+      firstname,
+      lastname,
+      email,
+    })
+    .eq("id", userId)
+    .select();
+
+  if (updateUserError) return { data: null, error: updateUserError };
+
+  return { data: updateUserData, error: null };
 };
 
 export const deleteUser = async (userId) => {
@@ -83,9 +95,7 @@ export const deleteUser = async (userId) => {
     .delete()
     .eq("id", userId);
 
-  if (deleteUserError)
-    return {
-      data: { message: "User succesfully deleted" },
-      error: deleteUserError,
-    };
+  if (deleteUserError) return { data: null, error: deleteUserError };
+
+  return { data: "User succesfully deleted", error: null };
 };

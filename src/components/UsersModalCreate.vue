@@ -48,7 +48,7 @@ const handleRegisterFormSubmit = async (values) => {
     removeDelay: 2000,
   });
 
-  setTimeout(() => router.go(), 1000);
+  setTimeout(() => router.go(), 1200);
 };
 </script>
 

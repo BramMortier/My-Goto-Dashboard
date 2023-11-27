@@ -1,9 +1,11 @@
 <script setup>
+import { useRouter } from "vue-router";
 import { useModalStore } from "@stores/ModalStore";
 import { useNotificationStore } from "@stores/NotificationStore";
 import { deleteUser } from "@services/userService";
-import { getAuthenticatedUser } from "@services/userService";
-import { onMounted, ref, computed } from "vue";
+import { useAuthStore } from "@stores/AuthStore";
+import { storeToRefs } from "pinia";
+import { computed } from "vue";
 
 import BaseButton from "@components/BaseButton.vue";
 
@@ -13,31 +15,26 @@ const props = defineProps({
 
 const { closeModal } = useModalStore();
 const { addNotification } = useNotificationStore();
-
-const AuthenticatedUser = ref(null);
-
-onMounted(async () => {
-  const { data: getAuthenticatedUserData, error: getAuthenticatedUserError } =
-    await getAuthenticatedUser();
-
-  AuthenticatedUser.value = getAuthenticatedUserData;
-  console.log(AuthenticatedUser.value.id);
-});
+const { user } = storeToRefs(useAuthStore());
+const router = useRouter();
 
 const deleteActionMatchesAuthenticatedUser = computed(() => {
-  return (props.user.id = AuthenticatedUser.value.id);
+  return props.user.id === user.value.id;
 });
 
 const handleDeleteUser = async (userId) => {
   const { error: deleteUserError } = await deleteUser(userId);
 
   if (!deleteUserError) {
+    closeModal();
     addNotification({
       title: "Succes!",
       message: "Deleted user succesfully",
       type: "succes",
       removeDelay: 2000,
     });
+
+    setTimeout(() => router.go(0), 1200);
   } else {
     addNotification({
       title: "Error!",
@@ -51,10 +48,11 @@ const handleDeleteUser = async (userId) => {
 
 <template>
   <div class="users-modal-confirm-delete">
-    <p>
+    <p v-if="!deleteActionMatchesAuthenticatedUser">
       Are you sure u want to delete {{ props.user.firstname }}
       {{ props.user.lastname }} ?
     </p>
+    <p v-else>You can't delete the account you are currently logged in to</p>
     <div class="users-modal-confirm-delete__action-buttons">
       <BaseButton
         v-if="!deleteActionMatchesAuthenticatedUser"

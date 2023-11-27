@@ -11,7 +11,7 @@
   display: flex;
   gap: var(--space-sm);
   padding: 0 var(--space-md);
-  min-height: 3rem;
+  min-height: 2.5rem;
   min-width: 12.5rem;
   align-items: center;
   transition: var(--hover-transition);

@@ -8,13 +8,13 @@ import TheRightClickMenu from "@components/TheRightClickMenu.vue";
 import TheModalWindow from "@components/TheModalWindow.vue";
 import TheNotifications from "@components/TheNotifications.vue";
 
+import "@styles/index.scss";
+
 const { user } = storeToRefs(useAuthStore());
 
-supabase.auth.onAuthStateChange((event, session) => {
+supabase.auth.onAuthStateChange(async (_, session) => {
   user.value = session?.user || null;
 });
-
-import "@styles/index.scss";
 </script>
 
 <template>

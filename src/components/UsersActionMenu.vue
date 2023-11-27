@@ -5,6 +5,7 @@ import { useRouter } from "vue-router";
 
 import BaseRightClickMenuOption from "@components/BaseRightClickMenuOption.vue";
 import UsersModalConfirmDelete from "@components/UsersModalConfirmDelete.vue";
+import UsersModalUpdate from "@components/UsersModalUpdate.vue";
 
 const props = defineProps({
   user: Object,
@@ -18,7 +19,15 @@ const router = useRouter();
 
 <template>
   <div class="user-actions-menu">
-    <BaseRightClickMenuOption>
+    <BaseRightClickMenuOption
+      @click="
+        openModal({
+          component: UsersModalUpdate,
+          props: { user: props.user },
+        });
+        closeMenu();
+      "
+    >
       <img
         class="user-actions-menu__option-icon"
         src="@assets/icons/pen.svg"
@@ -50,8 +59,8 @@ const router = useRouter();
 <style lang="scss" scoped>
 .user-actions-menu {
   &__option-icon {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1rem;
+    height: 1rem;
   }
 }
 </style>
