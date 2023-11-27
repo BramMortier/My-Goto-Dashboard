@@ -1,5 +1,6 @@
 <script setup>
 import { useModalStore } from "@stores/ModalStore";
+import { ref } from "vue";
 
 import UsersTable from "@components/UsersTable.vue";
 import BasePageSection from "@components/BasePageSection.vue";
@@ -9,6 +10,8 @@ import BaseButton from "@components/BaseButton.vue";
 import UsersModalCreate from "@components/UsersModalCreate.vue";
 
 const { openModal } = useModalStore();
+
+const searchTerm = ref(null);
 </script>
 
 <template>
@@ -16,14 +19,17 @@ const { openModal } = useModalStore();
     <BasePageSection title="Users">
       <BasePageSectionGroup>
         <div class="manage-users-page__filters">
-          <BaseSearchbar />
+          <BaseSearchbar
+            :searchTerm="searchTerm"
+            @update:searchTerm="(newValue) => (searchTerm = newValue)"
+          />
           <BaseButton @click="openModal({ component: UsersModalCreate })"
             >Add a new user</BaseButton
           >
         </div>
       </BasePageSectionGroup>
       <BasePageSectionGroup>
-        <UsersTable />
+        <UsersTable :searchTerm="searchTerm" />
       </BasePageSectionGroup>
     </BasePageSection>
   </div>

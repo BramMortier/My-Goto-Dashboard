@@ -1,11 +1,22 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  searchTerm: String,
+});
+
+const emit = defineEmits(["update:searchTerm"]);
+</script>
 
 <template>
   <div class="searchbar">
     <div class="searchbar__icon">
       <img src="@assets/icons/search.svg" alt="searchbar icon" />
     </div>
-    <input type="text" placeholder="Search all users" />
+    <input
+      :value="searchTerm"
+      @input="$emit('update:searchTerm', $event.target.value)"
+      placeholder="Search all users"
+      type="text"
+    />
   </div>
 </template>
 
