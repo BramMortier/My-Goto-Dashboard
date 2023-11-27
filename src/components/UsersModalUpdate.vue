@@ -17,7 +17,6 @@ import * as yup from "yup";
 const props = defineProps({
   user: Object,
 });
-console.log(props.user);
 
 const router = useRouter();
 const { closeModal } = useModalStore();
@@ -30,26 +29,59 @@ const userUpdateFormValidationSchema = yup.object({
     .string()
     .required("Email is required")
     .email("Invalid email format"),
-  password: yup.string().required("Password is required"),
   roles: yup
     .array()
     .of(yup.string().required())
     .required("You must select at least one role"),
 });
 
-const handleUserUpdateFormSubmit = async () => {};
+const handleUserUpdateFormSubmit = async (values) => {
+  closeModal();
+
+  const { data: updateUserData, error: updateUserError } = await updateUser({
+    userId: props.user.id,
+    firstname: values.firstname,
+    lastname: values.lastname,
+    email: values.email,
+    roles: values.roles,
+  });
+
+  if (updateUserError) {
+    addNotification({
+      title: "Error!",
+      message: "Failed to update user",
+      type: "error",
+      removeDelay: 2000,
+    });
+  } else {
+    addNotification({
+      title: "Succes!",
+      message: "Updated user succesfully",
+      type: "succes",
+      removeDelay: 2000,
+    });
+  }
+
+  setTimeout(() => router.go(), 1200);
+};
+
+const handleUserUpdateFormInvalidSubmit = async ({ values, errors }) => {
+  console.log("invalid submit");
+  console.log(values, errors);
+};
 </script>
 
 <template>
   <Form
     class="user-update-form"
     @submit="handleUserUpdateFormSubmit"
+    @invalid-submit="handleUserUpdateFormInvalidSubmit"
     :validation-schema="userUpdateFormValidationSchema"
     :initial-values="{
       firstname: props.user.firstname,
       lastname: props.user.lastname,
       email: props.user.email,
-      roles: props.user.roles.map((role) => role.name),
+      roles: props.user.roles.map((role) => role.id),
     }"
     v-slot="{ errors }"
   >
@@ -91,7 +123,7 @@ const handleUserUpdateFormSubmit = async () => {};
         <p class="register-form__error-feedback">{{ errors.roles }}</p>
       </BaseFormRow>
     </BaseFormFieldset>
-    <BaseButton>Add user</BaseButton>
+    <BaseButton>Update user</BaseButton>
   </Form>
 </template>
 

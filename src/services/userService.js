@@ -5,7 +5,7 @@ import { storeToRefs } from "pinia";
 export const getAllUsers = async () => {
   const { data: getAllUsersData, error: getAllUsersError } = await supabase
     .from("user_profiles")
-    .select("*, roles ( name ) ");
+    .select("*, roles ( id,  name ) ");
 
   if (getAllUsersError) return { data: null, error: getAllUsersError };
 
@@ -73,7 +73,26 @@ export const assignUserRole = async ({ userId, roleId }) => {
   return { data: assignUserRoleData, error: null };
 };
 
-export const updateUser = async ({ userId, firstname, lastname, email }) => {
+export const removeUserRoles = async (userId) => {
+  const { error: removeUserRolesError } = await supabase
+    .from("user_roles")
+    .delete()
+    .eq("user_id", userId);
+
+  if (removeUserRolesError) return { data: null, error: removeUserRolesError };
+
+  return { data: "User roles succesfully deleted", error: null };
+};
+
+export const updateUser = async ({
+  userId,
+  firstname,
+  lastname,
+  email,
+  roles,
+}) => {
+  console.log(userId, firstname, lastname, email, roles);
+
   const { data: updateUserData, error: updateUserError } = await supabase
     .from("user_profiles")
     .update({
@@ -85,6 +104,29 @@ export const updateUser = async ({ userId, firstname, lastname, email }) => {
     .select();
 
   if (updateUserError) return { data: null, error: updateUserError };
+
+  if (updateUserData) {
+    const { data: removeUserRolesData, error: removeUserRolesError } =
+      await removeUserRoles(userId);
+
+    if (removeUserRolesError)
+      return { data: null, error: removeUserRolesError };
+
+    roles.forEach(async (roleId) => {
+      const { data: assignUserRoleData, error: assignUserRoleError } =
+        await assignUserRole({
+          userId: userId,
+          roleId: roleId,
+        });
+
+      if (assignUserRoleError)
+        return { data: null, error: assignUserRoleError };
+    });
+
+    return { data: updateUserData, error: null };
+  } else {
+    return { data: null, error: "Failed to update user" };
+  }
 
   return { data: updateUserData, error: null };
 };
