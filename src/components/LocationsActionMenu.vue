@@ -18,7 +18,7 @@ const { openModal } = useModalStore();
 const { closeMenu } = useRightClickMenuStore();
 
 const locationUpdateModal = computed(() => {
-  switch (props.location.type) {
+  switch (props.location.location_type) {
     case "Machine":
       return MachinesModalUpdate;
     case "Warehouse":
@@ -45,7 +45,7 @@ const locationUpdateModal = computed(() => {
         src="@assets/icons/pen.svg"
         alt="edit icon"
       />
-      <p>Edit {{ props.location.type.toLowerCase() }}</p>
+      <p>Edit {{ props.location.location_type.toLowerCase() }}</p>
     </BaseRightClickMenuOption>
     <BaseRightClickMenuOption
       @click="
@@ -55,14 +55,14 @@ const locationUpdateModal = computed(() => {
         });
         closeMenu();
       "
-      v-if="props.location.type === 'Machine'"
+      v-if="props.location.location_type === 'Machine'"
     >
       <img
         class="locations-action-menu__option-icon"
         src="@assets/icons/pen.svg"
         alt="edit icon"
       />
-      <p>Update {{ props.location.type.toLowerCase() }} plan</p>
+      <p>Update {{ props.location.location_type.toLowerCase() }} plan</p>
     </BaseRightClickMenuOption>
     <BaseRightClickMenuOption
       @click="
@@ -78,7 +78,7 @@ const locationUpdateModal = computed(() => {
         src="@assets/icons/trash.svg"
         alt="delete icon"
       />
-      <p>Delete {{ props.location.type.toLowerCase() }}</p>
+      <p>Delete {{ props.location.location_type.toLowerCase() }}</p>
     </BaseRightClickMenuOption>
   </div>
 </template>

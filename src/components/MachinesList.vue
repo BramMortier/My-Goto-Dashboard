@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useModalStore } from "@stores/ModalStore";
-import { getAllLocationsByType } from "@services/locationService";
+import { getAllMachinesWithPlan } from "@services/locationService";
 
 import MachinesListCard from "@components/MachinesListCard.vue";
 import MachinesListCardCreate from "@components/MachinesListCardCreate.vue";
@@ -13,9 +13,10 @@ const { openModal } = useModalStore();
 
 onMounted(async () => {
   const { data: getAllLocationsData, error: getAllLocationsError } =
-    await getAllLocationsByType("Machine");
+    await getAllMachinesWithPlan();
 
   machines.value = getAllLocationsData;
+  console.log(machines.value);
 });
 </script>
 
@@ -26,7 +27,7 @@ onMounted(async () => {
     />
     <MachinesListCard
       v-for="machine in machines"
-      :key="machine.id"
+      :key="machine.machine_id"
       :machine="machine"
     />
   </ul>

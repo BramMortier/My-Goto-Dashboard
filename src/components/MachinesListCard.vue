@@ -1,5 +1,6 @@
 <script setup>
 import { useRightClickMenuStore } from "@stores/RightClickMenuStore";
+import { sanitizeMachinePlan } from "@helpers/index";
 
 import LocationsActionMenu from "@components/LocationsActionMenu.vue";
 
@@ -27,22 +28,26 @@ const { openMenu } = useRightClickMenuStore();
       />
     </div>
     <div class="machines-list-card__main">
-      <h4>{{ props.machine.name }}</h4>
-      <p class="machines-list-card__assigned-dishes">6 Assigned dishes</p>
+      <h4>{{ props.machine.location_name }}</h4>
+      <p class="machines-list-card__assigned-dishes">
+        {{ sanitizeMachinePlan(props.machine.machine_plan).length }} Assigned
+        dishes
+      </p>
       <div class="machines-list-card__info">
         <div class="machines-list-card__info-entry">
           <p>Address:</p>
           <span>
-            {{ props.machine.street }} {{ props.machine.street_number }}
+            {{ props.machine.location_street }}
+            {{ props.machine.location_street_number }}
           </span>
         </div>
         <div class="machines-list-card__info-entry">
           <p>Postal code:</p>
-          <span>{{ props.machine.postal_code }}</span>
+          <span>{{ props.machine.location_postal_code }}</span>
         </div>
         <div class="machines-list-card__info-entry">
           <p>City:</p>
-          <span>{{ props.machine.city }}</span>
+          <span>{{ props.machine.location_city }}</span>
         </div>
       </div>
     </div>

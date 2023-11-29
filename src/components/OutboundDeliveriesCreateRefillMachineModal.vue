@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { generateArrayFromLength } from "@helpers/index";
+import { generateArrayFromLength, sanitizeMachinePlan } from "@helpers/index";
 
 import BaseButton from "@components/BaseButton.vue";
 
@@ -11,7 +11,12 @@ const props = defineProps({
 
 const emit = defineEmits(["updateOutboundDeliveryContents"]);
 
-const inventoryRefillPlan = ref(props.machine.machine_plan);
+const inventoryRefillPlan = ref(
+  sanitizeMachinePlan(props.machine.machine_plan)
+);
+
+console.log(sanitizeMachinePlan(props.machine.machine_plan));
+
 const hoveredMeal = ref({
   dish: null,
   index: null,
@@ -36,8 +41,6 @@ const handleUpdateInventoryRefillPlan = (dishId, addedAmount) => {
 const handleUpdateOutboundDeliveryContents = (contents) => {
   emit("updateOutboundDeliveryContents", contents);
 };
-
-console.log(inventoryRefillPlan.value);
 </script>
 
 <template>

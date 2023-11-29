@@ -52,7 +52,7 @@ export const createMeals = async ({
     dish_id: inboundDishId,
     supplier_batch: inboundDishSupplierBatchNumber,
     expires_at: inboundDishBatchExpiryDate,
-    warehouse_id: "8aa863b4-794f-4263-95dd-687cbdd0f083",
+    warehouse_id: "fe4847d7-0578-47dc-9228-e347bba24d61",
   }));
 
   console.log(mealsData);

@@ -48,22 +48,22 @@ const handleDeleteLocation = async (locationId) => {
       <p>Are you sure u want to delete the following location?</p>
       <div class="locations-modal-confirm-delete__location-icon">
         <img
-          v-if="props.location.type === 'Machine'"
+          v-if="props.location.location_type === 'Machine'"
           src="@assets/icons/vending-machine-v4.svg"
           alt="vending machine icon"
         />
         <img
-          v-else-if="props.location.type === 'Truck'"
+          v-else-if="props.location.location_type === 'Truck'"
           src="@assets/icons/truck.svg"
           alt="truck machine icon"
         />
         <img v-else src="@assets/icons/warehouse.svg" alt="warehouse icon" />
       </div>
-      <h4>{{ props.location.name }}</h4>
+      <h4>{{ props.location.location_name }}</h4>
     </div>
     <div class="locations-modal-confirm-delete__action-buttons">
       <BaseButton
-        @click="handleDeleteLocation(props.location.id)"
+        @click="handleDeleteLocation(props.location.machine_id)"
         type="outlined"
         variant="tertiary"
         stretch="fit-content"
