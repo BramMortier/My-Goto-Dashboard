@@ -17,6 +17,15 @@ export const generateTabsFromRoute = (route) => {
   });
 };
 
+export const sanitizeMachinePlan = (machinePlan) => {
+  return machinePlan.filter(
+    (entry) =>
+      entry.available_quantity !== 0 ||
+      entry.suggested_quantity !== 0 ||
+      entry.in_transport_quantity !== 0
+  );
+};
+
 export const transformToFormattedDate = (date) => {
   return date.toLocaleDateString("en-US", {
     weekday: "long",

@@ -1,5 +1,5 @@
 <script setup>
-import { generateArrayFromLength } from "@helpers/index";
+import { generateArrayFromLength, sanitizeMachinePlan } from "@helpers/index";
 
 const props = defineProps({
   machine: Object,
@@ -16,13 +16,19 @@ const props = defineProps({
     </div>
     <div class="machines-active-list-card__main">
       <h4>{{ props.machine.location_name }}</h4>
-      <span>43/{{ props.machine.capacity }} meals filled (61,1%)</span>
+      <span
+        >{{ props.machine.stocked_capacity }}/{{ props.machine.capacity }} meals
+        filled ({{
+          (props.machine.stocked_capacity / props.machine.capacity) * 100
+        }}%)</span
+      >
       <p class="machines-active-list-card__assigned-dishes">
-        6 Assigned dishes
+        {{ sanitizeMachinePlan(props.machine.machine_plan).length }} Assigned
+        dishes
       </p>
       <ul class="machines-active-list-card__inventory-overview">
         <li
-          v-for="entry in props.machine.machine_plan"
+          v-for="entry in sanitizeMachinePlan(props.machine.machine_plan)"
           class="machines-active-list-card__inventory-overview-entry"
         >
           <div

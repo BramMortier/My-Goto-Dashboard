@@ -14,7 +14,7 @@ export const getAllMachinesWithPlan = async () => {
   const {
     data: getAllMachinesWithPlanData,
     error: getAllMachinesWithPlanError,
-  } = await supabase.rpc("get_all_machines_with_plan");
+  } = await supabase.rpc("get_all_machine_overviews");
 
   if (getAllMachinesWithPlanError)
     return { data: null, error: getAllMachinesWithPlanError };
