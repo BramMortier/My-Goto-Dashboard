@@ -51,7 +51,7 @@ const locationUpdateModal = computed(() => {
       @click="
         openModal({
           component: MachinesModalUpdatePlanStructure,
-          props: { location: props.location },
+          props: { machine: props.location },
         });
         closeMenu();
       "
