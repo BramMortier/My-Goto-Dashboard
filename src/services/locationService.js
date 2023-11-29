@@ -76,7 +76,7 @@ export const createLocation = async ({
 
   console.log("created location record: ", createLocationData[0]);
 
-  if (createLocationData) {
+  if (createLocationData && createLocationData[0].type === "Machine") {
     const { data: getAllDishesData, error: getAllDishesError } =
       await getAllDishes();
 

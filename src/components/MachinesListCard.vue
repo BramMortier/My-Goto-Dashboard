@@ -1,11 +1,25 @@
 <script setup>
+import { useRightClickMenuStore } from "@stores/RightClickMenuStore";
+
+import LocationsActionMenu from "@components/LocationsActionMenu.vue";
+
 const props = defineProps({
   machine: Object,
 });
+
+const { openMenu } = useRightClickMenuStore();
 </script>
 
 <template>
-  <li class="machines-list-card">
+  <li
+    class="machines-list-card"
+    @click.right.prevent="
+      openMenu({
+        component: LocationsActionMenu,
+        props: { location: props.machine },
+      })
+    "
+  >
     <div class="machines-list-card__thumbnail">
       <img
         src="@assets/icons/vending-machine-v4.svg"
