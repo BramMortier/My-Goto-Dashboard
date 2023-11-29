@@ -204,6 +204,7 @@ const handleRemoveDishFromMachineStructurePlan = (index) => {
     background-color: var(--clr-white);
     border-bottom: 2px solid var(--clr-green-400);
     padding: var(--space-xs);
+    box-shadow: var(--box-shadow-md);
 
     &::-webkit-scrollbar {
       width: 0.5rem;

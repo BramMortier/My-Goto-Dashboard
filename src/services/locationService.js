@@ -1,4 +1,5 @@
 import { supabase } from "@plugins/supabase";
+import { getAllDishes } from "@services/dishService";
 
 export const getAllLocations = async () => {
   const { data: getAllLocationsData, error: getAllLocationsError } =
@@ -51,6 +52,7 @@ export const createLocation = async ({
   locationCountry,
   locationLatitude,
   locationLongitude,
+  locationPlan,
 }) => {
   const { data: createLocationData, error: createLocationError } =
     await supabase
@@ -72,7 +74,60 @@ export const createLocation = async ({
 
   if (createLocationError) return { data: null, error: createLocationError };
 
+  console.log("created location record: ", createLocationData[0]);
+
+  if (createLocationData) {
+    const { data: getAllDishesData, error: getAllDishesError } =
+      await getAllDishes();
+
+    if (getAllDishesError) return { data: null, error: getAllDishesError };
+
+    console.log("dishes: ", getAllDishesData);
+
+    const locationBaseDishes = getAllDishesData.map((entry) => ({
+      location_id: createLocationData[0].id,
+      dish_id: entry.id,
+      suggested_quantity: 0,
+    }));
+
+    console.log("base dishes array: ", locationBaseDishes);
+
+    const { data: assignLocationDishesData, error: assignLocationDishesError } =
+      await assignLocationDishes(locationBaseDishes);
+
+    if (assignLocationDishesError)
+      return { data: null, error: assignLocationDishesError };
+
+    if (locationPlan) {
+      const locationAssignedDishes = locationPlan.map((entry) => ({
+        location_id: createLocationData[0].id,
+        dish_id: entry.dishId,
+        suggested_quantity: entry.dishQuantity,
+      }));
+
+      console.log("assigned dishes array: ", locationAssignedDishes);
+
+      const {
+        data: assignLocationDishesData,
+        error: assignLocationDishesError,
+      } = await assignLocationDishes(locationAssignedDishes);
+
+      if (assignLocationDishesError)
+        return { data: null, error: assignLocationDishesError };
+    }
+  }
+
   return { data: createLocationData, error: null };
+};
+
+export const assignLocationDishes = async (locationDishes) => {
+  const { data: assignLocationDishesData, error: assignLocationDishesError } =
+    await supabase.from("location_dishes").upsert(locationDishes).select();
+
+  if (assignLocationDishesError)
+    return { data: null, error: assignLocationDishesError };
+
+  return { data: assignLocationDishesData, error: null };
 };
 
 export const updateLocation = async (locationId) => {};

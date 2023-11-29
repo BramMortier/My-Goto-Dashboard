@@ -40,7 +40,7 @@ onClickOutside(rightClickMenu, () => closeMenu());
   flex-direction: column;
   background-color: var(--clr-white);
   border-bottom: 2px solid var(--clr-green-400);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--box-shadow-md);
 }
 
 .right-click-menu-transition-enter-from,

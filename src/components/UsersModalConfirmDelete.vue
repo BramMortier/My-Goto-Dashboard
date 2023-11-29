@@ -23,10 +23,11 @@ const deleteActionMatchesAuthenticatedUser = computed(() => {
 });
 
 const handleDeleteUser = async (userId) => {
+  closeModal();
+
   const { error: deleteUserError } = await deleteUser(userId);
 
   if (!deleteUserError) {
-    closeModal();
     addNotification({
       title: "Succes!",
       message: "Deleted user succesfully",
@@ -50,7 +51,7 @@ const handleDeleteUser = async (userId) => {
   <div class="users-modal-confirm-delete">
     <p v-if="!deleteActionMatchesAuthenticatedUser">
       Are you sure u want to delete {{ props.user.firstname }}
-      {{ props.user.lastname }} ?
+      {{ props.user.lastname }}?
     </p>
     <p v-else>You can't delete the account you are currently logged in to</p>
     <div class="users-modal-confirm-delete__action-buttons">

@@ -32,12 +32,12 @@ export const createAllergy = async ({ allergyName, iconPath }) => {
 export const updateAllergy = async (allergyId) => {};
 
 export const deleteAllergy = async (allergyId) => {
-  const { data: deleteAllergyData, error: deleteAllergyError } = await supabase
+  const { error: deleteAllergyError } = await supabase
     .from("allergies")
     .delete()
     .eq("id", allergyId);
 
   if (deleteAllergyError) return { data: null, error: deleteAllergyError };
 
-  return { data: deleteAllergyData, error: null };
+  return { data: "Allergy succesfully deleted", error: null };
 };

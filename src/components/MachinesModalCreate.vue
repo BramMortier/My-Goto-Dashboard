@@ -35,25 +35,25 @@ const machineLocationValidationSchema = yup.object({
 });
 
 const handleMachineLocationFormSubmit = async (values) => {
-  console.log("submiting");
-  console.log(values);
+  console.log("form values: ", values);
 
-  // const { data: createLocationData, error: createLocationError } =
-  //   await createLocation({
-  //     locationType: "Machine",
-  //     locationCapacity: values.locationCapacity,
-  //     locationName: values.locationName,
-  //     locationStreet: values.locationStreet,
-  //     locationStreetNumber: values.locationStreetNumber,
-  //     locationPostalCode: values.locationPostalCode,
-  //     locationCity: values.locationCity,
-  //     locationCountry: values.locationCountry,
-  //     locationLatitude: values.locationLatitude,
-  //     locationLongitude: values.locationLongitude,
-  //   });
+  const { data: createLocationData, error: createLocationError } =
+    await createLocation({
+      locationType: "Machine",
+      locationCapacity: values.locationCapacity,
+      locationName: values.locationName,
+      locationStreet: values.locationStreet,
+      locationStreetNumber: values.locationStreetNumber,
+      locationPostalCode: values.locationPostalCode,
+      locationCity: values.locationCity,
+      locationCountry: values.locationCountry,
+      locationLatitude: values.locationLatitude,
+      locationLongitude: values.locationLongitude,
+      locationPlan: values.locationPlan,
+    });
 
-  // console.log(createLocationData);
-  // console.log(createLocationError);
+  console.log("form response: ", createLocationData);
+  console.log("form error: ", createLocationError);
 };
 
 const handleActiveStepChange = (stepIndex) => {

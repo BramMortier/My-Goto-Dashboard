@@ -1,14 +1,30 @@
 <script setup>
+import { useModalStore } from "@stores/ModalStore";
+import { useRightClickMenuStore } from "@stores/RightClickMenuStore";
+
 import BaseRightClickMenuOption from "@components/BaseRightClickMenuOption.vue";
+import AllergiesModalConfirmDelete from "@components/AllergiesModalConfirmDelete.vue";
+import AllergiesModalUpdate from "@components/AllergiesModalUpdate.vue";
 
 const props = defineProps({
-  Allergy: Object,
+  allergy: Object,
 });
+
+const { openModal } = useModalStore();
+const { closeMenu } = useRightClickMenuStore();
 </script>
 
 <template>
   <div class="allergies-action-menu">
-    <BaseRightClickMenuOption>
+    <BaseRightClickMenuOption
+      @click="
+        openModal({
+          component: AllergiesModalUpdate,
+          props: { allergy: props.allergy },
+        });
+        closeMenu();
+      "
+    >
       <img
         class="allergies-action-menu__option-icon"
         src="@assets/icons/pen.svg"
@@ -16,7 +32,15 @@ const props = defineProps({
       />
       <p>Edit allergy</p>
     </BaseRightClickMenuOption>
-    <BaseRightClickMenuOption>
+    <BaseRightClickMenuOption
+      @click="
+        openModal({
+          component: AllergiesModalConfirmDelete,
+          props: { allergy: props.allergy },
+        });
+        closeMenu();
+      "
+    >
       <img
         class="allergies-action-menu__option-icon"
         src="@assets/icons/trash.svg"
