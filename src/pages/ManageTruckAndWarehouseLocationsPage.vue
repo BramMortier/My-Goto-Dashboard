@@ -32,5 +32,9 @@ import TrucksList from "@components/TrucksList.vue";
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-xl);
+
+  @media screen and (max-width: 1400px) {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

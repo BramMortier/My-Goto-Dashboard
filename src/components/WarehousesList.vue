@@ -16,7 +16,6 @@ onMounted(async () => {
     await getAllLocationsByType("Warehouse");
 
   warehouses.value = getAllLocationsData;
-  console.log(warehouses.value);
 });
 </script>
 

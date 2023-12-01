@@ -14,11 +14,28 @@ const { closeModal } = useModalStore();
 const { addNotification } = useNotificationStore();
 const router = useRouter();
 
-const handleDeleteTruck = async () => {
-  console.log("deleting truck...");
-};
+const handleDeleteTruck = async (truckId) => {
+  const { data: deleteLocationData, error: deleteLocationError } =
+    await deleteLocation(truckId);
 
-console.log(props.truck);
+  if (!deleteLocationError) {
+    addNotification({
+      title: "Succes!",
+      message: "Deleted truck succesfully",
+      type: "succes",
+      removeDelay: 2000,
+    });
+
+    setTimeout(() => router.go(0), 1200);
+  } else {
+    addNotification({
+      title: "Error!",
+      message: "Failed to delete truck",
+      type: "error",
+      removeDelay: 2000,
+    });
+  }
+};
 </script>
 
 <template>
