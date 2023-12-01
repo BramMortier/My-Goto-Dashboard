@@ -47,6 +47,8 @@ const handleAddDishToMachineStructurePlan = (dish) => {
 
 const handleUupdateDishQuantity = (index, quantity) => {
   machinePlan.value[index].dishQuantity = Number(quantity);
+
+  console.log(machinePlan.value);
 };
 
 const handleRemoveDishFromMachineStructurePlan = (index) => {

@@ -61,11 +61,11 @@ const handleDeleteUser = async (userId) => {
         type="outlined"
         variant="tertiary"
         stretch="fit-content"
-        >Confirm</BaseButton
-      >
+        >Confirm
+      </BaseButton>
       <BaseButton @click="closeModal()" stretch="fit-content"
-        >Cancel</BaseButton
-      >
+        >Cancel
+      </BaseButton>
     </div>
   </div>
 </template>

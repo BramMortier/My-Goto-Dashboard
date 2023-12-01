@@ -129,7 +129,9 @@ const handleUpdateOutboundDeliveryContents = (contents) => {
         </div>
       </li>
     </ul>
-    <BaseButton stretch="fit-content" @click=""
+    <BaseButton
+      stretch="fit-content"
+      @click="handleUpdateOutboundDeliveryContents(inventoryRefillPlan)"
       >Add to outbound delivery</BaseButton
     >
   </div>

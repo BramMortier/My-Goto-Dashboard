@@ -1,11 +1,22 @@
 <script setup>
+import { useRightClickMenuStore } from "@stores/RightClickMenuStore";
+
+import TrucksActionMenu from "@components/TrucksActionMenu.vue";
+
 const props = defineProps({
   truck: Object,
 });
+
+const { openMenu } = useRightClickMenuStore();
 </script>
 
 <template>
-  <li class="truck-list-card">
+  <li
+    @click.right.prevent="
+      openMenu({ component: TrucksActionMenu, props: { truck: props.truck } })
+    "
+    class="truck-list-card"
+  >
     <div class="truck-list-card__thumbnail">
       <img src="@assets/icons/truck.svg" alt="truck list card icon" />
     </div>
@@ -28,6 +39,16 @@ const props = defineProps({
   gap: var(--space-md);
   padding-bottom: var(--space-md);
   border-bottom: 1px solid var(--clr-gray-500);
+  transition: var(--hover-transition);
+
+  &:hover {
+    cursor: pointer;
+    border-color: var(--clr-gray-700);
+
+    .truck-list-card__thumbnail {
+      background-color: var(--clr-gray-300);
+    }
+  }
 
   &:not(:last-child) {
     margin-bottom: var(--space-md);
@@ -41,6 +62,7 @@ const props = defineProps({
     align-items: center;
     background-color: var(--clr-gray-100);
     border-radius: var(--border-radius-md);
+    transition: var(--hover-transition);
 
     img {
       width: 2rem;
