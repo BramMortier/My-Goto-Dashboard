@@ -84,10 +84,6 @@ Global state management with stores
 
 In combination these packages provide easy and consistent form handling and validation.
 
-#### Axios
-
-Easier API requests
-
 #### Supabase
 
 Backend As A Service where the project makes use of the following features:

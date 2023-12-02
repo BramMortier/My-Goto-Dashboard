@@ -21,16 +21,18 @@ onMounted(async () => {
   } = await getAllMachinesWithPlan();
 
   machines.value = getAllMachinesWithPlanData;
-  console.log(machines.value);
+  outboundDeliveryContents.value = [];
 });
 
 const { value: outboundDeliveryContents, errorMessage } = useField(
   () => props.name
 );
 
-const updateOutboundDeliveryContents = (content) => {
+const updateOutboundDeliveryContents = (contentEntry) => {
   console.log("updating...");
-  console.log("content: ", content);
+  console.log(outboundDeliveryContents.value);
+  outboundDeliveryContents.value.push(contentEntry);
+  console.log(outboundDeliveryContents.value);
 };
 </script>
 

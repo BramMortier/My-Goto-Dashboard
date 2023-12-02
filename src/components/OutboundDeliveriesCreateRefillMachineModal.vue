@@ -15,8 +15,6 @@ const inventoryRefillPlan = ref(
   sanitizeMachinePlan(props.machine.machine_plan)
 );
 
-console.log(sanitizeMachinePlan(props.machine.machine_plan));
-
 const hoveredMeal = ref({
   dish: null,
   index: null,
@@ -36,10 +34,11 @@ const handleUpdateInventoryRefillPlan = (dishId, addedAmount) => {
     }
     return { ...dish };
   });
+  console.log(inventoryRefillPlan.value);
 };
 
-const handleUpdateOutboundDeliveryContents = (contents) => {
-  emit("updateOutboundDeliveryContents", contents);
+const handleUpdateOutboundDeliveryContents = (contentEntry) => {
+  emit("updateOutboundDeliveryContents", contentEntry);
 };
 </script>
 
@@ -131,7 +130,12 @@ const handleUpdateOutboundDeliveryContents = (contents) => {
     </ul>
     <BaseButton
       stretch="fit-content"
-      @click="handleUpdateOutboundDeliveryContents(inventoryRefillPlan)"
+      @click="
+        handleUpdateOutboundDeliveryContents({
+          inventoryRefillPlan,
+          machine: props.machine,
+        })
+      "
       >Add to outbound delivery</BaseButton
     >
   </div>
