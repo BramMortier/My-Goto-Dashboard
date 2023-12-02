@@ -5,6 +5,7 @@ import { getAllMachinesWithPlan } from "@services/locationService";
 import { useModalStore } from "@stores/ModalStore";
 
 import OutboundDeliveriesCreateRefillMachineModal from "@components/OutboundDeliveriesCreateRefillMachineModal.vue";
+import MachinesListCardRefillStatus from "@components/MachinesListCardRefillStatus.vue";
 
 const props = defineProps({
   name: String,
@@ -21,6 +22,7 @@ onMounted(async () => {
   } = await getAllMachinesWithPlan();
 
   machines.value = getAllMachinesWithPlanData;
+  console.log(machines.value);
   outboundDeliveryContents.value = [];
 });
 
@@ -60,10 +62,11 @@ const updateOutboundDeliveryContents = (contentEntry) => {
       </div>
       <div class="outbound-deliveries-create-machines-list__main">
         <h4>{{ machine.location_name }}</h4>
-        <span>43/70 meals filled (61,1%)</span>
-        <p class="outbound-deliveries-create-machines-list__filled-status">
-          Optional refill
-        </p>
+        <span
+          >{{ machine.stocked_capacity }}/{{ machine.capacity }} meals filled
+          ({{ (machine.stocked_capacity / machine.capacity) * 100 }}%)</span
+        >
+        <MachinesListCardRefillStatus :machine="machine" />
       </div>
     </li>
   </ul>
@@ -129,15 +132,6 @@ const updateOutboundDeliveryContents = (contentEntry) => {
       line-height: var(--lh-xs);
       margin-bottom: var(--space-md);
     }
-  }
-
-  &__filled-status {
-    background-color: var(--clr-green-400);
-    color: var(--clr-white);
-    border-radius: var(--border-radius-md);
-    padding: var(--space-xs) var(--space-sm);
-    line-height: var(--lh-xs);
-    width: fit-content;
   }
 }
 </style>
