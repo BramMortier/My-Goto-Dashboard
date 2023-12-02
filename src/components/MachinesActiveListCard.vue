@@ -1,6 +1,8 @@
 <script setup>
 import { generateArrayFromLength, sanitizeMachinePlan } from "@helpers/index";
 
+import MachinesListCardRefillStatus from "@components/MachinesListCardRefillStatus.vue";
+
 const props = defineProps({
   machine: Object,
 });
@@ -22,10 +24,7 @@ const props = defineProps({
           (props.machine.stocked_capacity / props.machine.capacity) * 100
         }}%)</span
       >
-      <p class="machines-active-list-card__assigned-dishes">
-        {{ sanitizeMachinePlan(props.machine.machine_plan).length }} Assigned
-        dishes
-      </p>
+      <MachinesListCardRefillStatus :machine="props.machine" />
       <ul class="machines-active-list-card__inventory-overview">
         <li
           v-for="entry in sanitizeMachinePlan(props.machine.machine_plan)"
@@ -93,20 +92,11 @@ const props = defineProps({
     }
   }
 
-  &__assigned-dishes {
-    background-color: var(--clr-green-400);
-    color: var(--clr-white);
-    border-radius: var(--border-radius-md);
-    padding: var(--space-xs) var(--space-sm);
-    margin-bottom: var(--space-md);
-    line-height: var(--lh-xs);
-    width: fit-content;
-  }
-
   &__inventory-overview {
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+    margin-top: var(--space-md);
   }
 
   &__inventory-overview-entry {

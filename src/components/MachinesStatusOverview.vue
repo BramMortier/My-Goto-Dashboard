@@ -41,7 +41,10 @@
         class="machines-status-overview__status-bar-urgent-refill"
         :style="{ width: `20%` }"
       ></div>
-      <div class="machines-status-overview__status-bar-empty"></div>
+      <div
+        class="machines-status-overview__status-bar-empty"
+        :style="{ width: `20%` }"
+      ></div>
     </div>
   </div>
 </template>
@@ -90,19 +93,22 @@
         background-color: var(--clr-green-500);
       }
     }
+
     &:nth-child(2) {
       .machines-status-overview__legend-entry-color {
         background-color: var(--clr-green-400);
       }
     }
+
     &:nth-child(3) {
       .machines-status-overview__legend-entry-color {
         background-color: var(--clr-yellow-400);
       }
     }
+
     &:nth-child(4) {
       .machines-status-overview__legend-entry-color {
-        background-color: var(--clr-gray-100);
+        background-color: var(--clr-red-400);
       }
     }
   }
@@ -125,11 +131,17 @@
   &__status-bar-full {
     background-color: var(--clr-green-500);
   }
+
   &__status-bar-optional-refill {
     background-color: var(--clr-green-400);
   }
+
   &__status-bar-urgent-refill {
     background-color: var(--clr-yellow-400);
+  }
+
+  &__status-bar-empty {
+    background-color: var(--clr-red-400);
   }
 }
 </style>

@@ -6,6 +6,7 @@ import BaseFormFieldset from "@components/BaseFormFieldset.vue";
 import OutboundDeliveriesCreateTruckDriversList from "@components/OutboundDeliveriesCreateTruckDriversList.vue";
 import OutboundDeliveriesCreateTrucksList from "@components/OutboundDeliveriesCreateTrucksList.vue";
 import OutboundDeliveriesCreateMachinesList from "./OutboundDeliveriesCreateMachinesList.vue";
+import OutboundDeliveriesCreateContentsOverview from "@components/OutboundDeliveriesCreateContentsOverview.vue";
 import BaseSearchbar from "@components/BaseSearchbar.vue";
 import BaseButton from "@components/BaseButton.vue";
 
@@ -40,6 +41,11 @@ const handleOutboundDeliveriesFormSubmit = async () => {};
         <BaseSearchbar />
       </div>
       <OutboundDeliveriesCreateMachinesList name="outboundDeliveryContents" />
+    </BaseFormFieldset>
+    <BaseFormFieldset label="Delivery contents overview">
+      <OutboundDeliveriesCreateContentsOverview
+        :outboundDeliveryContents="values.outboundDeliveryContents"
+      />
     </BaseFormFieldset>
     <div class="outbound-deliveries-form-create__action-buttons">
       <BaseButton stretch="fit-content">Finalize outbound delivery</BaseButton>

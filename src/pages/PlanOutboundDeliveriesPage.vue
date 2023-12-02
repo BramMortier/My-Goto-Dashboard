@@ -15,11 +15,6 @@ import OutboundDeliveriesCreateWarehouseInventoryOverview from "@components/Outb
         <OutboundDeliveriesCreate />
       </BasePageSectionGroup>
     </BasePageSection>
-    <BasePageSection title="Delivery contents">
-      <BasePageSectionGroup>
-        <h4>DeliveryContentList</h4>
-      </BasePageSectionGroup>
-    </BasePageSection>
   </div>
 </template>
 

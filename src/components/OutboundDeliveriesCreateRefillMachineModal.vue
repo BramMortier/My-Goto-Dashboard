@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from "vue";
+import { useModalStore } from "@stores/ModalStore";
+import { useNotificationStore } from "@stores/NotificationStore";
 import { generateArrayFromLength, sanitizeMachinePlan } from "@helpers/index";
 
 import BaseButton from "@components/BaseButton.vue";
@@ -10,6 +12,9 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["updateOutboundDeliveryContents"]);
+
+const { closeModal } = useModalStore();
+const { addNotification } = useNotificationStore();
 
 const inventoryRefillPlan = ref(
   sanitizeMachinePlan(props.machine.machine_plan)
@@ -34,11 +39,17 @@ const handleUpdateInventoryRefillPlan = (dishId, addedAmount) => {
     }
     return { ...dish };
   });
-  console.log(inventoryRefillPlan.value);
 };
 
 const handleUpdateOutboundDeliveryContents = (contentEntry) => {
   emit("updateOutboundDeliveryContents", contentEntry);
+
+  addNotification({
+    title: "Succes!",
+    message: "Added to inbound delivery succesfully",
+    type: "succes",
+    removeDelay: 2000,
+  });
 };
 </script>
 
@@ -52,9 +63,10 @@ const handleUpdateOutboundDeliveryContents = (contentEntry) => {
       <div class="outbound-deliveries-create-refill-machine__capacity-bar">
         <div
           class="outbound-deliveries-create-refill-machine__capacity-bar-value"
+          :style="{ width: `${props.machine.stocked_capacity}%` }"
         ></div>
       </div>
-      <p>0 / 70</p>
+      <p>{{ props.machine.stocked_capacity }} / {{ props.machine.capacity }}</p>
     </div>
     <h4>Machine inventory overview</h4>
     <div class="outbound-deliveries-create-refill-machine__tooltip">
@@ -134,7 +146,8 @@ const handleUpdateOutboundDeliveryContents = (contentEntry) => {
         handleUpdateOutboundDeliveryContents({
           inventoryRefillPlan,
           machine: props.machine,
-        })
+        });
+        closeModal();
       "
       >Add to outbound delivery</BaseButton
     >
@@ -180,7 +193,6 @@ const handleUpdateOutboundDeliveryContents = (contentEntry) => {
     height: 2rem;
     border-top-left-radius: var(--border-radius-md);
     border-bottom-left-radius: var(--border-radius-md);
-    width: 73%;
     background-color: var(--clr-green-400);
   }
 
