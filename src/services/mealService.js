@@ -88,3 +88,12 @@ export const deleteMeal = async (mealId) => {
 
   return { data: "Meal succesfully deleted", error: null };
 };
+
+export const getOldestMeals = async (quantity, dishId) => {
+  const { data: getOldestMealsData, error: getOldestMealsError } =
+    await supabase.rpc("get_oldest_meals", { amount: quantity, dish: dishId });
+
+  if (getOldestMealsError) return { data: null, error: getOldestMealsError };
+
+  return { data: getOldestMealsData, error: null };
+};
