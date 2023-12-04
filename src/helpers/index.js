@@ -26,6 +26,19 @@ export const sanitizeMachinePlan = (machinePlan) => {
   );
 };
 
+export const sanitizeOutboundDeliveryContents = (outboundDeliveryContents) => {
+  if (outboundDeliveryContents) {
+    return outboundDeliveryContents.map((machine) => ({
+      ...machine,
+      inventoryRefillPlan: machine.inventoryRefillPlan.filter((plan) =>
+        plan.hasOwnProperty("added_quantity")
+      ),
+    }));
+  } else {
+    return [];
+  }
+};
+
 export const transformToFormattedDate = (date) => {
   return date.toLocaleDateString("en-US", {
     weekday: "long",

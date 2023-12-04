@@ -6,7 +6,7 @@ import * as yup from "yup";
 import BaseFormFieldset from "@components/BaseFormFieldset.vue";
 import OutboundDeliveriesCreateTruckDriversList from "@components/OutboundDeliveriesCreateTruckDriversList.vue";
 import OutboundDeliveriesCreateTrucksList from "@components/OutboundDeliveriesCreateTrucksList.vue";
-import OutboundDeliveriesCreateMachinesList from "./OutboundDeliveriesCreateMachinesList.vue";
+import OutboundDeliveriesCreateMachinesList from "@components/OutboundDeliveriesCreateMachinesList.vue";
 import OutboundDeliveriesCreateContentsOverview from "@components/OutboundDeliveriesCreateContentsOverview.vue";
 import BaseSearchbar from "@components/BaseSearchbar.vue";
 import BaseButton from "@components/BaseButton.vue";

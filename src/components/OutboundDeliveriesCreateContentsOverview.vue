@@ -1,4 +1,6 @@
 <script setup>
+import { sanitizeOutboundDeliveryContents } from "@helpers/index";
+
 const props = defineProps({
   outboundDeliveryContents: Object,
 });
@@ -7,7 +9,9 @@ const props = defineProps({
 <template>
   <ul class="outbound-deliveries-create-contents-overview">
     <li
-      v-for="contentEntry in props.outboundDeliveryContents"
+      v-for="contentEntry in sanitizeOutboundDeliveryContents(
+        props.outboundDeliveryContents
+      )"
       class="outbound-deliveries-create-contents-overview__entry"
     >
       <h4>{{ contentEntry.machine.location_name }}</h4>
