@@ -67,8 +67,15 @@ export const createMeals = async ({
   return { data: createMealData, error: null };
 };
 
-export const updateMeal = async (mealId) => {
-  // update meal
+export const updateMeals = async (mealsData) => {
+  const { data: updateMealsData, error: updateMealsError } = await supabase
+    .from("meals")
+    .upsert(mealsData)
+    .select();
+
+  if (updateMealsError) return { data: null, error: updateMealsError };
+
+  return { data: updateMealsData, error: null };
 };
 
 export const deleteMeal = async (mealId) => {

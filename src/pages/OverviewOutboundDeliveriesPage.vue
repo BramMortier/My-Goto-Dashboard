@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 import BasePageSection from "@components/BasePageSection.vue";
 import BasePageSectionGroup from "@components/BasePageSectionGroup.vue";
 import BaseButton from "@components/BaseButton.vue";
+import OutboundDeliveriesList from "@components/OutboundDeliveriesList.vue";
 
 const router = useRouter();
 </script>
@@ -17,10 +18,13 @@ const router = useRouter();
           @click="router.push({ name: 'PlanOutboundDeliveriesPage' })"
           >Plan an outbound delivery</BaseButton
         >
+        <OutboundDeliveriesList />
       </BasePageSectionGroup>
     </BasePageSection>
     <BasePageSection title="Delivery history">
-      <BasePageSectionGroup> Delivery history </BasePageSectionGroup>
+      <BasePageSectionGroup>
+        <OutboundDeliveriesList :showDeliveryHistory="true" />
+      </BasePageSectionGroup>
     </BasePageSection>
   </div>
 </template>

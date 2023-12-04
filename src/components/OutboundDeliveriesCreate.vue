@@ -1,5 +1,6 @@
 <script setup>
 import { Form } from "vee-validate";
+import { createOutboundDelivery } from "@services/outboundDeliveryService";
 import * as yup from "yup";
 
 import BaseFormFieldset from "@components/BaseFormFieldset.vue";
@@ -18,13 +19,24 @@ const outboundDeliveriesFormValidationSchema = yup.object({
   outboundDeliveryContents: yup.mixed().required("Contents are required"),
 });
 
-const handleOutboundDeliveriesFormSubmit = async () => {};
+const handleOutboundDeliveriesFormSubmit = async (values) => {
+  const {
+    data: createOutboundDeliveryData,
+    error: createOutboundDeliveryError,
+  } = await createOutboundDelivery({
+    outboundDeliveryTruckDriver: values.outboundDeliveryTruckDriver,
+    outboundDeliveryTruck: values.outboundDeliveryTruck,
+    outboundDeliveryContents: values.outboundDeliveryContents,
+  });
+
+  console.log("from succes: ", createOutboundDeliveryData);
+  console.log("form error: ", createOutboundDeliveryError);
+};
 </script>
 
 <template>
   <Form
     @submit="handleOutboundDeliveriesFormSubmit"
-    :validation-schema="outboundDeliveriesFormValidationSchema"
     class="outbound-deliveries-form-create"
     v-slot="{ values }"
   >
