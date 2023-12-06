@@ -50,8 +50,6 @@ export const createOutboundDelivery = async ({
   if (createOutboundDeliveryData) {
     outboundDeliveryContents.forEach(async (machine) => {
       machine.inventoryRefillPlan.forEach(async (dish) => {
-        const outboundDeliveryMeals = [];
-
         if (dish.added_quantity) {
           const { data: getOldestMealsData, error: getOldestMealsError } =
             await getOldestMeals(dish.added_quantity, dish.dish_id);
@@ -59,13 +57,11 @@ export const createOutboundDelivery = async ({
           if (getOldestMealsError)
             return { data: null, error: getOldestMealsError };
 
-          getOldestMealsData.forEach((meal) => {
-            outboundDeliveryMeals.push({
-              ...meal,
-              delivery_id: createOutboundDeliveryData[0].id,
-              machine_id: machine.machine.machine_id,
-            });
-          });
+          const outboundDeliveryMeals = getOldestMealsData.map((meal) => ({
+            ...meal,
+            delivery_id: createOutboundDeliveryData[0].id,
+            machine_id: machine.machine.machine_id,
+          }));
 
           const {
             data: assignOutboundDeliveryItemsData,
@@ -74,6 +70,21 @@ export const createOutboundDelivery = async ({
 
           if (assignOutboundDeliveryItemsError)
             return { data: null, error: assignOutboundDeliveryItemsError };
+
+          const updatedStatusMeals = getOldestMealsData.map((meal) => ({
+            id: meal.meal_id,
+            truck_id: outboundDeliveryTruck.id,
+            machine_id: machine.machine.machine_id,
+          }));
+
+          const { data, error } = await supabase
+            .from("meals")
+            .update(updatedStatusMeals)
+            .eq("id")
+            .select();
+
+          console.log(error);
+          console.log(data);
         }
       });
     });
@@ -83,9 +94,6 @@ export const createOutboundDelivery = async ({
 };
 
 export const assignOutboundDeliveryItems = async (outboundDeliveryItems) => {
-  console.log("assigning delivery items");
-  console.log("items to insert: ", outboundDeliveryItems);
-
   const {
     data: assignOutboundDeliveryItemData,
     error: assignOutboundDeliveryItemError,
