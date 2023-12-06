@@ -13,7 +13,12 @@ const router = useRouter();
 <template>
   <li
     class="outbound-deliveries-list-card"
-    @click="router.push({ name: 'PlanOutboundDeliveriesPage' })"
+    @click="
+      router.push({
+        name: 'DetailsOutboundDeliveryPage',
+        params: { id: props.outboundDelivery.delivery_id },
+      })
+    "
   >
     <div class="outbound-deliveries-list-card__truck-info">
       <div class="outbound-deliveries-list-card__truck-icon">
@@ -49,6 +54,13 @@ const router = useRouter();
 
   &:hover {
     cursor: pointer;
+    border-color: var(--clr-gray-700);
+
+    .outbound-deliveries-list-card {
+      &__truck-icon {
+        background-color: var(--clr-gray-300);
+      }
+    }
   }
 
   &__truck-info {

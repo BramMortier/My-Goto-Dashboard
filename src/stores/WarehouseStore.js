@@ -17,7 +17,7 @@ export const useWarehouseStore = defineStore("warehouse", () => {
     return { data: getAllMealsCountData, error: null };
   };
 
-  const updateWarehouseState = (dish, quantity) => {
+  const updateWarehouseState = (dishId, quantity) => {
     console.log(dish, quantity);
   };
 

@@ -18,23 +18,23 @@ onMounted(async () => {
     <h4>Live warehouse inventory overview</h4>
     <ul class="outbound-deliveries-create-warehouse-inventory-overview__list">
       <li
-        v-for="(meal, index) in warehouseState"
-        :key="index"
+        v-for="dish in warehouseState"
+        :key="dish.dish_id"
         class="outbound-deliveries-create-warehouse-inventory-overview__list-card"
       >
         <div
           class="outbound-deliveries-create-warehouse-inventory-overview__list-card-thumbnail"
           :style="{
             backgroundImage: `url(${
-              publicStorageBucketUrl + encodeURIComponent(meal.dish_thumbnail)
+              publicStorageBucketUrl + encodeURIComponent(dish.dish_thumbnail)
             })`,
           }"
         ></div>
         <div
           class="outbound-deliveries-create-warehouse-inventory-overview__list-card-info"
         >
-          <p>{{ meal.dish_name }}</p>
-          <span>{{ meal.available_amount }}</span>
+          <p>{{ dish.dish_name }}</p>
+          <span>{{ dish.available_amount }}</span>
         </div>
       </li>
     </ul>

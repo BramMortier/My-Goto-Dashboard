@@ -1,8 +1,6 @@
 <script setup>
 import { useRouter } from "vue-router";
 
-import OutboundDeliveriesListCardStops from "@components/OutboundDeliveriesListCardStops.vue";
-
 const router = useRouter();
 </script>
 
@@ -39,6 +37,13 @@ const router = useRouter();
 
   &:hover {
     cursor: pointer;
+    border-color: var(--clr-gray-700);
+
+    .outbound-deliveries-list-card-create {
+      &__truck-icon {
+        background-color: var(--clr-gray-300);
+      }
+    }
   }
 
   &__truck-info {

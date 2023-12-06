@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { useWarehouseStore } from "@stores/WarehouseStore";
 import { useModalStore } from "@stores/ModalStore";
 import { useNotificationStore } from "@stores/NotificationStore";
 import { generateArrayFromLength, sanitizeMachinePlan } from "@helpers/index";
@@ -15,6 +16,7 @@ const emit = defineEmits(["updateOutboundDeliveryContents"]);
 
 const { closeModal } = useModalStore();
 const { addNotification } = useNotificationStore();
+const { refreshWarehouseState } = useWarehouseStore();
 
 const inventoryRefillPlan = ref(
   sanitizeMachinePlan(props.machine.machine_plan)

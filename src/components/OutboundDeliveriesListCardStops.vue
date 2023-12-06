@@ -8,6 +8,7 @@ const props = defineProps({
   <div class="outbound-deliveries-list-card-stops">
     <div
       v-for="stop in stops"
+      :key="stop.machine_name"
       class="outbound-deliveries-list-card-stops__stop"
     >
       <div class="outbound-deliveries-list-card-stops__stop-label">

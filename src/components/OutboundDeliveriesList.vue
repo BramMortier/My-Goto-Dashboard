@@ -28,6 +28,7 @@ onMounted(async () => {
   <ul v-if="showDeliveryHistory" class="outbound-deliveries-list">
     <OutboundDeliveriesListCard
       v-for="outboundDelivery in outboundDeliveries"
+      :key="outboundDelivery.delivery_id"
       :outboundDelivery="outboundDelivery"
     />
   </ul>
@@ -35,6 +36,7 @@ onMounted(async () => {
     <OutboundDeliveriesListCardCreate />
     <OutboundDeliveriesListCard
       v-for="outboundDelivery in outboundDeliveries"
+      :key="outboundDelivery.delivery_id"
       :outboundDelivery="outboundDelivery"
     />
   </ul>

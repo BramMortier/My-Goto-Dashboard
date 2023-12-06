@@ -5,12 +5,26 @@ export const getAllOutboundDeliveries = async () => {
   const {
     data: getAllOutboundDeliveriesData,
     error: getAllOutboundDeliveriesError,
-  } = await supabase.rpc("get_all_outbound_deliveries_new");
+  } = await supabase.rpc("get_all_outbound_deliveries");
 
   if (getAllOutboundDeliveriesError)
     return { data: null, error: getAllOutboundDeliveriesError };
 
   return { data: getAllOutboundDeliveriesData, error: null };
+};
+
+export const getOutboundDeliveryById = async (outboundDeliveryId) => {
+  const {
+    data: getOutboundDeliveryByIdData,
+    error: getOutboundDeliveryByIdError,
+  } = await supabase.rpc("get_outbound_delivery_by_id", {
+    id: outboundDeliveryId,
+  });
+
+  if (getOutboundDeliveryByIdError)
+    return { data: null, error: getOutboundDeliveryByIdError };
+
+  return { data: getOutboundDeliveryByIdData, error: null };
 };
 
 export const createOutboundDelivery = async ({
