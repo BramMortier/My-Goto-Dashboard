@@ -1,27 +1,24 @@
 <script setup>
-import { useRouter } from "vue-router";
-
 import BasePageSection from "@components/BasePageSection.vue";
+import BaseSearchbar from "@components/BaseSearchbar.vue";
 import BasePageSectionGroup from "@components/BasePageSectionGroup.vue";
-import BaseButton from "@components/BaseButton.vue";
 import OutboundDeliveriesList from "@components/OutboundDeliveriesList.vue";
-
-const router = useRouter();
 </script>
 
 <template>
   <div class="overview-outbound-deliveries-page">
     <BasePageSection title="Active deliveries">
       <BasePageSectionGroup>
-        <BaseButton
-          stretch="fit-content"
-          @click="router.push({ name: 'PlanOutboundDeliveriesPage' })"
-          >Plan an outbound delivery</BaseButton
-        >
+        <BaseSearchbar />
+      </BasePageSectionGroup>
+      <BasePageSectionGroup>
         <OutboundDeliveriesList />
       </BasePageSectionGroup>
     </BasePageSection>
     <BasePageSection title="Delivery history">
+      <BasePageSectionGroup>
+        <BaseSearchbar />
+      </BasePageSectionGroup>
       <BasePageSectionGroup>
         <OutboundDeliveriesList :showDeliveryHistory="true" />
       </BasePageSectionGroup>

@@ -1,15 +1,15 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { getAllMealsCount } from "@services/mealService";
+import { onMounted } from "vue";
 import { publicStorageBucketUrl } from "@services/storageService";
+import { useWarehouseStore } from "@stores/WarehouseStore";
+import { storeToRefs } from "pinia";
 
-const mealCounts = ref(null);
+const { warehouseState } = storeToRefs(useWarehouseStore());
+const { refreshWarehouseState } = useWarehouseStore();
 
 onMounted(async () => {
-  const { data: getAllMealsCountData, error: getAllMealsCountError } =
-    await getAllMealsCount();
-
-  mealCounts.value = getAllMealsCountData;
+  await refreshWarehouseState();
+  console.log(warehouseState.value);
 });
 </script>
 
@@ -18,7 +18,7 @@ onMounted(async () => {
     <h4>Live warehouse inventory overview</h4>
     <ul class="outbound-deliveries-create-warehouse-inventory-overview__list">
       <li
-        v-for="(meal, index) in mealCounts"
+        v-for="(meal, index) in warehouseState"
         :key="index"
         class="outbound-deliveries-create-warehouse-inventory-overview__list-card"
       >

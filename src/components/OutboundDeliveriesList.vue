@@ -20,6 +20,7 @@ onMounted(async () => {
   } = await getAllOutboundDeliveries();
 
   outboundDeliveries.value = getAllOutboundDeliveriesData;
+  console.log(outboundDeliveries.value);
 });
 </script>
 
@@ -31,6 +32,7 @@ onMounted(async () => {
     />
   </ul>
   <ul v-else class="outbound-deliveries-list">
+    <OutboundDeliveriesListCardCreate />
     <OutboundDeliveriesListCard
       v-for="outboundDelivery in outboundDeliveries"
       :outboundDelivery="outboundDelivery"
@@ -42,6 +44,5 @@ onMounted(async () => {
 .outbound-deliveries-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
 }
 </style>

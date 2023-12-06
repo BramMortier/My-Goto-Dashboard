@@ -29,8 +29,8 @@ const handleOutboundDeliveriesFormSubmit = async (values) => {
     outboundDeliveryContents: values.outboundDeliveryContents,
   });
 
-  console.log("from succes: ", createOutboundDeliveryData);
-  console.log("form error: ", createOutboundDeliveryError);
+  // console.log("from succes: ", createOutboundDeliveryData);
+  // console.log("form error: ", createOutboundDeliveryError);
 };
 </script>
 
