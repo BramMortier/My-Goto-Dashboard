@@ -40,7 +40,7 @@ export const createOutboundDelivery = async ({
     .insert({
       truck_id: outboundDeliveryTruck.id,
       driver_id: outboundDeliveryTruckDriver.truck_driver_id,
-      status: "in progress",
+      status: "planned",
     })
     .select();
 

@@ -31,3 +31,10 @@ export const foodCategories = [
     id: "851d952d-23d6-4e16-8267-54d19f3a2bef",
   },
 ];
+
+export const outboundDeliveryStatuses = [
+  "planned",
+  "loaded",
+  "in progress",
+  "delivered",
+];
