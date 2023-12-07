@@ -32,7 +32,6 @@ const { value: outboundDeliveryContents, errorMessage } = useField(
 const updateOutboundDeliveryContents = (contentEntry) => {
   console.log("updating...");
   outboundDeliveryContents.value.push(contentEntry);
-  console.log(outboundDeliveryContents.value);
 };
 </script>
 

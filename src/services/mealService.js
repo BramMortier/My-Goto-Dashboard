@@ -91,9 +91,22 @@ export const deleteMeal = async (mealId) => {
 
 export const getOldestMeals = async (quantity, dishId) => {
   const { data: getOldestMealsData, error: getOldestMealsError } =
-    await supabase.rpc("get_oldest_meals", { amount: quantity, dish: dishId });
+    await supabase.rpc("get_oldest_meals", {
+      amount: quantity,
+      dish: dishId,
+    });
 
   if (getOldestMealsError) return { data: null, error: getOldestMealsError };
 
   return { data: getOldestMealsData, error: null };
+};
+
+export const updateMealsToPlanned = async (mealsData) => {
+  const { data: updateMealsToPlannedData, error: updateMealsToPlannedError } =
+    await supabase.from("meals").upsert(mealsData).select();
+
+  if (updateMealsToPlannedError)
+    return { data: null, error: updateMealsToPlannedError };
+
+  return { data: updateMealsToPlannedData, error: null };
 };

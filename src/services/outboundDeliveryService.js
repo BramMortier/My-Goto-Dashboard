@@ -1,5 +1,5 @@
 import { supabase } from "@plugins/supabase";
-import { getOldestMeals } from "@services/mealService";
+import { getOldestMeals, updateMealsToPlanned } from "@services/mealService";
 
 export const getAllOutboundDeliveries = async () => {
   const {
@@ -49,7 +49,9 @@ export const createOutboundDelivery = async ({
 
   if (createOutboundDeliveryData) {
     outboundDeliveryContents.forEach(async (machine) => {
+      console.log(machine);
       machine.inventoryRefillPlan.forEach(async (dish) => {
+        console.log(dish);
         if (dish.added_quantity) {
           const { data: getOldestMealsData, error: getOldestMealsError } =
             await getOldestMeals(dish.added_quantity, dish.dish_id);
@@ -58,7 +60,7 @@ export const createOutboundDelivery = async ({
             return { data: null, error: getOldestMealsError };
 
           const outboundDeliveryMeals = getOldestMealsData.map((meal) => ({
-            ...meal,
+            meal_id: meal.id,
             delivery_id: createOutboundDeliveryData[0].id,
             machine_id: machine.machine.machine_id,
           }));
@@ -72,19 +74,21 @@ export const createOutboundDelivery = async ({
             return { data: null, error: assignOutboundDeliveryItemsError };
 
           const updatedStatusMeals = getOldestMealsData.map((meal) => ({
-            id: meal.meal_id,
+            ...meal,
             truck_id: outboundDeliveryTruck.id,
             machine_id: machine.machine.machine_id,
           }));
 
-          const { data, error } = await supabase
-            .from("meals")
-            .update(updatedStatusMeals)
-            .eq("id")
-            .select();
+          const {
+            data: updateMealsToPlannedData,
+            error: updateMealsToPlannedError,
+          } = await updateMealsToPlanned(updatedStatusMeals);
 
-          console.log(error);
-          console.log(data);
+          if (updateMealsToPlannedError)
+            return { data: null, error: updateMealsToPlannedError };
+
+          console.log(updateMealsToPlannedData);
+          console.log(updateMealsToPlannedError);
         }
       });
     });
