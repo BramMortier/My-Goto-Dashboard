@@ -112,3 +112,15 @@ export const updateMealsToPlanned = async (deliveryId) => {
 
   return { data: updateMealsToPlannedData, error: null };
 };
+
+export const updateMealsToInTransport = async (deliveryId) => {
+  const {
+    data: updateMealsToInTransportData,
+    error: updateMealsToInTransportError,
+  } = await supabase.rpc("");
+};
+
+export const updateMealsToFilled = async (deliveryId) => {
+  const { data: updateMealsToFilledData, error: updateMealsToFilledError } =
+    await supabase.rpc("");
+};

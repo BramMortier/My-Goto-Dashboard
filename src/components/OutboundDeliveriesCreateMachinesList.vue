@@ -61,7 +61,9 @@ const updateOutboundDeliveryContents = (contentEntry) => {
         <h4>{{ machine.location_name }}</h4>
         <span
           >{{ machine.stocked_capacity }}/{{ machine.capacity }} meals filled
-          ({{ (machine.stocked_capacity / machine.capacity) * 100 }}%)</span
+          ({{
+            Math.floor((machine.stocked_capacity / machine.capacity) * 100)
+          }}%)</span
         >
         <MachinesListCardRefillStatus :machine="machine" />
       </div>
