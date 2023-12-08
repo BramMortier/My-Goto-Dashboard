@@ -38,22 +38,28 @@ console.log(props.machine);
             class="machines-active-list-card__inventory-overview-entry-quantity"
           >
             <p>{{ entry.dish_name }}</p>
-            <ul
-              class="machines-active-list-card__inventory-overview-entry-quantity-in-transport"
-            >
+            <ul>
+              <li
+                v-for="(_, index) in generateArrayFromLength(
+                  entry.available_quantity
+                )"
+                :key="index"
+                class="machines-active-list-card__inventory-overview-entry-quantity-available"
+              ></li>
               <li
                 v-for="(_, index) in generateArrayFromLength(
                   entry.in_transport_quantity
                 )"
                 :key="index"
+                class="machines-active-list-card__inventory-overview-entry-quantity-in-transport"
               ></li>
-            </ul>
-            <ul>
               <li
                 v-for="(_, index) in generateArrayFromLength(
-                  entry.suggested_quantity
+                  entry.suggested_quantity -
+                    (entry.available_quantity + entry.in_transport_quantity)
                 )"
                 :key="index"
+                class="machines-active-list-card__inventory-overview-entry-quantity-suggested"
               ></li>
             </ul>
           </div>
@@ -140,23 +146,21 @@ console.log(props.machine);
         width: 16px;
         height: 16px;
         border-radius: 3px;
-        background-color: var(--clr-gray-300);
       }
     }
   }
 
-  &__inventory-overview-entry-quantity-in-transport {
-    display: grid;
-    grid-template-columns: repeat(12, 16px);
-    gap: var(--space-2xs);
+  &__inventory-overview-entry-quantity-suggested {
+    background-color: var(--clr-gray-300);
+  }
 
-    & > li {
-      width: 16px;
-      height: 16px;
-      border-radius: 3px;
-      border: 1px solid var(--clr-green-400);
-      background-color: var(--clr-gray-300);
-    }
+  &__inventory-overview-entry-quantity-in-transport {
+    background-color: var(--clr-gray-300);
+    border: 1px solid var(--clr-green-400);
+  }
+
+  &__inventory-overview-entry-quantity-available {
+    background-color: var(--clr-green-400);
   }
 }
 </style>
