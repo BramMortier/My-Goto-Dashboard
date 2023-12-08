@@ -9,7 +9,6 @@ const { refreshWarehouseState } = useWarehouseStore();
 
 onMounted(async () => {
   await refreshWarehouseState();
-  console.log(warehouseState.value);
 });
 </script>
 

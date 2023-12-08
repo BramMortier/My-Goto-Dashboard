@@ -93,7 +93,7 @@ export const getOldestMeals = async (quantity, dishId) => {
   const { data: getOldestMealsData, error: getOldestMealsError } =
     await supabase.rpc("get_oldest_meals", {
       amount: quantity,
-      dish: dishId,
+      dish_id: dishId,
     });
 
   if (getOldestMealsError) return { data: null, error: getOldestMealsError };
@@ -103,13 +103,12 @@ export const getOldestMeals = async (quantity, dishId) => {
 
 export const updateMealsToPlanned = async (deliveryId) => {
   const { data: updateMealsToPlannedData, error: updateMealsToPlannedError } =
-    await supabase.from("meals").select("*").eq("id", deliveryId);
+    await supabase.rpc("update_meals_to_planned", {
+      delivery_id: deliveryId,
+    });
 
   if (updateMealsToPlannedError)
     return { data: null, error: updateMealsToPlannedError };
-
-  console.log(updateMealsToPlannedData);
-  console.log(updateMealsToPlannedError);
 
   return { data: updateMealsToPlannedData, error: null };
 };
