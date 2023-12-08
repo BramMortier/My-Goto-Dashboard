@@ -49,9 +49,7 @@ export const createOutboundDelivery = async ({
 
   if (createOutboundDeliveryData) {
     outboundDeliveryContents.forEach(async (machine) => {
-      console.log(machine);
       machine.inventoryRefillPlan.forEach(async (dish) => {
-        console.log(dish);
         if (dish.added_quantity) {
           const { data: getOldestMealsData, error: getOldestMealsError } =
             await getOldestMeals(dish.added_quantity, dish.dish_id);
@@ -72,26 +70,15 @@ export const createOutboundDelivery = async ({
 
           if (assignOutboundDeliveryItemsError)
             return { data: null, error: assignOutboundDeliveryItemsError };
-
-          const updatedStatusMeals = getOldestMealsData.map((meal) => ({
-            ...meal,
-            truck_id: outboundDeliveryTruck.id,
-            machine_id: machine.machine.machine_id,
-          }));
-
-          const {
-            data: updateMealsToPlannedData,
-            error: updateMealsToPlannedError,
-          } = await updateMealsToPlanned(updatedStatusMeals);
-
-          if (updateMealsToPlannedError)
-            return { data: null, error: updateMealsToPlannedError };
-
-          console.log(updateMealsToPlannedData);
-          console.log(updateMealsToPlannedError);
         }
       });
     });
+
+    const { data: updateMealsToPlannedData, error: updateMealsToPlannedError } =
+      await updateMealsToPlanned(createOutboundDeliveryData[0].id);
+
+    if (updateMealsToPlannedError)
+      return { data: null, error: updateMealsToPlannedError };
   }
 
   return { data: createOutboundDeliveryData, error: null };

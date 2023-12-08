@@ -101,12 +101,15 @@ export const getOldestMeals = async (quantity, dishId) => {
   return { data: getOldestMealsData, error: null };
 };
 
-export const updateMealsToPlanned = async (mealsData) => {
+export const updateMealsToPlanned = async (deliveryId) => {
   const { data: updateMealsToPlannedData, error: updateMealsToPlannedError } =
-    await supabase.from("meals").upsert(mealsData).select();
+    await supabase.from("meals").select("*").eq("id", deliveryId);
 
   if (updateMealsToPlannedError)
     return { data: null, error: updateMealsToPlannedError };
+
+  console.log(updateMealsToPlannedData);
+  console.log(updateMealsToPlannedError);
 
   return { data: updateMealsToPlannedData, error: null };
 };
