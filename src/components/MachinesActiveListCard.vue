@@ -63,7 +63,7 @@ console.log(props.machine);
               ></li>
             </ul>
           </div>
-          <p>0 / {{ entry.suggested_quantity }}</p>
+          <p>{{ entry.available_quantity }} / {{ entry.suggested_quantity }}</p>
         </li>
       </ul>
     </div>

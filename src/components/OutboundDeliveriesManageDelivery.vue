@@ -6,7 +6,8 @@ import { useModalStore } from "@stores/ModalStore";
 import OutboundDeliveriesManageDeliveryStatusModal from "@components/OutboundDeliveriesManageDeliveryStatusModal.vue";
 
 const props = defineProps({
-  status: String,
+  deliveryStatus: String,
+  deliveryId: String,
 });
 
 const { openModal } = useModalStore();
@@ -24,16 +25,17 @@ const status = ref(null);
           openModal({
             component: OutboundDeliveriesManageDeliveryStatusModal,
             props: {
-              status: status,
+              deliveryStatus: status,
+              deliveryId: props.deliveryId,
             },
           })
         "
         class="outbound-deliveries-manage-delivery__progress-stage"
         :class="{
           'outbound-deliveries-manage-delivery__progress-stage--active':
-            props.status === status,
+            props.deliveryStatus === status,
           'outbound-deliveries-manage-delivery__progress-stage--completed':
-            outboundDeliveryStatuses.indexOf(props.status) >= index,
+            outboundDeliveryStatuses.indexOf(props.deliveryStatus) >= index,
         }"
       >
         <p>{{ index + 1 }}. {{ status }}</p>
@@ -53,7 +55,7 @@ const status = ref(null);
   &__progress {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-xs);
   }
 
@@ -101,12 +103,6 @@ const status = ref(null);
       &:nth-child(1) {
         & > div {
           background-color: var(--clr-yellow-500);
-        }
-      }
-
-      &:nth-child(2) {
-        & > div {
-          background-color: var(--clr-orange-500);
         }
       }
 

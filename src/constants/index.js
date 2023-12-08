@@ -32,9 +32,4 @@ export const foodCategories = [
   },
 ];
 
-export const outboundDeliveryStatuses = [
-  "planned",
-  "loaded",
-  "in progress",
-  "delivered",
-];
+export const outboundDeliveryStatuses = ["planned", "in progress", "delivered"];

@@ -27,7 +27,10 @@ onMounted(async () => {
   <div class="details-outbound-delivery-page">
     <BasePageSection title="Manage delivery status">
       <BasePageSectionGroup>
-        <OutboundDeliveriesManageDelivery :status="deliveryDetails?.status" />
+        <OutboundDeliveriesManageDelivery
+          :deliveryStatus="deliveryDetails?.status"
+          :deliveryId="deliveryDetails?.delivery_id"
+        />
       </BasePageSectionGroup>
     </BasePageSection>
     <BasePageSection title="Delivery details">

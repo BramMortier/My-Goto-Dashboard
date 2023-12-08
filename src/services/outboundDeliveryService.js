@@ -105,6 +105,27 @@ export const assignOutboundDeliveryItems = async (outboundDeliveryItems) => {
   return { data: assignOutboundDeliveryItemData, error: null };
 };
 
+export const updateOutboundDeliveryStatus = async (
+  outboundDeliveryStatus,
+  outboundDeliveryId
+) => {
+  const {
+    data: updateOutboundDeliveryStatusData,
+    error: updateOutboundDeliveryStatusError,
+  } = await supabase
+    .from("deliveries")
+    .update({
+      status: outboundDeliveryStatus,
+    })
+    .eq("id", outboundDeliveryId)
+    .select();
+
+  if (updateOutboundDeliveryStatusError)
+    return { data: null, error: updateOutboundDeliveryStatusError };
+
+  return { data: updateOutboundDeliveryStatusData, error: null };
+};
+
 export const deleteOutboundDelivery = async (outboundDeliveryId) => {
   const { error: deleteOutboundDeliveryError } = await supabase
     .from("deliveries")

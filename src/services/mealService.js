@@ -117,10 +117,24 @@ export const updateMealsToInTransport = async (deliveryId) => {
   const {
     data: updateMealsToInTransportData,
     error: updateMealsToInTransportError,
-  } = await supabase.rpc("");
+  } = await supabase.rpc("update_meals_to_in_transport", {
+    delivery_id: deliveryId,
+  });
+
+  if (updateMealsToInTransportError)
+    return { data: null, error: updateMealsToInTransportError };
+
+  return { data: updateMealsToInTransportData, error: null };
 };
 
 export const updateMealsToFilled = async (deliveryId) => {
   const { data: updateMealsToFilledData, error: updateMealsToFilledError } =
-    await supabase.rpc("");
+    await supabase.rpc("update_meals_to_filled", {
+      delivery_id: deliveryId,
+    });
+
+  if (updateMealsToFilledError)
+    return { data: null, error: updateMealsToFilledError };
+
+  return { data: updateMealsToFilledData, error: null };
 };
