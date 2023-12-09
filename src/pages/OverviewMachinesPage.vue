@@ -1,10 +1,14 @@
 <script setup>
+import { useRouter } from "vue-router";
+
 import BasePageSection from "@components/BasePageSection.vue";
 import BasePageSectionGroup from "@components/BasePageSectionGroup.vue";
 import BaseSearchbar from "@components/BaseSearchbar.vue";
 import BaseButton from "@components/BaseButton.vue";
 import MachinesStatusOverview from "@components/MachinesStatusOverview.vue";
 import MachinesActiveList from "@components/MachinesActiveList.vue";
+
+const router = useRouter();
 </script>
 
 <template>
@@ -18,7 +22,11 @@ import MachinesActiveList from "@components/MachinesActiveList.vue";
       <BasePageSectionGroup>
         <div class="overview-machines-page__filters">
           <BaseSearchbar />
-          <BaseButton stretch="fit-content">Refill machines</BaseButton>
+          <BaseButton
+            @click="router.push({ name: 'OverviewOutboundDeliveriesPage' })"
+            stretch="fit-content"
+            >Refill machines</BaseButton
+          >
         </div>
       </BasePageSectionGroup>
       <BasePageSectionGroup>

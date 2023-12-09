@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { getAllOutboundDeliveries } from "@services/outboundDeliveryService";
 
 import OutboundDeliveriesListCardCreate from "@components/OutboundDeliveriesListCardCreate.vue";
@@ -10,8 +10,6 @@ const props = defineProps({
 });
 
 const outboundDeliveries = ref(null);
-const ActiveOutboundDeliveries = ref(null);
-const OutboundDeliveriesHistory = ref(null);
 
 onMounted(async () => {
   const {
@@ -22,12 +20,28 @@ onMounted(async () => {
   outboundDeliveries.value = getAllOutboundDeliveriesData;
   console.log(outboundDeliveries.value);
 });
+
+const ActiveOutboundDeliveries = computed(() => {
+  if (!outboundDeliveries.value) return [];
+
+  return outboundDeliveries.value.filter(
+    (outboundDelivery) => outboundDelivery.status != "delivered"
+  );
+});
+
+const OutboundDeliveriesHistory = computed(() => {
+  if (!outboundDeliveries.value) return [];
+
+  return outboundDeliveries.value.filter(
+    (outboundDelivery) => outboundDelivery.status === "delivered"
+  );
+});
 </script>
 
 <template>
   <ul v-if="showDeliveryHistory" class="outbound-deliveries-list">
     <OutboundDeliveriesListCard
-      v-for="outboundDelivery in outboundDeliveries"
+      v-for="outboundDelivery in OutboundDeliveriesHistory"
       :key="outboundDelivery.delivery_id"
       :outboundDelivery="outboundDelivery"
     />
@@ -35,7 +49,7 @@ onMounted(async () => {
   <ul v-else class="outbound-deliveries-list">
     <OutboundDeliveriesListCardCreate />
     <OutboundDeliveriesListCard
-      v-for="outboundDelivery in outboundDeliveries"
+      v-for="outboundDelivery in ActiveOutboundDeliveries"
       :key="outboundDelivery.delivery_id"
       :outboundDelivery="outboundDelivery"
     />

@@ -156,7 +156,7 @@ console.log(props.machine);
 
   &__inventory-overview-entry-quantity-in-transport {
     background-color: var(--clr-gray-300);
-    border: 1px solid var(--clr-green-400);
+    border: 2px solid var(--clr-green-400);
   }
 
   &__inventory-overview-entry-quantity-available {
