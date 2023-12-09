@@ -1,5 +1,10 @@
 import { supabase } from "@plugins/supabase";
-import { getOldestMeals, updateMealsToPlanned } from "@services/mealService";
+import {
+  getOldestMeals,
+  updateMealsToPlanned,
+  updateMealsToInTransport,
+  updateMealsToFilled,
+} from "@services/mealService";
 
 export const getAllOutboundDeliveries = async () => {
   const {
@@ -106,8 +111,8 @@ export const assignOutboundDeliveryItems = async (outboundDeliveryItems) => {
 };
 
 export const updateOutboundDeliveryStatus = async (
-  outboundDeliveryStatus,
-  outboundDeliveryId
+  outboundDeliveryId,
+  outboundDeliveryStatus
 ) => {
   const {
     data: updateOutboundDeliveryStatusData,
@@ -124,6 +129,48 @@ export const updateOutboundDeliveryStatus = async (
     return { data: null, error: updateOutboundDeliveryStatusError };
 
   return { data: updateOutboundDeliveryStatusData, error: null };
+};
+
+export const updateOutboundDeliveryToInTransport = async (
+  outboundDeliveryId
+) => {
+  const {
+    data: updateOutboundDeliveryStatusData,
+    error: updateOutboundDeliveryStatusError,
+  } = await updateOutboundDeliveryStatus(outboundDeliveryId, "in progress");
+
+  if (updateOutboundDeliveryStatusError)
+    return { data: null, error: updateOutboundDeliveryStatusError };
+
+  const {
+    data: updateMealsToInTransportData,
+    error: updateMealsToInTransportError,
+  } = await updateMealsToInTransport(outboundDeliveryId);
+
+  if (updateMealsToInTransportError)
+    return { data: null, error: updateMealsToInTransportError };
+
+  return { data: updateMealsToInTransportData, error: null };
+};
+
+export const updateOutboundDeliveryToFilled = async (outboundDeliveryId) => {
+  const {
+    data: updateOutboundDeliveryStatusData,
+    error: updateOutboundDeliveryStatusError,
+  } = await updateOutboundDeliveryStatus(outboundDeliveryId, "delivered");
+
+  if (updateOutboundDeliveryStatusError)
+    return { data: null, error: updateOutboundDeliveryStatusError };
+
+  const {
+    data: updateOutboundDeliveryToFilledData,
+    error: updateOutboundDeliveryToFilledError,
+  } = await updateMealsToFilled(outboundDeliveryId);
+
+  if (updateOutboundDeliveryToFilledError)
+    return { data: null, error: updateOutboundDeliveryToFilledError };
+
+  return { data: updateOutboundDeliveryToFilledData, error: null };
 };
 
 export const deleteOutboundDelivery = async (outboundDeliveryId) => {

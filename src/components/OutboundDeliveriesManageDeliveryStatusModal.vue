@@ -1,6 +1,9 @@
 <script setup>
 import { useModalStore } from "@stores/ModalStore";
-import { updateMealsToInTransport } from "@services/mealService";
+import {
+  updateOutboundDeliveryToInTransport,
+  updateOutboundDeliveryToFilled,
+} from "@services/outboundDeliveryService";
 
 import BaseButton from "@components/BaseButton.vue";
 
@@ -11,14 +14,18 @@ const props = defineProps({
 
 const { closeModal } = useModalStore();
 
-const handleStatusUpdate = async (deliveryId) => {
-  const {
-    data: updateMealsToInTransportData,
-    error: updateMealsToInTransportError,
-  } = await updateMealsToInTransport(deliveryId);
-
-  console.log(updateMealsToInTransportData);
-  console.log(updateMealsToInTransportError);
+const handleStatusUpdate = async (deliveryId, deliveryStatus) => {
+  if (deliveryStatus === "in progress") {
+    const {
+      data: updateOutboundDeliveryToInTransportData,
+      error: updateOutboundDeliveryToInTransportError,
+    } = await updateOutboundDeliveryToInTransport(deliveryId);
+  } else {
+    const {
+      data: updateOutboundDeliveryToFilledData,
+      error: updateOutboundDeliveryToFilledError,
+    } = await updateOutboundDeliveryToFilled(deliveryId);
+  }
 };
 </script>
 
@@ -34,7 +41,7 @@ const handleStatusUpdate = async (deliveryId) => {
       class="outbound-deliveries-manage-delivery-status-modal__action-buttons"
     >
       <BaseButton
-        @click="handleStatusUpdate(props.deliveryId)"
+        @click="handleStatusUpdate(props.deliveryId, props.deliveryStatus)"
         type="outlined"
         variant="tertiary"
         stretch="fit-content"

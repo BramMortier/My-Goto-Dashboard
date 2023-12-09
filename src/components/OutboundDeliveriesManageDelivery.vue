@@ -106,13 +106,13 @@ const status = ref(null);
         }
       }
 
-      &:nth-child(3) {
+      &:nth-child(2) {
         & > div {
           background-color: var(--clr-green-400);
         }
       }
 
-      &:nth-child(4) {
+      &:nth-child(3) {
         & > div {
           background-color: var(--clr-green-500);
         }
