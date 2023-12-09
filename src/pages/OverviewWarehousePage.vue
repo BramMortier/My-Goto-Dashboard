@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from "vue";
 import { useModalStore } from "@stores/ModalStore";
 
 import BasePageSection from "@components/BasePageSection.vue";
@@ -9,6 +10,8 @@ import WarehouseInventoriesTable from "@components/WarehouseInventoriesTable.vue
 import WarehouseInboundDeliveriesModalCreate from "@components/WarehouseInboundDeliveriesModalCreate.vue";
 
 const { openModal } = useModalStore();
+
+const searchTerm = ref(null);
 </script>
 
 <template>
@@ -16,7 +19,10 @@ const { openModal } = useModalStore();
     <BasePageSection title="Inventory" width="xl">
       <BasePageSectionGroup>
         <div class="overview-warehouse-page__filters">
-          <BaseSearchbar />
+          <BaseSearchbar
+            :searchTerm="searchTerm"
+            @update:searchTerm="(newValue) => (searchTerm = newValue)"
+          />
           <BaseButton
             @click="
               openModal({ component: WarehouseInboundDeliveriesModalCreate })
@@ -26,7 +32,7 @@ const { openModal } = useModalStore();
         </div>
       </BasePageSectionGroup>
       <BasePageSectionGroup>
-        <WarehouseInventoriesTable />
+        <WarehouseInventoriesTable :searchTerm="searchTerm" />
       </BasePageSectionGroup>
     </BasePageSection>
   </div>

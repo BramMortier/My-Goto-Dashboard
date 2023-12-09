@@ -1,16 +1,37 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { getWarehouseInventory } from "@services/mealService";
 
 import WarehouseInventoriesTableRow from "@components/WarehouseInventoriesTableRow.vue";
 
-const warehouseInventories = ref(null);
+const props = defineProps({
+  searchTerm: String,
+});
+
+const warehouseInventory = ref(null);
 
 onMounted(async () => {
   const { data: getWarehouseInventoryData, error: getWarehouseInventoryError } =
     await getWarehouseInventory();
 
-  warehouseInventories.value = getWarehouseInventoryData;
+  warehouseInventory.value = getWarehouseInventoryData;
+  console.log(warehouseInventory.value);
+});
+
+const filteredWarehouseInventory = computed(() => {
+  if (!warehouseInventory.value) return [];
+  if (!props.searchTerm) return warehouseInventory.value;
+
+  const searchTerm = props.searchTerm.toLowerCase();
+
+  return warehouseInventory.value.filter((inventoryEntry) => {
+    return (
+      inventoryEntry.dish_name.toLowerCase().includes(searchTerm) ||
+      inventoryEntry.supplier_name.toLowerCase().includes(searchTerm) ||
+      inventoryEntry.amount < Number(searchTerm) ||
+      Number(inventoryEntry.expires_in_days) < Number(searchTerm)
+    );
+  });
 });
 </script>
 
@@ -25,9 +46,9 @@ onMounted(async () => {
       <div class="warehouse-inventories-table__head-cell">Expires at</div>
       <div class="warehouse-inventories-table__head-cell">Expires in</div>
     </div>
-    <div class="warehouse-inventories-table-body">
+    <div class="warehouse-inventories-table__body">
       <WarehouseInventoriesTableRow
-        v-for="inventoryEntry in warehouseInventories"
+        v-for="inventoryEntry in filteredWarehouseInventory"
         :key="inventoryEntry.stored_at"
         :inventoryEntry="inventoryEntry"
       />

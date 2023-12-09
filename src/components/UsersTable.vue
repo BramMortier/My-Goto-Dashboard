@@ -51,7 +51,7 @@ const filteredUsers = computed(() => {
       />
       <div v-else class="users-table__empty-placeholder">
         <p>
-          0 Search results for <span>"{{ searchTerm }}"</span>
+          0 Search results for <span>"{{ props.searchTerm }}"</span>
         </p>
       </div>
     </div>
