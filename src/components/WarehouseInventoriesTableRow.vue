@@ -1,14 +1,27 @@
 <script setup>
 import { transformToFormattedDateShort } from "@helpers/index";
 import { publicStorageBucketUrl } from "@services/storageService";
+import { useRightClickMenuStore } from "@stores/RightClickMenuStore";
+
+import WarehouseInboundDeliveriesActionMenu from "@components/WarehouseInboundDeliveriesActionMenu.vue";
 
 const props = defineProps({
   inventoryEntry: Object,
 });
+
+const { openMenu } = useRightClickMenuStore();
 </script>
 
 <template>
-  <div class="warehouse-inventories-table-row">
+  <div
+    @click.right.prevent="
+      openMenu({
+        component: WarehouseInboundDeliveriesActionMenu,
+        props: { inboundDelivery: props.inventoryEntry },
+      })
+    "
+    class="warehouse-inventories-table-row"
+  >
     <div class="warehouse-inventories-table-row__cell">
       {{ inventoryEntry.dish_name }}
     </div>

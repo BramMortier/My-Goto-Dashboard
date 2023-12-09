@@ -10,11 +10,7 @@ onMounted(async () => {
   const { data: getWarehouseInventoryData, error: getWarehouseInventoryError } =
     await getWarehouseInventory();
 
-  console.log(getWarehouseInventoryError);
-
   warehouseInventories.value = getWarehouseInventoryData;
-
-  console.log(warehouseInventories.value);
 });
 </script>
 

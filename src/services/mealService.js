@@ -78,17 +78,6 @@ export const updateMeals = async (mealsData) => {
   return { data: updateMealsData, error: null };
 };
 
-export const deleteMeal = async (mealId) => {
-  const { error: deleteMealError } = await supabase
-    .from("meals")
-    .delete()
-    .eq("id", mealId);
-
-  if (deleteMealError) return { data: null, error: deleteMealError };
-
-  return { data: "Meal succesfully deleted", error: null };
-};
-
 export const getOldestMeals = async (quantity, dishId) => {
   const { data: getOldestMealsData, error: getOldestMealsError } =
     await supabase.rpc("get_oldest_meals", {
@@ -137,4 +126,17 @@ export const updateMealsToFilled = async (deliveryId) => {
     return { data: null, error: updateMealsToFilledError };
 
   return { data: updateMealsToFilledData, error: null };
+};
+
+export const deleteMeals = async (supplierBatch) => {
+  const { error: deleteMealError } = await supabase.rpc(
+    "delete_warehouse_inventory_items",
+    {
+      supplier_batch: supplierBatch,
+    }
+  );
+
+  if (deleteMealError) return { data: null, error: deleteMealError };
+
+  return { data: "Meals succesfully deleted", error: null };
 };

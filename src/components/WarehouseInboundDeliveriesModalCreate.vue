@@ -1,7 +1,10 @@
 <script setup>
 import { ref } from "vue";
 import { Form } from "vee-validate";
+import { useRouter } from "vue-router";
 import { transformToFormattedDate } from "@helpers/index";
+import { useModalStore } from "@stores/ModalStore";
+import { useNotificationStore } from "@stores/NotificationStore";
 import { createMeals } from "@services/mealService";
 import * as yup from "yup";
 
@@ -11,6 +14,10 @@ import BaseFormFieldset from "@components/BaseFormFieldset.vue";
 import BaseFormDatePicker from "@components/BaseFormDatePicker.vue";
 import BaseFormInput from "@components/BaseFormInput.vue";
 import BaseButton from "@components/BaseButton.vue";
+
+const { closeModal } = useModalStore();
+const { addNotification } = useNotificationStore();
+const router = useRouter();
 
 const inboundDeliveryFormActiveStep = ref(1);
 
@@ -35,7 +42,7 @@ const inboundDeliveryFormValidationSchema = yup.object({
 });
 
 const handleInboundDeliveryFormSubmit = async (values) => {
-  console.log(values);
+  closeModal();
 
   const { data: createMealData, error: createMealError } = await createMeals({
     inboundDishId: values.inboundDish.id,
@@ -43,6 +50,24 @@ const handleInboundDeliveryFormSubmit = async (values) => {
     inboundDishBatchExpiryDate: values.inboundDishBatchExpiryDate.toISOString(),
     inboundDishAmountOfUnits: values.inboundDishAmountOfUnits,
   });
+
+  if (createMealError) {
+    addNotification({
+      title: "Error!",
+      message: "Failed to add inbound delivery",
+      type: "error",
+      removeDelay: 2000,
+    });
+  } else {
+    addNotification({
+      title: "Succes!",
+      message: "Succesfully added inbound delivery",
+      type: "succes",
+      removeDelay: 2000,
+    });
+
+    setTimeout(() => router.go(0), 1200);
+  }
 
   console.log(createMealData);
   console.log(createMealError);
