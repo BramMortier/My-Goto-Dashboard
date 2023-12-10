@@ -86,23 +86,37 @@ const handleUpdateOutboundDeliveryContents = (contentEntry) => {
           class="outbound-deliveries-create-refill-machine__inventory-overview-entry-quantity"
         >
           <p>{{ entry.dish_name }}</p>
-          <ul
-            class="outbound-deliveries-create-refill-machine__inventory-overview-meals"
-            @mouseleave="setHoveredMeal(null, null)"
-          >
+          <ul @mouseleave="setHoveredMeal(null, null)">
             <li
               v-for="(_, index) in generateArrayFromLength(
-                entry.suggested_quantity
+                entry.available_quantity
+              )"
+              :key="index"
+              @mouseover="setHoveredMeal(null, null)"
+              class="outbound-deliveries-create-refill-machine__inventory-overview-entry-quantity-available"
+            ></li>
+            <li
+              v-for="(_, index) in generateArrayFromLength(
+                entry.in_transport_quantity
+              )"
+              :key="index"
+              @mouseover="setHoveredMeal(null, null)"
+              class="outbound-deliveries-create-refill-machine__inventory-overview-entry-quantity-in-transport"
+            ></li>
+            <li
+              v-for="(_, index) in generateArrayFromLength(
+                entry.suggested_quantity -
+                  (entry.available_quantity + entry.in_transport_quantity)
               )"
               :key="index"
               @click="handleUpdateInventoryRefillPlan(entry.dish_id, index + 1)"
               @mouseover="setHoveredMeal(entry.dish_name, index)"
-              class="outbound-deliveries-create-refill-machine__inventory-overview-meal"
+              class="outbound-deliveries-create-refill-machine__inventory-overview-entry-quantity-suggested"
               :class="{
-                'outbound-deliveries-create-refill-machine__inventory-overview-meal--selected':
+                'outbound-deliveries-create-refill-machine__inventory-overview-entry-quantity-suggested--selected':
                   hoveredMeal.dish === entry.dish_name &&
                   hoveredMeal.index >= index,
-                'outbound-deliveries-create-refill-machine__inventory-overview-meal--added':
+                'outbound-deliveries-create-refill-machine__inventory-overview-entry-quantity-suggested--added':
                   index + 1 <= entry.added_quantity,
               }"
             ></li>
@@ -124,7 +138,10 @@ const handleUpdateOutboundDeliveryContents = (contentEntry) => {
           <div>
             <p>
               {{ entry.added_quantity ? entry.added_quantity : 0 }} /
-              {{ entry.suggested_quantity }}
+              {{
+                entry.suggested_quantity -
+                (entry.available_quantity + entry.in_transport_quantity)
+              }}
             </p>
           </div>
           <button
@@ -234,6 +251,19 @@ const handleUpdateOutboundDeliveryContents = (contentEntry) => {
     & > P {
       line-height: var(--lh-xs);
     }
+
+    & > ul {
+      display: grid;
+      grid-template-columns: repeat(12, 20px);
+      gap: var(--space-2xs);
+      width: fit-content;
+
+      & > li {
+        width: 20px;
+        height: 20px;
+        border-radius: var(--border-radius-md);
+      }
+    }
   }
 
   &__inventory-overview-entry-quantity-controls {
@@ -278,17 +308,7 @@ const handleUpdateOutboundDeliveryContents = (contentEntry) => {
     }
   }
 
-  &__inventory-overview-meals {
-    display: grid;
-    grid-template-columns: repeat(12, 20px);
-    gap: var(--space-2xs);
-    width: fit-content;
-  }
-
-  &__inventory-overview-meal {
-    width: 20px;
-    height: 20px;
-    border-radius: var(--border-radius-md);
+  &__inventory-overview-entry-quantity-suggested {
     background-color: var(--clr-gray-300);
     transition: var(--hover-transition);
 
@@ -298,8 +318,17 @@ const handleUpdateOutboundDeliveryContents = (contentEntry) => {
     }
 
     &--added {
-      background-color: var(--clr-green-400);
+      background-color: var(--clr-blue-400);
     }
+  }
+
+  &__inventory-overview-entry-quantity-in-transport {
+    background-color: var(--clr-gray-300);
+    border: 2px solid var(--clr-green-400);
+  }
+
+  &__inventory-overview-entry-quantity-available {
+    background-color: var(--clr-green-400);
   }
 }
 </style>
