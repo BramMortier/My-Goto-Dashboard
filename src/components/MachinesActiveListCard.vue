@@ -6,8 +6,6 @@ import MachinesListCardRefillStatus from "@components/MachinesListCardRefillStat
 const props = defineProps({
   machine: Object,
 });
-
-console.log(props.machine);
 </script>
 
 <template>

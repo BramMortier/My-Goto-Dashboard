@@ -1,49 +1,151 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted, computed } from "vue";
+import {
+  getMachinesStatusOverview,
+  getMachinesMaxCapcity,
+} from "@services/locationService";
+import { getMealsCountTotal } from "@services/mealService";
+
+const machinesStatusOverview = ref(null);
+const availableMealsPercentage = ref(null);
+
+onMounted(async () => {
+  const {
+    data: getMachinesStatusOverviewData,
+    error: getMachinesStatusOverviewError,
+  } = await getMachinesStatusOverview();
+
+  machinesStatusOverview.value = getMachinesStatusOverviewData;
+
+  const { data: getMealsCountTotalData, error: getMealsCountTotalError } =
+    await getMealsCountTotal();
+
+  const { data: getMachinesMaxCapcityData, error: getMachinesMaxCapcityError } =
+    await getMachinesMaxCapcity();
+
+  availableMealsPercentage.value =
+    (getMealsCountTotalData / getMachinesMaxCapcityData) * 100;
+});
+
+const totalAmountOfMachines = computed(() => {
+  if (machinesStatusOverview.value) {
+    return Object.values(machinesStatusOverview.value).reduce(
+      (sum, value) => sum + value,
+      0
+    );
+  }
+});
+</script>
 
 <template>
   <div class="machines-status-overview">
     <div class="machines-status-overview__percentage">
-      <p>86%</p>
+      <p>
+        {{ availableMealsPercentage && Math.floor(availableMealsPercentage) }}%
+      </p>
       <span>Meals available</span>
     </div>
     <ul class="machines-status-overview__legend">
       <li class="machines-status-overview__legend-entry">
         <div class="machines-status-overview__legend-entry-color"></div>
         <p>Full</p>
-        <span>3 machines</span>
+        <span>
+          {{ machinesStatusOverview && machinesStatusOverview["full"] }}
+          machine{{
+            machinesStatusOverview &&
+            (machinesStatusOverview["full"] > 1 ||
+              machinesStatusOverview["full"] === 0)
+              ? "s"
+              : ""
+          }}
+        </span>
       </li>
       <li class="machines-status-overview__legend-entry">
         <div class="machines-status-overview__legend-entry-color"></div>
         <p>Optional refill</p>
-        <span>2 machines</span>
+        <span>
+          {{
+            machinesStatusOverview && machinesStatusOverview["optional refill"]
+          }}
+          machine{{
+            machinesStatusOverview &&
+            (machinesStatusOverview["optional refill"] > 1 ||
+              machinesStatusOverview["optional refill"] === 0)
+              ? "s"
+              : ""
+          }}
+        </span>
       </li>
       <li class="machines-status-overview__legend-entry">
         <div class="machines-status-overview__legend-entry-color"></div>
         <p>Urgent refill</p>
-        <span>5 machines</span>
+        <span>
+          {{
+            machinesStatusOverview && machinesStatusOverview["urgent refill"]
+          }}
+          machine{{
+            machinesStatusOverview &&
+            (machinesStatusOverview["urgent refill"] > 1 ||
+              machinesStatusOverview["urgent refill"] === 0)
+              ? "s"
+              : ""
+          }}
+        </span>
       </li>
       <li class="machines-status-overview__legend-entry">
         <div class="machines-status-overview__legend-entry-color"></div>
         <p>Empty</p>
-        <span>1 machine</span>
+        <span>
+          {{ machinesStatusOverview && machinesStatusOverview["empty"] }}
+          machine{{
+            machinesStatusOverview &&
+            (machinesStatusOverview["empty"] > 1 ||
+              machinesStatusOverview["empty"] === 0)
+              ? "s"
+              : ""
+          }}
+        </span>
       </li>
     </ul>
     <div class="machines-status-overview__status-bar">
       <div
         class="machines-status-overview__status-bar-full"
-        :style="{ width: `30%` }"
+        :style="{
+          width: `${
+            machinesStatusOverview &&
+            (machinesStatusOverview['full'] / totalAmountOfMachines) * 100
+          }%`,
+        }"
       ></div>
       <div
         class="machines-status-overview__status-bar-optional-refill"
-        :style="{ width: `30%` }"
+        :style="{
+          width: `${
+            machinesStatusOverview &&
+            (machinesStatusOverview['optional refill'] /
+              totalAmountOfMachines) *
+              100
+          }%`,
+        }"
       ></div>
       <div
         class="machines-status-overview__status-bar-urgent-refill"
-        :style="{ width: `20%` }"
+        :style="{
+          width: `${
+            machinesStatusOverview &&
+            (machinesStatusOverview['urgent refill'] / totalAmountOfMachines) *
+              100
+          }%`,
+        }"
       ></div>
       <div
         class="machines-status-overview__status-bar-empty"
-        :style="{ width: `20%` }"
+        :style="{
+          width: `${
+            machinesStatusOverview &&
+            (machinesStatusOverview['empty'] / totalAmountOfMachines) * 100
+          }%`,
+        }"
       ></div>
     </div>
   </div>

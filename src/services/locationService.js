@@ -1,5 +1,6 @@
 import { supabase } from "@plugins/supabase";
 import { getAllDishes } from "@services/dishService";
+import { machineStatuses } from "@constants/index";
 
 export const getAllLocations = async () => {
   const { data: getAllLocationsData, error: getAllLocationsError } =
@@ -20,6 +21,37 @@ export const getAllMachinesWithPlan = async () => {
     return { data: null, error: getAllMachinesWithPlanError };
 
   return { data: getAllMachinesWithPlanData, error: null };
+};
+
+export const getMachinesMaxCapcity = async () => {
+  const { data: getMachinesMaxCapcityData, error: getMachinesMaxCapcityError } =
+    await supabase.rpc("get_machines_max_capacity");
+
+  if (getMachinesMaxCapcityError)
+    return { data: null, error: getMachinesMaxCapcityError };
+
+  return { data: getMachinesMaxCapcityData, error: null };
+};
+
+export const getMachinesStatusOverview = async () => {
+  const {
+    data: getMachinesStatusOverviewData,
+    error: getMachinesStatusOverviewError,
+  } = await supabase.rpc("get_machines_status_overview");
+
+  if (getMachinesStatusOverviewError)
+    return { data: null, error: getMachinesStatusOverviewError };
+
+  const machinesStatusOverview = Object.fromEntries(
+    machineStatuses.map((status) => [status, 0])
+  );
+
+  getMachinesStatusOverviewData.forEach((status) => {
+    const { stock_status, amount } = status;
+    machinesStatusOverview[stock_status] = amount;
+  });
+
+  return { data: machinesStatusOverview, error: null };
 };
 
 export const getAllLocationsByType = async (locationType) => {

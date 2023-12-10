@@ -20,6 +20,16 @@ export const getAllMealsCount = async () => {
   return { data: getAllMealsCountData, error: null };
 };
 
+export const getMealsCountTotal = async () => {
+  const { data: getMealsCountTotalData, error: getMealsCountTotalError } =
+    await supabase.rpc("get_stocked_meals_total");
+
+  if (getMealsCountTotalError)
+    return { data: null, error: getMealsCountTotalError };
+
+  return { data: getMealsCountTotalData, error: null };
+};
+
 export const getWarehouseInventory = async () => {
   const { data: getWarehouseInventoryData, error: getWarehouseInventoryError } =
     await supabase.rpc("get_warehouse_inventory");

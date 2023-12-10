@@ -33,3 +33,10 @@ export const foodCategories = [
 ];
 
 export const outboundDeliveryStatuses = ["planned", "in progress", "delivered"];
+
+export const machineStatuses = [
+  "full",
+  "optional refill",
+  "urgent refill",
+  "empty",
+];
