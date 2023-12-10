@@ -7,6 +7,7 @@ import BasePageSectionGroup from "@components/BasePageSectionGroup.vue";
 import BaseSearchbar from "@components/BaseSearchbar.vue";
 import BaseButton from "@components/BaseButton.vue";
 import WarehouseInventoriesTable from "@components/WarehouseInventoriesTable.vue";
+import WarehouseInventoryOverview from "@components/WarehouseInventoryOverview.vue";
 import WarehouseInboundDeliveriesModalCreate from "@components/WarehouseInboundDeliveriesModalCreate.vue";
 
 const { openModal } = useModalStore();
@@ -16,7 +17,12 @@ const searchTerm = ref(null);
 
 <template>
   <div class="overview-warehouse-page">
-    <BasePageSection title="Inventory" width="xl">
+    <BasePageSection title="Inventory overview" width="xl">
+      <BasePageSectionGroup>
+        <WarehouseInventoryOverview />
+      </BasePageSectionGroup>
+    </BasePageSection>
+    <BasePageSection title="Inbound deliveries list" width="xl">
       <BasePageSectionGroup>
         <div class="overview-warehouse-page__filters">
           <BaseSearchbar
@@ -42,6 +48,7 @@ const searchTerm = ref(null);
 .overview-warehouse-page {
   display: flex;
   flex-direction: column;
+  gap: var(--space-xl);
 
   &__filters {
     display: grid;
