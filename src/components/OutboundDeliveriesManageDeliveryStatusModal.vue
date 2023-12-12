@@ -4,6 +4,8 @@ import {
   updateOutboundDeliveryToInTransport,
   updateOutboundDeliveryToFilled,
 } from "@services/outboundDeliveryService";
+import { useRouter } from "vue-router";
+import { useNotificationStore } from "@stores/NotificationStore";
 
 import BaseButton from "@components/BaseButton.vue";
 
@@ -12,19 +14,59 @@ const props = defineProps({
   deliveryId: String,
 });
 
+const router = useRouter();
 const { closeModal } = useModalStore();
+const { addNotification } = useNotificationStore();
 
 const handleStatusUpdate = async (deliveryId, deliveryStatus) => {
+  closeModal();
+
   if (deliveryStatus === "in progress") {
     const {
       data: updateOutboundDeliveryToInTransportData,
       error: updateOutboundDeliveryToInTransportError,
     } = await updateOutboundDeliveryToInTransport(deliveryId);
+
+    if (updateOutboundDeliveryToInTransportError) {
+      addNotification({
+        title: "Error!",
+        message: "Failed to update delivery status",
+        type: "error",
+        removeDelay: 2000,
+      });
+    } else {
+      addNotification({
+        title: "Succes!",
+        message: "Updated delivery status to in transport",
+        type: "succes",
+        removeDelay: 2000,
+      });
+
+      setTimeout(() => router.go(), 1200);
+    }
   } else {
     const {
       data: updateOutboundDeliveryToFilledData,
       error: updateOutboundDeliveryToFilledError,
     } = await updateOutboundDeliveryToFilled(deliveryId);
+
+    if (updateOutboundDeliveryToFilledError) {
+      addNotification({
+        title: "Error!",
+        message: "Failed to update delivery status",
+        type: "error",
+        removeDelay: 2000,
+      });
+    } else {
+      addNotification({
+        title: "Succes!",
+        message: "Updated delivery status to delivered",
+        type: "succes",
+        removeDelay: 2000,
+      });
+
+      setTimeout(() => router.go(), 1200);
+    }
   }
 };
 </script>

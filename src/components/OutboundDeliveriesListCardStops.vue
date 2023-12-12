@@ -28,6 +28,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .outbound-deliveries-list-card-stops {
+  overflow-x: hidden;
   display: flex;
   align-items: center;
   flex: 1;

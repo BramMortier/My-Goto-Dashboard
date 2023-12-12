@@ -1,6 +1,9 @@
 <script setup>
 import { Form } from "vee-validate";
 import { createOutboundDelivery } from "@services/outboundDeliveryService";
+import { useRouter } from "vue-router";
+import { useNotificationStore } from "@stores/NotificationStore";
+import { useModalStore } from "@stores/ModalStore";
 import * as yup from "yup";
 
 import BaseFormFieldset from "@components/BaseFormFieldset.vue";
@@ -11,6 +14,10 @@ import OutboundDeliveriesCreateContentsOverview from "@components/OutboundDelive
 import BaseSearchbar from "@components/BaseSearchbar.vue";
 import BaseButton from "@components/BaseButton.vue";
 
+const router = useRouter();
+const { closeModal } = useModalStore();
+const { addNotification } = useNotificationStore();
+
 const outboundDeliveriesFormValidationSchema = yup.object({
   outboundDeliveryTruckDriver: yup
     .mixed()
@@ -20,6 +27,8 @@ const outboundDeliveriesFormValidationSchema = yup.object({
 });
 
 const handleOutboundDeliveriesFormSubmit = async (values) => {
+  closeModal();
+
   const {
     data: createOutboundDeliveryData,
     error: createOutboundDeliveryError,
@@ -29,14 +38,33 @@ const handleOutboundDeliveriesFormSubmit = async (values) => {
     outboundDeliveryContents: values.outboundDeliveryContents,
   });
 
-  // console.log("from succes: ", createOutboundDeliveryData);
-  // console.log("form error: ", createOutboundDeliveryError);
+  if (createOutboundDeliveryError) {
+    addNotification({
+      title: "Error!",
+      message: "Failed to create outbound delivery",
+      type: "error",
+      removeDelay: 2000,
+    });
+  } else {
+    addNotification({
+      title: "Succes!",
+      message: "Succesfully created outbound delivery",
+      type: "succes",
+      removeDelay: 2000,
+    });
+
+    setTimeout(
+      () => router.push({ name: "OverviewOutboundDeliveriesPage" }),
+      1200
+    );
+  }
 };
 </script>
 
 <template>
   <Form
     @submit="handleOutboundDeliveriesFormSubmit"
+    :validationSchema="outboundDeliveriesFormValidationSchema"
     class="outbound-deliveries-form-create"
     v-slot="{ values }"
   >

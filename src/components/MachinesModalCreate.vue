@@ -2,6 +2,9 @@
 import { ref } from "vue";
 import { Form } from "vee-validate";
 import { createLocation } from "@services/locationService";
+import { useRouter } from "vue-router";
+import { useNotificationStore } from "@stores/NotificationStore";
+import { useModalStore } from "@stores/ModalStore";
 import * as yup from "yup";
 
 import BaseButton from "@components/BaseButton.vue";
@@ -10,6 +13,10 @@ import BaseFormInput from "@components/BaseFormInput.vue";
 import BaseFormFieldset from "@components/BaseFormFieldset.vue";
 import BaseMultistepFormProgressBar from "@components/BaseMultistepFormProgressBar.vue";
 import MachinesModalCreatePlanStructure from "@components/MachinesModalCreatePlanStructure.vue";
+
+const router = useRouter();
+const { closeModal } = useModalStore();
+const { addNotification } = useNotificationStore();
 
 const machineLocationFormActiveStep = ref(1);
 
@@ -35,7 +42,7 @@ const machineLocationValidationSchema = yup.object({
 });
 
 const handleMachineLocationFormSubmit = async (values) => {
-  console.log("form values: ", values);
+  closeModal();
 
   const { data: createLocationData, error: createLocationError } =
     await createLocation({
@@ -52,8 +59,23 @@ const handleMachineLocationFormSubmit = async (values) => {
       locationPlan: values.locationPlan,
     });
 
-  console.log("form response: ", createLocationData);
-  console.log("form error: ", createLocationError);
+  if (createLocationError) {
+    addNotification({
+      title: "Error!",
+      message: "Failed to create location",
+      type: "error",
+      removeDelay: 2000,
+    });
+  } else {
+    addNotification({
+      title: "Succes!",
+      message: "Created location succesfully",
+      type: "succes",
+      removeDelay: 2000,
+    });
+
+    setTimeout(() => router.go(), 1200);
+  }
 };
 
 const handleActiveStepChange = (stepIndex) => {

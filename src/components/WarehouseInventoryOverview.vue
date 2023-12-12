@@ -77,4 +77,12 @@ onMounted(async () => {
     }
   }
 }
+
+@media screen and (max-width: 1600px) {
+  .warehouse-inventory-overview {
+    &__list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
 </style>

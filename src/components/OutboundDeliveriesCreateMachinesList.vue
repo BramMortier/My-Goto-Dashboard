@@ -115,6 +115,8 @@ const updateOutboundDeliveryContents = (contentEntry) => {
     img {
       width: 2.5rem;
       height: 2.5rem;
+      filter: invert(30%) sepia(0%) saturate(121%) hue-rotate(167deg)
+        brightness(102%) contrast(90%);
     }
   }
 
